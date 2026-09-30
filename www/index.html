@@ -5862,16 +5862,16 @@ function cnRestoreData(){
 
 
 
-<style id="cn-app-shell-fix-v6">
-/* CleanNova v6: no forced home page, no touch hacks, no browser-toolbar compensation. */
+<style id="cn-app-shell-fix-v7">
+/* CleanNova v7: keep the app bottom nav above Android system navigation. */
 html,body{margin:0!important;padding:0!important;width:100%;min-height:100%;overflow-x:hidden;overscroll-behavior-y:none}
 body{background:#f4f7fb}
-#app{position:relative;width:100%;max-width:430px;min-height:100dvh;margin:0 auto;padding-bottom:96px!important;box-sizing:border-box;overflow-x:hidden;background:#f7fbfd}
+#app{position:relative;width:100%;max-width:430px;min-height:100dvh;margin:0 auto;padding-bottom:178px!important;box-sizing:border-box;overflow-x:hidden;background:#f7fbfd}
 #app>header{position:sticky;top:0;z-index:200;width:100%;background:linear-gradient(135deg,#e2f6ff,#f8fcff)}
 #app>.tabs{position:sticky;top:0;z-index:190;width:100%;background:#fff}
 #app>.page{position:relative;z-index:1}
-#app>nav{position:fixed!important;left:50%!important;bottom:0!important;transform:translateX(-50%)!important;z-index:9999!important;width:min(430px,100vw)!important;height:72px!important;min-height:72px!important;padding:8px 10px!important;box-sizing:border-box!important;display:flex!important;align-items:stretch!important;background:rgba(255,255,255,.98)!important;border-top:1px solid #e6eaf0!important;box-shadow:0 -7px 20px rgba(15,23,42,.07)!important}
-#app>nav .nav{height:56px!important;min-height:50px!important;flex:1!important;touch-action:manipulation!important}
+#app>nav{position:fixed!important;left:50%!important;bottom:84px!important;transform:translateX(-50%)!important;z-index:9999!important;width:min(430px,100vw)!important;height:72px!important;min-height:72px!important;padding:8px 10px!important;box-sizing:border-box!important;display:flex!important;align-items:stretch!important;background:rgba(255,255,255,.98)!important;border:1px solid #e6eaf0!important;border-radius:0!important;box-shadow:0 -7px 20px rgba(15,23,42,.07)!important}
+#app>nav .nav{height:56px!important;min-height:50px!important;flex:1!important;touch-action:manipulation!important;pointer-events:auto!important}
 .modal{z-index:10000!important}
 button,input,select,textarea{touch-action:manipulation}
 @media(min-width:431px){body{display:flex;justify-content:center}#app{box-shadow:0 0 30px rgba(24,67,91,.08)}}
