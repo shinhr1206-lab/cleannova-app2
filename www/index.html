@@ -895,6 +895,7 @@ nav{height:72px!important;padding:8px 10px calc(8px + env(safe-area-inset-bottom
 <meta content="클린노바" name="apple-mobile-web-app-title"/>
 <link href="icons/icon.svg" rel="icon" type="image/svg+xml"/>
 <link href="icons/icon-192.png" rel="apple-touch-icon"/>
+<!-- CleanNova v94 -->
 </head>
 <body>
 <div id="app">
@@ -1148,7 +1149,7 @@ nav{height:72px!important;padding:8px 10px calc(8px + env(safe-area-inset-bottom
 </div>
 <div class="cn-tax-note">발급 체크 시 현재 작업금액을 공급가액으로 보고 부가세 10%를 자동 계산합니다.</div>
 </div>
-<div class="info"><div><span>서비스</span><b id="dtype">-</b></div><div><span>상태</span><b id="dstate">예약</b></div><div><span>서비스 단가</span><b id="dunitPrice">0원</b></div><div><span>수량</span><b id="dquantity">1개</b></div><div><span>서비스 금액</span><b id="dprice">0원</b></div><div><span>재방문 예정</span><b id="drevisit">미정</b></div><div><span>주소</span><b id="daddr">-</b></div></div>
+<div class="info"><div><span>상태</span><b id="dstate">예약</b></div><div id="cnDetailItemLines" class="cn-detail-item-lines"></div><div><span>재방문 예정</span><b id="drevisit">미정</b></div><div><span>주소</span><b id="daddr">-</b></div></div>
 </section>
 <section class="page" id="documents">
 <div class="title"><h1>견적 · 영수증</h1><button class="primary" onclick="renderDocuments()">새로고침</button></div>
@@ -6322,6 +6323,56 @@ function cnSetCalendarView(mode){
   window.cnOpenPhotoSettings=function(){if(typeof origOpen==='function')origOpen();setTimeout(function(){const v=read();[['cnCloudName',v.cloud],['cnCloudPreset',v.preset],['cnPhotoPublicBase',v.publicBase]].forEach(function(a){const el=document.getElementById(a[0]);if(el)el.value=a[1];});},30);};
   const origSave=window.cnSavePhotoSettings;
   window.cnSavePhotoSettings=function(){const v={cloud:(document.getElementById('cnCloudName')?.value||DEF.cloud).trim(),preset:(document.getElementById('cnCloudPreset')?.value||DEF.preset).trim(),publicBase:(document.getElementById('cnPhotoPublicBase')?.value||DEF.publicBase).trim()};write(v);if(typeof origSave==='function')origSave();};
+})();
+</script>
+<script id="cn-v92-reservation-item-lines">
+/* v92: 예약내역에 기본 서비스와 추가 품목을 개별 금액으로 표시 */
+(function(){
+  const money=v=>Number(v||0).toLocaleString('ko-KR')+'원';
+  const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  function detail(b){try{return typeof detailDataForBooking==='function'?detailDataForBooking(b):{}}catch(e){return {}}}
+  function lines(b){
+    const d=detail(b), service=String(d.service||b.service||b.type||'서비스').trim()||'서비스';
+    const qty=Math.max(1,Math.floor(Number(d.quantity??b.quantity??b.qty??1)||1));
+    const unit=Number(d.unitPrice??b.unitPrice??0)||0;
+    const items=Array.isArray(d.items)?d.items.map(x=>({service:String(x.service||'품목').trim()||'품목',qty:Math.max(1,Math.floor(Number(x.qty??x.quantity??1)||1)),unit:Math.max(0,Number(x.unit??x.unitPrice??0)||0)})):[];
+    const mainAmount=Number(d.servicePrices?.[service] ?? (unit*qty))||0;
+    const main=mainAmount>0||!items.length?`<div class="cn-res-item-line"><span>${esc(service)} ${qty.toLocaleString('ko-KR')}개</span><b>${money(mainAmount)}</b></div>`:'';
+    const extra=items.map(x=>`<div class="cn-res-item-line cn-res-extra"><span>${esc(x.service)} ${x.qty.toLocaleString('ko-KR')}개</span><b>${money(x.qty*x.unit)}</b></div>`).join('');
+    const total=Number(b.price??d.price??(mainAmount+items.reduce((a,x)=>a+x.qty*x.unit,0)))||0;
+    return {html:main+extra,total};
+  }
+  window.rows=function(list){
+    return (list||[]).map(b=>{
+      const id=b.id||'', ct=b.customerType||((customers||[]).find(c=>c.name===b.name)?.customerType)||'가정집';
+      const x=lines(b);
+      return `<div class="booking" onclick="openBookingDetail('${esc(id)}')"><div class="time">${esc(b.time||'-')}</div><div class="bar"></div><div class="bookingmain"><b>${esc(b.name)} · ${esc(b.type||'서비스')}</b><div class="cn-res-item-lines">${x.html}<div class="cn-res-item-total"><span>총 금액</span><b>${money(x.total)}</b></div></div><div class="booking-type-row" onclick="event.stopPropagation()"><span>고객유형</span><select class="booking-type-select" onchange="cnSetBookingCustomerType('${esc(id)}',this.value)" onclick="event.stopPropagation()"><option value="가정집" ${ct==='가정집'?'selected':''}>가정집</option><option value="상가" ${ct==='상가'?'selected':''}>상가</option></select></div></div><span class="status">${b.done?'완료':'예약'}</span><div class="booking-actions" onclick="event.stopPropagation()"><button class="booking-edit" onclick="editBookingById('${esc(id)}')">수정</button><button class="booking-delete" onclick="cnDeleteBookingById('${esc(id)}')">삭제</button></div></div>`;
+    }).join('')||'<div class="sub" style="padding:15px">예약이 없습니다.</div>';
+  };
+  const st=document.createElement('style');
+  st.textContent=`.cn-res-item-lines{margin-top:5px;padding:7px 9px;background:#f7fbfd;border:1px solid #e3edf1;border-radius:9px}.cn-res-item-line{display:flex;justify-content:space-between;gap:8px;line-height:1.55;font-size:10px}.cn-res-item-line b{font-weight:900;white-space:nowrap}.cn-res-extra{color:#496878}.cn-res-item-total{display:flex;justify-content:space-between;gap:8px;margin-top:5px;padding-top:5px;border-top:1px solid #dce7ec;font-size:10px}.cn-res-item-total b{font-size:11px;color:#126fd2}`;
+  document.head.appendChild(st);
+})();
+</script>
+<script id="cn-v93-live-item-detail">
+(function(){
+'use strict';
+const money=v=>Number(v||0).toLocaleString('ko-KR')+'원';
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const num=v=>{const n=Number(v);return Number.isFinite(n)?n:0};
+const qty=v=>Math.max(1,Math.floor(num(v)||1));
+function currentBooking(){try{return typeof selectedBookingId!=='undefined'&&selectedBookingId?(bookings||[]).find(b=>b.id===selectedBookingId)||null:null}catch(e){return null}}
+function readItems(){return [...document.querySelectorAll('#cnReservationItems .cn-price-item-row')].map(r=>({service:r.querySelector('.cn-ri-service')?.value||'품목',qty:qty(r.querySelector('.cn-ri-qty')?.value||1),unit:Math.max(0,Math.round(num(r.querySelector('.cn-ri-unit')?.value||0)))}))}
+function values(){const b=currentBooking();if(!b)return null;const d=typeof detailDataForBooking==='function'?(detailDataForBooking(b)||{}):{};const service=(document.getElementById('cnPriceService')?.value||d.service||b.service||b.type||'서비스').trim();const q=qty(document.getElementById('cnPriceQty')?.value||d.quantity||b.quantity||1);const main=Math.max(0,Math.round(num(document.getElementById('cnPriceInput')?.value||d.servicePrices?.[service]||d.unitPrice*q||b.unitPrice*q||0)));const items=readItems();const extra=items.reduce((s,x)=>s+x.qty*x.unit,0);return {b,d,service,q,main,items,extra,total:main+extra}}
+function ensureBox(){const info=document.querySelector('#detail .info');if(!info)return null;let box=document.getElementById('cnDetailItemLines');if(!box){box=document.createElement('div');box.id='cnDetailItemLines';box.className='cn-detail-item-lines';const target=document.getElementById('drevisit')?.parentElement;if(target)info.insertBefore(box,target);else info.appendChild(box)}return box}
+function update(){const v=values();if(!v)return;const unit=document.getElementById('dunitPrice'),q=document.getElementById('dquantity'),price=document.getElementById('dprice'),serviceEl=document.getElementById('dtype');if(serviceEl)serviceEl.textContent=v.service;if(unit)unit.textContent=money(v.q?v.main/v.q:v.main);if(q)q.textContent=v.q+'개';if(price)price.textContent=money(v.main);const box=ensureBox();if(box){box.innerHTML='<div class="cn-detail-extra-title">기본 품목</div><div class="cn-detail-item-line"><span>'+esc(v.service)+' '+v.q.toLocaleString('ko-KR')+'개</span><b>'+money(v.main)+'</b></div>'+(v.items.length?'<div class="cn-detail-extra-title">추가 품목</div>'+v.items.map(x=>'<div class="cn-detail-item-line"><span>'+esc(x.service)+' '+x.qty.toLocaleString('ko-KR')+'개</span><b>'+money(x.qty*x.unit)+'</b></div>').join(''):'')+'<div class="cn-detail-total-line"><span>총 금액</span><b>'+money(v.total)+'</b></div>';box.style.display='block'}const flow=document.getElementById('cnBookingFlow');if(flow){const info=flow.querySelectorAll('.cn-flow-info>div');if(info.length>=2)info[1].innerHTML='<span>서비스 / 수량 / 금액</span><b>'+esc(v.service)+' · '+v.q.toLocaleString('ko-KR')+'개 · '+money(v.main)+'</b>'+(v.items.length?v.items.map(x=>'<div class="cn-live-extra">'+esc(x.service)+' · '+x.qty.toLocaleString('ko-KR')+'개 · '+money(x.qty*x.unit)+'</div>').join(''):'')+'<div class="cn-live-total">총 금액 · '+money(v.total)+'</div>'}const total=document.getElementById('cnPriceTotal');if(total)total.textContent=money(v.total)}
+const schedule=()=>setTimeout(update,0);
+document.addEventListener('input',e=>{if(e.target&&(e.target.id==='cnPriceInput'||e.target.id==='cnPriceQty'||e.target.classList.contains('cn-ri-qty')||e.target.classList.contains('cn-ri-unit')))schedule()});
+document.addEventListener('change',e=>{if(e.target&&(e.target.id==='cnPriceService'||e.target.id==='cnPriceQty'||e.target.classList.contains('cn-ri-service')||e.target.classList.contains('cn-ri-qty')||e.target.classList.contains('cn-ri-unit')))schedule()});
+const oldItem=window.cnReservationItemsChanged;if(typeof oldItem==='function'){window.cnReservationItemsChanged=function(){const r=oldItem.apply(this,arguments);schedule();return r}}
+const oldSave=window.cnSavePrice;if(typeof oldSave==='function'&&!oldSave.__cn93){const f=function(){const r=oldSave.apply(this,arguments);setTimeout(update,20);return r};f.__cn93=true;window.cnSavePrice=f}
+const oldOpen=window.openDetail;if(typeof oldOpen==='function'&&!oldOpen.__cn93){const f=function(){const r=oldOpen.apply(this,arguments);setTimeout(update,30);return r};f.__cn93=true;window.openDetail=f}
+const st=document.createElement('style');st.textContent='.cn-hidden-service-price{display:none!important}.cn-detail-item-lines{grid-column:1/-1!important;margin:0!important;padding:0!important;border-top:1px solid #dce5ea!important;border-bottom:1px solid #dce5ea!important}.cn-detail-extra-title{padding:10px 0 6px!important;font-size:12px!important;font-weight:900!important;color:#607582!important}.cn-detail-item-line,.cn-detail-total-line{display:flex!important;justify-content:space-between!important;gap:10px!important;padding:7px 0!important;border-top:1px solid #e5ecef!important}.cn-detail-item-line b,.cn-detail-total-line b{font-weight:900!important;white-space:nowrap!important}.cn-detail-total-line{margin-top:2px!important;padding-top:9px!important;font-size:13px!important}.cn-detail-total-line b{color:#147bd1!important}.cn-live-extra{font-size:11px!important;font-weight:700!important;color:#5d7480!important;margin-top:3px!important}.cn-live-total{font-size:12px!important;font-weight:900!important;color:#147bd1!important;margin-top:4px!important}';document.head.appendChild(st);document.addEventListener('DOMContentLoaded',()=>setTimeout(update,300));
 })();
 </script>
 </body>
