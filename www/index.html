@@ -1442,7 +1442,15 @@ cnEnsureBookingNumbers();
     });
   }catch(e){}
 })();
-function save(){cnEnsureBookingIds();cnEnsureBookingNumbers();localStorage.setItem("cn8_customers",JSON.stringify(customers));localStorage.setItem("cn8_bookings",JSON.stringify(bookings))}
+function cnNormalizeCustomerTypes(){
+  try{
+    if(!Array.isArray(customers))customers=[];
+    if(!Array.isArray(bookings))bookings=[];
+    customers.forEach(c=>{if(c.customerType!=="상가"&&c.customerType!=="가정집")c.customerType="가정집"});
+    bookings.forEach(b=>{if(b.customerType!=="상가"&&b.customerType!=="가정집"){const c=customers.find(x=>x.name===b.name);b.customerType=(c&&c.customerType==="상가")?"상가":"가정집"}});
+  }catch(e){}
+}
+function save(){cnEnsureBookingIds();cnEnsureBookingNumbers();cnNormalizeCustomerTypes();localStorage.setItem("cn8_customers",JSON.stringify(customers));localStorage.setItem("cn8_bookings",JSON.stringify(bookings))}
 function cnTodayKey(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
 if(!localStorage.getItem("cn8_bookings")){const today=cnTodayKey();bookings=bookings.map(b=>({...b,date:today}));}
 function won(n){return Number(n||0).toLocaleString("ko-KR")+"원"}
@@ -1458,9 +1466,11 @@ function cnSetBookingCustomerType(id,type){
   const c=(customers||[]).find(x=>x.name===b.name);
   if(c)c.customerType=type;
   save();
+  if(typeof render==="function")render();
   if(typeof cnRenderCalendar==="function")cnRenderCalendar();
   if(typeof renderTodayWork==="function")renderTodayWork();
-  msg(`고객 유형을 ${type}(으)로 저장했습니다.`);
+  if(typeof renderReports==="function")renderReports();
+  msg(`예약 고객 유형을 ${type}(으)로 저장했습니다. 매출에도 반영되었습니다.`);
 }
 
 function renderTodayWork(){
@@ -2028,7 +2038,7 @@ function cnSaveDetailCustomerType(type){
   if(typeof cnRenderCalendar==="function")cnRenderCalendar();
   if(typeof renderTodayWork==="function")renderTodayWork();
   if(typeof renderReports==="function")renderReports();
-  msg(`예약 고객 유형을 ${type}(으)로 저장했습니다.`);
+  msg(`예약 고객 유형을 ${type}(으)로 저장했습니다. 매출에도 반영되었습니다.`);
 }
 
 function detail(){const b=selectedBookingId?(bookings||[]).find(x=>x.id===selectedBookingId):null;if(b)return detailDataForBooking(b);return JSON.parse(localStorage.getItem("cn8_d_"+selected)||'{"state":"예약","price":0,"revisit":"","photos":[]}')}
@@ -6202,6 +6212,27 @@ function cnSetCalendarView(mode){
 <style id="cn-worktype-dashboard">
 .cn-worktype-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0 14px}.cn-worktype-card{padding:12px;border:1px solid #dfe7ee;border-radius:14px;background:#fff}.cn-worktype-card span{display:block;font-size:10px;color:#718096;margin-bottom:5px}.cn-worktype-card b{display:block;font-size:20px;color:#173b50}.cn-worktype-card small{display:block;margin-top:3px;font-size:9px;color:#94a3b8}.cn-worktype-card.home{background:#f5f9ff}.cn-worktype-card.shop{background:#f4fbf7}.cn-worktype-card.all{background:#fafafa}.cn-month-work-head{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-top:1px solid #edf1f4}.cn-month-work-head>div{display:flex;align-items:center;gap:7px}.cn-month-work-head button{width:32px;height:30px;border:1px solid #dbe3ea;background:#fff;border-radius:9px;font-size:18px;font-weight:800}#cnWorkMonthLabel{min-width:75px;text-align:center;font-size:12px;font-weight:800;color:#24445b}.cn-month-work-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0 12px}.cn-month-work-grid div{padding:10px;border-radius:11px;background:#f7fafc;border:1px solid #e7edf2;text-align:center}.cn-month-work-grid span{display:block;font-size:9px;color:#718096;margin-bottom:4px}.cn-month-work-grid b{font-size:16px;color:#173b50}.cn-monthly-work-table{border:1px solid #e4ebf0;border-radius:12px;overflow:hidden}.cn-monthly-work-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;padding:9px 10px;border-bottom:1px solid #edf1f4;align-items:center;text-align:right;font-size:10px}.cn-monthly-work-row:last-child{border-bottom:0}.cn-monthly-work-row.head{background:#f7fafc;font-weight:800;color:#60717d}.cn-monthly-work-row>div:first-child{text-align:left}.cn-monthly-work-row b{font-size:11px;color:#173b50}
 </style>
+<script id="cn-customer-type-sync-final">
+(function(){
+  function sync(){
+    try{
+      if(!Array.isArray(window.customers)||!Array.isArray(window.bookings))return;
+      let changed=false;
+      window.customers.forEach(c=>{if(c.customerType!=="상가"&&c.customerType!=="가정집"){c.customerType="가정집";changed=true}});
+      window.bookings.forEach(b=>{
+        if(b.customerType!=="상가"&&b.customerType!=="가정집"){
+          const c=window.customers.find(x=>x.name===b.name);
+          b.customerType=(c&&c.customerType==="상가")?"상가":"가정집";
+          changed=true;
+        }
+      });
+      if(changed){localStorage.setItem("cn8_customers",JSON.stringify(window.customers));localStorage.setItem("cn8_bookings",JSON.stringify(window.bookings));}
+    }catch(e){}
+  }
+  window.cnSyncCustomerTypesFinal=sync;
+  document.addEventListener("DOMContentLoaded",function(){setTimeout(sync,100)});
+})();
+</script>
 <script id="cn-worktype-dashboard-js">
 (function(){
  let workCursor=new Date();workCursor.setDate(1);
