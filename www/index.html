@@ -898,7 +898,7 @@ nav{height:72px!important;padding:8px 10px calc(8px + env(safe-area-inset-bottom
 <body>
 <div id="app">
 <header>
-<div class="head"><div class="logo">클린<br/>노바</div><div class="brand"><b>클린노바</b><small>에어컨청소 · 고객관리</small></div><button class="logout" onclick="msg('클린노바 고객관리')">로그아웃</button></div>
+<div class="head"><div class="logo">클린<br/>노바</div><div class="brand"><b>클린노바</b><small>에어컨청소 · 고객관리</small></div><button class="logout" onclick="window.cnLogout && window.cnLogout()">로그아웃</button></div>
 <div class="tools"><button onclick="cnOpenPhotoSettings()">사진설정</button><button onclick="cnOpenStandaloneQuote()">견적서</button><button onclick="cnOpenPriceTable()">단가표</button><button onclick="cnBackupData()">백업</button><button onclick="cnOpenRestore()">복구</button></div>
 </header>
 <section class="page on" id="home">
@@ -912,14 +912,14 @@ nav{height:72px!important;padding:8px 10px calc(8px + env(safe-area-inset-bottom
 <div class="panel cn-calendar">
 <div class="cn-cal-head">
 <button onclick="cnCalMove(-1)">‹</button>
-<div class="cn-cal-title" id="cnCalTitle">예약 캘린더</div>
+<div class="cn-cal-title" id="cnHomeCalTitle">예약 캘린더</div>
 <button onclick="cnCalMove(1)">›</button>
 </div>
 <div class="cn-week">
 <div>일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div>토</div>
 </div>
-<div class="cn-days" id="cnCalendarDays"></div>
-<div class="cn-selected-summary" id="cnSelectedSummary">날짜를 선택하면 예약을 확인할 수 있습니다.</div>
+<div class="cn-days" id="cnHomeCalendarDays"></div>
+<div class="cn-selected-summary" id="cnHomeSelectedSummary">날짜를 선택하면 예약을 확인할 수 있습니다.</div>
 </div>
 <div class="panel cn-today-wrap">
 <div class="cn-date-nav">
@@ -945,7 +945,16 @@ nav{height:72px!important;padding:8px 10px calc(8px + env(safe-area-inset-bottom
 <section class="page" id="calendar">
 <div class="title"><h1>예약 캘린더</h1><button class="primary" onclick="openBooking()">＋ 예약 추가</button></div>
 <div class="cards"><div class="card"><div class="ico b">▣</div><div class="label">오늘 예약</div><div class="num" id="calCount">0건</div></div><div class="card"><div class="ico g">✓</div><div class="label">작업 완료</div><div class="num" id="calDoneCount">0건</div></div></div>
-<div class="panel"><div class="switch"><button class="on">주간 캘린더</button><button onclick="msg('월간 캘린더는 아래 예약 캘린더에서 사용할 수 있습니다.')">월간 캘린더</button></div><div class="week" id="weekRangeLabel">이번 주</div><div class="controls"><button onclick="cnWeekMove(-1)">이전</button><button onclick="cnWeekToday()">오늘</button><button onclick="cnWeekMove(1)">다음</button><button onclick="render()">새로고침</button></div><div class="days" id="weekDays"></div></div>
+<div class="panel" id="cnCalendarViewPanel">
+<div class="switch"><button id="cnWeekTab" class="on" onclick="cnSetCalendarView('week')">주간 캘린더</button><button id="cnMonthTab" onclick="cnSetCalendarView('month')">월간 캘린더</button></div>
+<div id="cnWeekView"><div class="week" id="weekRangeLabel">이번 주</div><div class="controls"><button onclick="cnWeekMove(-1)">이전</button><button onclick="cnWeekToday()">오늘</button><button onclick="cnWeekMove(1)">다음</button><button onclick="render()">새로고침</button></div><div class="days" id="weekDays"></div></div>
+<div id="cnMonthView" style="display:none">
+  <div class="cn-cal-head"><button onclick="cnCalMove(-1)">‹</button><div class="cn-cal-title" id="cnCalTitle">예약 캘린더</div><button onclick="cnCalMove(1)">›</button></div>
+  <div class="cn-week"><div>일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div>토</div></div>
+  <div class="cn-days" id="cnCalendarDays"></div>
+  <div class="cn-selected-summary" id="cnMonthSelectedSummary">날짜를 선택하면 예약을 확인할 수 있습니다.</div>
+</div>
+</div>
 <div class="panel"><div class="panelhead"><b id="calendarSelectedLabel">오늘 예약</b><button class="smallbtn" onclick="openBooking()">＋ 추가</button></div><div id="calendarBookings"></div></div>
 </section>
 <section class="page" id="customers">
@@ -999,7 +1008,7 @@ nav{height:72px!important;padding:8px 10px calc(8px + env(safe-area-inset-bottom
 </div>
 <div class="cn-tax-unissued-list" id="cnTaxUnissuedList"></div>
 </div>
-<div class="panel"><div class="panelhead"><b>최근 매출</b></div><div id="salesList"></div></div>
+<div class="panel cn-worktype-panel"><div class="panelhead"><b>🏠 고객 유형별 작업 현황</b><span class="sub">예약일 기준</span></div><div class="cn-worktype-cards"><div class="cn-worktype-card home"><span>가정집</span><b id="cnHomeWorkTotal">0건</b><small>전체 작업</small></div><div class="cn-worktype-card shop"><span>상가</span><b id="cnShopWorkTotal">0건</b><small>전체 작업</small></div><div class="cn-worktype-card all"><span>전체</span><b id="cnAllWorkTotal">0건</b><small>전체 작업</small></div></div><div class="cn-month-work-head"><b>📅 월별 작업 건수</b><div><button type="button" onclick="cnWorkMonthMove(-1)">‹</button><span id="cnWorkMonthLabel">-</span><button type="button" onclick="cnWorkMonthMove(1)">›</button></div></div><div class="cn-month-work-grid"><div><span>가정집</span><b id="cnMonthHomeWork">0건</b></div><div><span>상가</span><b id="cnMonthShopWork">0건</b></div><div><span>전체</span><b id="cnMonthAllWork">0건</b></div></div><div id="cnMonthlyWorkTable" class="cn-monthly-work-table"></div></div><div class="panel"><div class="panelhead"><b>최근 매출</b></div><div id="salesList"></div></div>
 </section>
 <section class="page" id="detail">
 <div class="detailhero"><b id="dname">고객 상세</b><small id="dmeta">-</small></div>
@@ -1237,6 +1246,7 @@ nav{height:72px!important;padding:8px 10px calc(8px + env(safe-area-inset-bottom
 <div class="field"><label>고객명</label><input id="bn" oninput="suggestCustomer()" placeholder="고객명"/></div>
 <div class="field"><label>전화번호</label><input id="bp" inputmode="tel" placeholder="010-0000-0000"/></div>
 <div class="field"><label>주소</label><input id="ba" placeholder="세종시 ○○동"/></div>
+<div class="field"><label>고객 유형</label><select id="bcustomerType"><option value="가정집">가정집</option><option value="상가">상가</option></select></div>
 <div class="field"><label>예약 날짜</label>
 <button class="calendarPickBtn" onclick="openBookingCalendar()" type="button">📅 <span id="bdLabel">날짜 선택</span></button>
 <input id="bd" type="hidden" value=""/>
@@ -1253,6 +1263,7 @@ nav{height:72px!important;padding:8px 10px calc(8px + env(safe-area-inset-bottom
 <div class="field"><label>고객명</label><input id="cnName" placeholder="고객명"/></div>
 <div class="field"><label>전화번호</label><input id="cnPhone" inputmode="tel" placeholder="010-0000-0000"/></div>
 <div class="field"><label>주소</label><input id="cnAddr" placeholder="주소를 입력하세요"/></div>
+<div class="field"><label>고객 유형</label><select id="cnCustomerType"><option value="가정집">가정집</option><option value="상가">상가</option></select></div>
 <div class="field"><label>서비스 항목</label>
 <select id="cnService">
 <option>벽걸이</option>
@@ -1281,6 +1292,7 @@ nav{height:72px!important;padding:8px 10px calc(8px + env(safe-area-inset-bottom
 <div class="field"><label for="ceName">고객명</label><input autocomplete="name" id="ceName" placeholder="고객명을 입력하세요"/></div>
 <div class="field"><label for="cePhone">전화번호</label><input autocomplete="tel" id="cePhone" inputmode="tel" placeholder="010-0000-0000"/></div>
 <div class="field"><label for="ceAddr">주소</label><input autocomplete="street-address" id="ceAddr" placeholder="주소를 입력하세요"/></div>
+<div class="field"><label for="ceCustomerType">고객 유형</label><select id="ceCustomerType"><option value="가정집">가정집</option><option value="상가">상가</option></select></div>
 </div>
 <div class="customer-edit-section">
 <div class="customer-edit-section-title">🧹 서비스 정보</div>
@@ -1464,6 +1476,7 @@ function editCustomer(name){
   document.getElementById("ceName").value=c.name||"";
   document.getElementById("cePhone").value=c.phone||"";
   document.getElementById("ceAddr").value=c.addr||"";
+  document.getElementById("ceCustomerType").value=c.customerType||"가정집";
   document.getElementById("ceService").value=c.type||"벽걸이";
   const modal=document.getElementById("customerEditModal");
   modal.classList.add("on"); modal.style.display="flex";
@@ -1479,6 +1492,7 @@ function saveCustomerEdit(){
   const n=(document.getElementById("ceName")?.value||"").trim();
   const p=(document.getElementById("cePhone")?.value||"").trim();
   const a=(document.getElementById("ceAddr")?.value||"").trim();
+  const ct=document.getElementById("ceCustomerType")?.value||"가정집";
   const t=document.getElementById("ceService")?.value||"벽걸이";
   if(!oldName){return;}
   if(!n){alert("고객명을 입력해주세요.");return;}
@@ -1487,7 +1501,7 @@ function saveCustomerEdit(){
   }
   const c=customers.find(x=>x.name===oldName);
   if(!c)return;
-  c.name=n; c.phone=p; c.addr=a; c.type=t;
+  c.name=n; c.phone=p; c.addr=a; c.customerType=ct; c.type=t;
   // Rename name-keyed detail data so photos/history/completion are retained.
   if(n!==oldName){
     try{
@@ -1632,6 +1646,7 @@ function renderCustomers(){
           '<div><span>최근 작업날짜</span><b>'+date+'</b></div>'+
           '<div><span>최근 작업금액</span><b>'+amount+'</b></div>'+
           '<div class="cn-customer-quick-actions">'+
+            '<button type="button" class="cn-customer-edit" onclick="event.stopPropagation();editCustomerByIndex('+x.index+')">고객 편집</button>'+
             '<button type="button" class="cn-customer-delete" onclick="event.stopPropagation();cnDeleteCustomerByIndex('+x.index+')">고객 삭제</button>'+
           '</div>'+
         '</div>':'')+
@@ -1641,6 +1656,11 @@ function renderCustomers(){
 function cnCustomerTapByIndex(index){
   const c=(customers||[])[Number(index)];
   if(c)cnCustomerTap(c.name);
+}
+function editCustomerByIndex(index){
+  const c=(customers||[])[Number(index)];
+  if(!c)return;
+  if(typeof editCustomer==='function')editCustomer(c.name);
 }
 function cnDeleteCustomerByIndex(index){
   const c=(customers||[])[Number(index)];
@@ -1674,6 +1694,7 @@ function resetBookingForm(){
   const bd=document.getElementById("bd"); if(bd)bd.value=cnTodayKey();
   const bl=document.getElementById("bdLabel"); if(bl)bl.textContent=cnTodayKey();
   const bs=document.getElementById("bs"); if(bs)bs.value="벽걸이";
+  const bct=document.getElementById("bcustomerType"); if(bct)bct.value="가정집";
   const bq=document.getElementById("bqty"); if(bq)bq.value="1";
   if(typeof cnApplyPriceToBooking==="function") setTimeout(cnApplyPriceToBooking,0);
   if(typeof cnRecalcBookingAmount==="function") setTimeout(cnRecalcBookingAmount,10);
@@ -1689,14 +1710,14 @@ function editBookingById(id){
   cnEditingBooking=b; selectedBookingId=b.id; selected=b.name;
   const c=customers.find(x=>x.name===b.name)||{};
   document.getElementById("bn").value=b.name||""; document.getElementById("bp").value=b.phone||c.phone||""; document.getElementById("ba").value=b.addr||c.addr||"";
-  document.getElementById("bd").value=b.date||cnTodayKey(); document.getElementById("bdLabel").textContent=b.date||cnTodayKey(); document.getElementById("bt").value=b.time||"09:00"; document.getElementById("bs").value=b.type||c.type||"벽걸이"; document.getElementById("bqty").value=Math.max(1,Number(b.quantity||b.qty||1)); document.getElementById("bprice").value=Number(b.price||0)||""; document.getElementById("brv").value=b.revisit||"";
+  document.getElementById("bd").value=b.date||cnTodayKey(); document.getElementById("bdLabel").textContent=b.date||cnTodayKey(); document.getElementById("bt").value=b.time||"09:00"; document.getElementById("bs").value=b.type||c.type||"벽걸이"; const bct=document.getElementById("bcustomerType"); if(bct)bct.value=b.customerType||c.customerType||"가정집"; document.getElementById("bqty").value=Math.max(1,Number(b.quantity||b.qty||1)); document.getElementById("bprice").value=Number(b.price||0)||""; document.getElementById("brv").value=b.revisit||"";
   const title=document.getElementById("bookingModalTitle"); if(title)title.textContent="예약 수정"; document.getElementById("modal").style.display="flex";
 }
 function editBooking(name,date,time){const b=(bookings||[]).find(x=>x.name===name&&(x.date||"")===date&&(x.time||"")===time);if(b)editBookingById(b.id);else alert("수정할 예약을 찾을 수 없습니다.");}
 
 function closeBooking(){document.getElementById("modal").style.display="none";cnEditingBooking=null}
 function saveBooking(){
-  let n=document.getElementById("bn").value.trim(),p=document.getElementById("bp").value.trim(),a=document.getElementById("ba").value.trim(),d=document.getElementById("bd").value,t=document.getElementById("bt").value,s=document.getElementById("bs").value,qty=Math.max(1,Number(document.getElementById("bqty").value||1)),price=Number(document.getElementById("bprice").value||0),rv=document.getElementById("brv").value;
+  let n=document.getElementById("bn").value.trim(),p=document.getElementById("bp").value.trim(),a=document.getElementById("ba").value.trim(),d=document.getElementById("bd").value,t=document.getElementById("bt").value,s=document.getElementById("bs").value,customerType=document.getElementById("bcustomerType")?.value||"가정집",qty=Math.max(1,Number(document.getElementById("bqty").value||1)),price=Number(document.getElementById("bprice").value||0),rv=document.getElementById("brv").value;
   const priceItem=typeof cnGetServicePriceInfo==='function'?cnGetServicePriceInfo(s):null; if(priceItem)price=Math.round(Number(priceItem.price||0)*qty);
   if(!n||!d||!t){msg("고객명·날짜·시간을 입력하세요");return}
   const duplicate=(bookings||[]).find(x=>x.id!==cnEditingBooking?.id && x.name===n && (x.date||"")===d && (x.time||"")===t);
@@ -1705,16 +1726,16 @@ function saveBooking(){
     if(!ok)return;
   }
   let c=customers.find(x=>x.name===n);
-  if(!c){c={name:n,phone:p,addr:a,type:s};customers.push(c)}else{if(p)c.phone=p;if(a)c.addr=a;c.type=s}
+  if(!c){c={name:n,phone:p,addr:a,customerType:customerType,type:s};customers.push(c)}else{if(p)c.phone=p;if(a)c.addr=a;c.customerType=customerType;c.type=s}
   if(cnEditingBooking){
     const b=cnEditingBooking;
-    b.name=n;b.phone=c.phone||p;b.addr=c.addr||a;b.date=d;b.time=t;b.type=s;b.quantity=qty;b.qty=qty;b.unitPrice=priceItem?Number(priceItem.price||0):Math.round(price/qty);b.price=price;b.revisit=rv||"";
+    b.name=n;b.phone=c.phone||p;b.addr=c.addr||a;b.date=d;b.time=t;b.type=s;b.customerType=customerType;b.quantity=qty;b.qty=qty;b.unitPrice=priceItem?Number(priceItem.price||0):Math.round(price/qty);b.price=price;b.revisit=rv||"";
     const det=detailDataForBooking(b);
     det.price=price; det.revisit=rv||"";
     localStorage.setItem(bookingDetailKey(b),JSON.stringify(det));
     msg("예약이 수정되었습니다.");
   }else{
-    const nb={id:cnBookingId(),bookingNo:cnNextBookingNo(),name:n,phone:c.phone,date:d,time:t,type:s,quantity:qty,qty:qty,unitPrice:priceItem?Number(priceItem.price||0):Math.round((price||0)/qty),price:price,done:false,revisit:rv||"",addr:c.addr||a}; bookings.push(nb);
+    const nb={id:cnBookingId(),bookingNo:cnNextBookingNo(),name:n,phone:c.phone,date:d,time:t,type:s,customerType:customerType,quantity:qty,qty:qty,unitPrice:priceItem?Number(priceItem.price||0):Math.round((price||0)/qty),price:price,done:false,revisit:rv||"",addr:c.addr||a}; bookings.push(nb);
     const det={state:"예약",price:price||0,quantity:qty,qty:qty,unitPrice:priceItem?Number(priceItem.price||0):Math.round((price||0)/qty),revisit:rv||"",photos:[]}; localStorage.setItem(bookingDetailKey(nb),JSON.stringify(det));
     msg("예약이 저장되었습니다.");
   }
@@ -1724,7 +1745,7 @@ function saveBooking(){
 function suggestCustomer(){
  const n=document.getElementById("bn").value.trim();
  const c=customers.find(x=>x.name===n);
- if(c){document.getElementById("bp").value=c.phone||"";document.getElementById("ba").value=c.addr||"";}
+ if(c){document.getElementById("bp").value=c.phone||"";document.getElementById("ba").value=c.addr||"";const bct=document.getElementById("bcustomerType");if(bct)bct.value=c.customerType||"가정집";}
 }
 function daysFromToday(dateStr){
  const now=new Date(); now.setHours(0,0,0,0), d=new Date(dateStr+"T00:00:00");
@@ -1928,10 +1949,12 @@ function addCustomer(){
   const n=document.getElementById("cnName");
   const p=document.getElementById("cnPhone");
   const a=document.getElementById("cnAddr");
+  const ct=document.getElementById("cnCustomerType");
   const t=document.getElementById("cnService");
   if(n)n.value="";
   if(p)p.value="010-";
   if(a)a.value="";
+  if(ct)ct.value="가정집";
   if(t)t.value="벽걸이";
   modal.classList.add("on");
   modal.style.display="flex";
@@ -1946,6 +1969,7 @@ function saveCustomerAdd(){
   const n=(document.getElementById("cnName")?.value||"").trim();
   const p=(document.getElementById("cnPhone")?.value||"").trim();
   const a=(document.getElementById("cnAddr")?.value||"").trim();
+  const ct=document.getElementById("cnCustomerType")?.value||"가정집";
   const t=document.getElementById("cnService")?.value||"벽걸이";
   if(!n){
     alert("고객명을 입력해주세요.");
@@ -1956,7 +1980,7 @@ function saveCustomerAdd(){
     alert("같은 이름의 고객이 이미 있습니다.");
     return;
   }
-  customers.unshift({name:n,phone:p,addr:a,type:t});
+  customers.unshift({name:n,phone:p,addr:a,customerType:ct,type:t});
   save();
   renderCustomers();
   render();
@@ -2466,18 +2490,20 @@ function cnDateKeyObj(d){
 function cnCalMove(delta){
   cnCalDate.setMonth(cnCalDate.getMonth()+delta);
   cnRenderCalendar();
+  cnRenderHomeCalendar();
 }
 function cnCalSelect(key){
   const parts=key.split("-").map(Number);
   cnSelectedDate=new Date(parts[0],parts[1]-1,parts[2]);
   cnScheduleDate=new Date(parts[0],parts[1]-1,parts[2]);
   cnRenderCalendar();
+  cnRenderHomeCalendar();
   cnRenderTodayJobs();
 }
 function cnRenderCalendar(){
-  const box=document.getElementById("cnCalendarDays");
-  const title=document.getElementById("cnCalTitle");
-  const summary=document.getElementById("cnSelectedSummary");
+  const box=document.querySelector("#cnMonthView #cnCalendarDays");
+  const title=document.querySelector("#cnMonthView #cnCalTitle");
+  const summary=document.getElementById("cnMonthSelectedSummary");
   if(!box)return;
 
   const y=cnCalDate.getFullYear(), m=cnCalDate.getMonth();
@@ -2518,8 +2544,31 @@ function cnRenderCalendar(){
     summary.innerHTML=`<b>${selectedKey}</b> · 예약 없음`;
   }
 }
+function cnRenderHomeCalendar(){
+  const box=document.getElementById("cnHomeCalendarDays");
+  const title=document.getElementById("cnHomeCalTitle");
+  const summary=document.getElementById("cnHomeSelectedSummary");
+  if(!box)return;
+  const y=cnCalDate.getFullYear(),m=cnCalDate.getMonth();
+  if(title)title.textContent=`${y}년 ${m+1}월`;
+  const first=new Date(y,m,1),start=first.getDay(),days=new Date(y,m+1,0).getDate(),prevDays=new Date(y,m,0).getDate();
+  const todayKey=cnDateKeyObj(new Date()),selectedKey=cnDateKeyObj(cnSelectedDate);
+  let out="";
+  for(let i=0;i<42;i++){
+    const num=i-start+1;let d,dayNum,muted=false;
+    if(num<1){d=new Date(y,m-1,prevDays+num);dayNum=d.getDate();muted=true;}
+    else if(num>days){d=new Date(y,m+1,num-days);dayNum=d.getDate();muted=true;}
+    else{d=new Date(y,m,num);dayNum=num;}
+    const key=cnDateKeyObj(d),jobs=(bookings||[]).filter(b=>b.date===key);
+    out+=`<div class="cn-day ${muted?"muted ":""}${key===todayKey?"today ":""}${key===selectedKey?"selected":""}" onclick="cnCalSelect('${key}')"><div class="cn-day-num">${dayNum}</div>${jobs.length?`<span class="cn-day-dot reserve">${jobs.length}건</span>`:""}</div>`;
+  }
+  box.innerHTML=out;
+  const selectedJobs=(bookings||[]).filter(b=>b.date===selectedKey).sort((a,b)=>(a.time||"").localeCompare(b.time||""));
+  if(summary)summary.innerHTML=selectedJobs.length?`<b>${selectedKey}</b> · ${selectedJobs.length}건 예약`:`<b>${selectedKey}</b> · 예약 없음`;
+}
+
 document.addEventListener("DOMContentLoaded",function(){
-  setTimeout(cnRenderCalendar,300);
+  setTimeout(function(){cnRenderCalendar();cnRenderHomeCalendar();},300);
 });
 </script>
 <script>
@@ -5876,5 +5925,255 @@ body{background:#f4f7fb}
 .modal{z-index:10000!important}
 button,input,select,textarea{touch-action:manipulation}
 @media(min-width:431px){body{display:flex;justify-content:center}#app{box-shadow:0 0 30px rgba(24,67,91,.08)}}
-</style></body>
+.cn-customer-edit{background:#eaf4ff!important;color:#1976d2!important;border:1px solid #cfe3f7!important}
+.cn-customer-quick-actions{display:flex;gap:8px;flex-wrap:wrap}
+</style>
+<script id="cn-v10-data-fix">
+/* v10: 추가 품목 저장 최종 보정 + 클라우드 '동기화'를 양방향 합치기로 고정 */
+(function(){
+  'use strict';
+  const num=v=>{const n=Number(v);return Number.isFinite(n)?n:0};
+  const money=v=>num(v).toLocaleString('ko-KR')+'원';
+  const getBooking=()=>{try{return typeof selectedBookingId!=='undefined'&&selectedBookingId?(bookings||[]).find(b=>b.id===selectedBookingId)||null:null}catch(e){return null}};
+  const getDetail=b=>{try{return b&&typeof detailDataForBooking==='function'?(detailDataForBooking(b)||{}):{}}catch(e){return {}}};
+  const readItems=()=>[...document.querySelectorAll('#cnReservationItems .cn-price-item-row')].map(r=>({
+    service:r.querySelector('.cn-ri-service')?.value||'품목',
+    qty:Math.max(1,Math.floor(num(r.querySelector('.cn-ri-qty')?.value||1))),
+    unit:Math.max(0,Math.round(num(r.querySelector('.cn-ri-unit')?.value||0)))
+  }));
+  const extraTotal=items=>items.reduce((a,x)=>a+x.qty*x.unit,0);
+
+  window.cnSavePrice=function(){
+    const b=getBooking();
+    if(!b){
+      if(typeof selected!=='undefined' && selected && typeof window.cnSyncAllData==='function'){
+        /* 예약이 선택되지 않은 일반 고객 금액 저장은 기존 동기화 함수에 맡김 */
+        const r=window.cnSyncAllData();
+        return r;
+      }
+      return;
+    }
+    const d=getDetail(b);
+    const service=(document.getElementById('cnPriceService')?.value||b.type||d.service||'서비스').trim();
+    const qty=Math.max(1,Math.floor(num(document.getElementById('cnPriceQty')?.value||d.quantity||b.quantity||1)));
+    const enteredMain=Math.max(0,Math.round(num(document.getElementById('cnPriceInput')?.value||0)));
+    const items=readItems();
+    const supply=enteredMain+extraTotal(items);
+
+    d.service=service;
+    d.quantity=qty; d.qty=qty;
+    d.unitPrice=qty?supply-extraTotal(items)===enteredMain?enteredMain/qty:enteredMain/qty:enteredMain;
+    d.items=items;
+    d.servicePrices=d.servicePrices||{};
+    d.servicePrices[service]=enteredMain;
+
+    let finalPrice=supply;
+    if(d.taxInvoice?.issued){
+      const base=Math.round(supply);
+      d.taxInvoice=d.taxInvoice||{};
+      d.taxInvoice.supplyAmount=base;
+      d.taxInvoice.vat=Math.round(base*0.1);
+      d.taxInvoice.total=d.taxInvoice.supplyAmount+d.taxInvoice.vat;
+      finalPrice=d.taxInvoice.total;
+    }
+    d.price=finalPrice;
+    b.type=service; b.service=service;
+    b.quantity=qty; b.qty=qty;
+    b.unitPrice=qty?enteredMain/qty:enteredMain;
+    b.price=finalPrice;
+
+    const c=(customers||[]).find(x=>x&&x.name===b.name);
+    if(c){
+      c.type=service;
+      let cd={};
+      try{cd=JSON.parse(localStorage.getItem('cn8_d_'+c.name)||'{}')||{}}catch(e){cd={}};
+      cd.service=service; cd.quantity=qty; cd.qty=qty;
+      cd.unitPrice=qty?enteredMain/qty:enteredMain;
+      cd.price=finalPrice; cd.items=items;
+      cd.servicePrices=cd.servicePrices||{};
+      cd.servicePrices[service]=enteredMain;
+      localStorage.setItem('cn8_d_'+c.name,JSON.stringify(cd));
+    }
+    try{
+      if(typeof setDetailForBooking==='function')setDetailForBooking(d,b);
+      else localStorage.setItem('cn8_b_'+b.id,JSON.stringify(d));
+    }catch(e){localStorage.setItem('cn8_b_'+b.id,JSON.stringify(d))}
+    try{save()}catch(e){
+      try{localStorage.setItem('cn8_bookings',JSON.stringify(bookings));localStorage.setItem('cn8_customers',JSON.stringify(customers))}catch(_){}
+    }
+
+    if(typeof renderTodayWork==='function')renderTodayWork();
+    if(typeof cnRenderTodayJobs==='function')cnRenderTodayJobs();
+    if(typeof render==='function')render();
+    if(typeof renderCustomers==='function')renderCustomers();
+    if(typeof renderReports==='function')renderReports();
+    if(typeof cnRenderCalendar==='function')cnRenderCalendar();
+
+    /* 다른 오래된 cnRenderPrice 래퍼가 저장값을 다시 바꾸지 못하도록 최종 표시를 직접 확정 */
+    const input=document.getElementById('cnPriceInput'); if(input)input.value=enteredMain;
+    const q=document.getElementById('cnPriceQty'); if(q)q.value=qty;
+    const unit=document.getElementById('cnPriceUnit'); if(unit)unit.textContent=money(qty?enteredMain/qty:enteredMain);
+    const ql=document.getElementById('cnPriceQtyLabel'); if(ql)ql.textContent=qty+'개';
+    const total=document.getElementById('cnPriceTotal'); if(total)total.textContent=money(finalPrice);
+    const box=document.getElementById('cnReservationItems');
+    if(box && typeof window.cnRenderPrice==='function'){
+      /* 현재 저장된 품목 배열을 DOM에 다시 반영하되 금액 계산은 건드리지 않음 */
+      box.querySelectorAll('.cn-price-item-row').forEach((r,i)=>{const it=items[i];if(!it)return;const e=r.querySelector('.cn-price-item-subtotal');if(e)e.textContent=money(it.qty*it.unit);});
+    }
+    if(typeof renderTax==='function')renderTax();
+    if(typeof renderFlow==='function')renderFlow();
+    if(typeof msg==='function')msg('서비스 금액과 추가 품목을 그대로 저장했습니다.');
+  };
+
+  /* 클라우드의 '동기화'는 단순 업로드가 아니라 현재 기기 + 클라우드 데이터를 합친 뒤 다시 저장 */
+  window.addEventListener('DOMContentLoaded',function(){
+    setTimeout(function(){
+      try{
+        if(typeof window.cnCloudSyncNow==='function'){
+          /* 기존 함수가 단순 push라면 아래에서 양방향 함수로 교체 */
+          const original=window.cnCloudSyncNow;
+          window.cnCloudSyncNow=async function(){
+            if(typeof window.cnCloudMerge==='function')return await window.cnCloudMerge();
+            return await original();
+          };
+        }
+      }catch(e){}
+    },500);
+  });
+})();
+</script>
+
+<style id="cn-auth-style">
+#cnAuthGate{position:fixed;inset:0;z-index:999999;display:none;align-items:center;justify-content:center;background:linear-gradient(180deg,#eef6ff 0%,#f7fbfd 100%);padding:24px;box-sizing:border-box}
+#cnAuthGate.on{display:flex}
+#cnAuthCard{width:min(390px,100%);background:#fff;border:1px solid #dce8ef;border-radius:24px;box-shadow:0 18px 50px rgba(30,70,100,.16);padding:28px 22px;box-sizing:border-box}
+#cnAuthLogo{width:64px;height:64px;margin:0 auto 14px;border-radius:20px;background:#eaf4ff;color:#148bd7;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:900;line-height:1.05}
+#cnAuthCard h2{margin:0;text-align:center;color:#24445b;font-size:25px}
+#cnAuthCard .cn-auth-sub{margin:8px 0 22px;text-align:center;color:#78909d;font-size:13px}
+.cn-auth-label{display:block;margin:14px 0 7px;color:#506675;font-weight:800;font-size:13px}
+.cn-auth-input{width:100%;height:52px;border:1px solid #d8e3e9;border-radius:14px;padding:0 15px;box-sizing:border-box;font-size:16px;outline:none;background:#fbfdfe}
+.cn-auth-input:focus{border-color:#2c91dc;box-shadow:0 0 0 3px rgba(44,145,220,.10)}
+#cnAuthSubmit{width:100%;height:54px;margin-top:22px;border:0;border-radius:15px;background:#238ddd;color:#fff;font-size:17px;font-weight:900;cursor:pointer}
+#cnAuthSwitch{display:block;width:100%;margin-top:13px;border:0;background:none;color:#247ab6;font-size:13px;font-weight:800;cursor:pointer;padding:8px}
+#cnAuthMsg{min-height:20px;margin-top:10px;text-align:center;color:#d45b5b;font-size:13px;font-weight:700}
+#cnAuthGate input::-ms-reveal{display:none}
+</style>
+<div id="cnAuthGate" aria-modal="true" role="dialog">
+  <div id="cnAuthCard">
+    <div id="cnAuthLogo">클린<br>노바</div>
+    <h2 id="cnAuthTitle">클린노바 시작하기</h2>
+    <div class="cn-auth-sub" id="cnAuthSub">처음 실행입니다. 사용할 아이디와 비밀번호를 만들어주세요.</div>
+    <label class="cn-auth-label" for="cnAuthId">아이디</label>
+    <input class="cn-auth-input" id="cnAuthId" autocomplete="username" autocapitalize="none" placeholder="아이디 입력">
+    <label class="cn-auth-label" for="cnAuthPw">비밀번호</label>
+    <input class="cn-auth-input" id="cnAuthPw" type="password" autocomplete="new-password" placeholder="비밀번호 입력">
+    <div id="cnAuthPw2Wrap">
+      <label class="cn-auth-label" for="cnAuthPw2">비밀번호 확인</label>
+      <input class="cn-auth-input" id="cnAuthPw2" type="password" autocomplete="new-password" placeholder="비밀번호 다시 입력">
+    </div>
+    <button id="cnAuthSubmit" type="button">계정 만들기</button>
+    <button id="cnAuthSwitch" type="button" style="display:none">로그인 화면으로</button>
+    <div id="cnAuthMsg"></div>
+  </div>
+</div>
+<script id="cn-auth-js">
+(function(){
+  const KEY='cn8_auth_v1';
+  const SESSION='cn8_auth_session_v1';
+  const gate=()=>document.getElementById('cnAuthGate');
+  const idEl=()=>document.getElementById('cnAuthId');
+  const pwEl=()=>document.getElementById('cnAuthPw');
+  const pw2El=()=>document.getElementById('cnAuthPw2');
+  const msgEl=()=>document.getElementById('cnAuthMsg');
+  const titleEl=()=>document.getElementById('cnAuthTitle');
+  const subEl=()=>document.getElementById('cnAuthSub');
+  const submitEl=()=>document.getElementById('cnAuthSubmit');
+  const switchEl=()=>document.getElementById('cnAuthSwitch');
+  const pw2Wrap=()=>document.getElementById('cnAuthPw2Wrap');
+  function cleanId(v){return String(v||'').trim();}
+  async function hash(v){
+    const data=new TextEncoder().encode(String(v));
+    if(window.crypto&&crypto.subtle){
+      const buf=await crypto.subtle.digest('SHA-256',data);
+      return Array.from(new Uint8Array(buf)).map(x=>x.toString(16).padStart(2,'0')).join('');
+    }
+    let h=2166136261; for(let i=0;i<data.length;i++){h^=data[i];h=Math.imul(h,16777619);} return 'fallback-'+(h>>>0).toString(16);
+  }
+  function setMsg(t,ok){const e=msgEl();if(e){e.textContent=t||'';e.style.color=ok?'#31916d':'#d45b5b';}}
+  function showLogin(){
+    const g=gate(); if(!g)return;
+    titleEl().textContent='클린노바 로그인'; subEl().textContent='아이디와 비밀번호를 입력해주세요.';
+    submitEl().textContent='로그인'; switchEl().style.display='block'; pw2Wrap().style.display='none'; setMsg('');
+    idEl().value='';pwEl().value='';pw2El().value='';g.classList.add('on');setTimeout(()=>idEl().focus(),50);
+  }
+  function showCreate(){
+    const g=gate(); if(!g)return;
+    titleEl().textContent='클린노바 시작하기'; subEl().textContent='처음 실행입니다. 사용할 아이디와 비밀번호를 만들어주세요.';
+    submitEl().textContent='계정 만들기'; switchEl().style.display='none'; pw2Wrap().style.display='block'; setMsg('');
+    idEl().value='';pwEl().value='';pw2El().value='';g.classList.add('on');setTimeout(()=>idEl().focus(),50);
+  }
+  async function submit(){
+    const id=cleanId(idEl().value), pw=String(pwEl().value||''), pw2=String(pw2El().value||'');
+    const account=localStorage.getItem(KEY);
+    if(!account){
+      if(id.length<3)return setMsg('아이디는 3자 이상 입력해주세요.');
+      if(pw.length<4)return setMsg('비밀번호는 4자 이상 입력해주세요.');
+      if(pw!==pw2)return setMsg('비밀번호가 서로 다릅니다.');
+      localStorage.setItem(KEY,JSON.stringify({id:id,hash:await hash(id+'|'+pw)}));
+      localStorage.setItem(SESSION,'1'); gate().classList.remove('on'); setMsg('');
+      return;
+    }
+    let a;try{a=JSON.parse(account)}catch(e){a=null}
+    if(!a||!a.id||!a.hash)return showCreate();
+    if(id!==a.id || await hash(id+'|'+pw)!==a.hash)return setMsg('아이디 또는 비밀번호가 올바르지 않습니다.');
+    localStorage.setItem(SESSION,'1'); gate().classList.remove('on'); setMsg('');
+  }
+  window.cnLogout=function(){localStorage.removeItem(SESSION);showLogin();};
+  function boot(){
+    const g=gate();if(!g)return;
+    const has=!!localStorage.getItem(KEY), logged=localStorage.getItem(SESSION)==='1';
+    if(!has){showCreate();} else if(!logged){showLogin();} else {g.classList.remove('on');}
+    submitEl().onclick=submit;
+    switchEl().onclick=showLogin;
+    [idEl(),pwEl(),pw2El()].forEach(e=>e&&e.addEventListener('keydown',ev=>{if(ev.key==='Enter')submit();}));
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
+})();
+</script>
+
+<script id="cn-month-calendar-toggle">
+function cnSetCalendarView(mode){
+  var week=document.getElementById("cnWeekView"), month=document.getElementById("cnMonthView");
+  var wt=document.getElementById("cnWeekTab"), mt=document.getElementById("cnMonthTab");
+  if(!week||!month)return;
+  var isMonth=mode==="month";
+  week.style.display=isMonth?"none":"block";
+  month.style.display=isMonth?"block":"none";
+  if(wt)wt.classList.toggle("on",!isMonth);
+  if(mt)mt.classList.toggle("on",isMonth);
+  if(isMonth){
+    if(typeof cnRenderCalendar==="function")cnRenderCalendar();
+  }else{
+    if(typeof renderWeekCalendar==="function")renderWeekCalendar();
+  }
+}
+</script>
+
+<style id="cn-worktype-dashboard">
+.cn-worktype-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0 14px}.cn-worktype-card{padding:12px;border:1px solid #dfe7ee;border-radius:14px;background:#fff}.cn-worktype-card span{display:block;font-size:10px;color:#718096;margin-bottom:5px}.cn-worktype-card b{display:block;font-size:20px;color:#173b50}.cn-worktype-card small{display:block;margin-top:3px;font-size:9px;color:#94a3b8}.cn-worktype-card.home{background:#f5f9ff}.cn-worktype-card.shop{background:#f4fbf7}.cn-worktype-card.all{background:#fafafa}.cn-month-work-head{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-top:1px solid #edf1f4}.cn-month-work-head>div{display:flex;align-items:center;gap:7px}.cn-month-work-head button{width:32px;height:30px;border:1px solid #dbe3ea;background:#fff;border-radius:9px;font-size:18px;font-weight:800}#cnWorkMonthLabel{min-width:75px;text-align:center;font-size:12px;font-weight:800;color:#24445b}.cn-month-work-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0 12px}.cn-month-work-grid div{padding:10px;border-radius:11px;background:#f7fafc;border:1px solid #e7edf2;text-align:center}.cn-month-work-grid span{display:block;font-size:9px;color:#718096;margin-bottom:4px}.cn-month-work-grid b{font-size:16px;color:#173b50}.cn-monthly-work-table{border:1px solid #e4ebf0;border-radius:12px;overflow:hidden}.cn-monthly-work-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;padding:9px 10px;border-bottom:1px solid #edf1f4;align-items:center;text-align:right;font-size:10px}.cn-monthly-work-row:last-child{border-bottom:0}.cn-monthly-work-row.head{background:#f7fafc;font-weight:800;color:#60717d}.cn-monthly-work-row>div:first-child{text-align:left}.cn-monthly-work-row b{font-size:11px;color:#173b50}
+</style>
+<script id="cn-worktype-dashboard-js">
+(function(){
+ let workCursor=new Date();workCursor.setDate(1);
+ const key=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");
+ const label=d=>d.getFullYear()+"년 "+(d.getMonth()+1)+"월";
+ function typeOf(b){if(b&&(b.customerType==="가정집"||b.customerType==="상가"))return b.customerType;const c=(customers||[]).find(x=>x.name===b.name);return c&&c.customerType==="상가"?"상가":"가정집";}
+ function jobs(k){return (bookings||[]).filter(b=>(b.date||"").startsWith(k));}
+ function render(){const all=bookings||[],h=all.filter(b=>typeOf(b)==="가정집").length,s=all.filter(b=>typeOf(b)==="상가").length,set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v};set("cnHomeWorkTotal",h+"건");set("cnShopWorkTotal",s+"건");set("cnAllWorkTotal",(h+s)+"건");const k=key(workCursor),a=jobs(k),mh=a.filter(b=>typeOf(b)==="가정집").length,ms=a.filter(b=>typeOf(b)==="상가").length;set("cnWorkMonthLabel",label(workCursor));set("cnMonthHomeWork",mh+"건");set("cnMonthShopWork",ms+"건");set("cnMonthAllWork",a.length+"건");const box=document.getElementById("cnMonthlyWorkTable");if(!box)return;let rows=[];for(let i=11;i>=0;i--){const d=new Date(workCursor.getFullYear(),workCursor.getMonth()-i,1),x=jobs(key(d));rows.push('<div class="cn-monthly-work-row"><div>'+label(d)+'</div><div>'+x.filter(b=>typeOf(b)==="가정집").length+'건</div><div>'+x.filter(b=>typeOf(b)==="상가").length+'건</div><div><b>'+x.length+'건</b></div></div>')}box.innerHTML='<div class="cn-monthly-work-row head"><div>월</div><div>가정집</div><div>상가</div><div>전체</div></div>'+rows.join("");}
+ window.cnWorkMonthMove=function(d){workCursor.setMonth(workCursor.getMonth()+d);render()};window.cnRenderWorkTypeDashboard=render;
+ const old=window.render;if(typeof old==="function"&&!old.__cnWorkType){const w=function(){old();render()};w.__cnWorkType=true;window.render=w}
+ document.addEventListener("DOMContentLoaded",()=>setTimeout(render,150));
+})();
+</script>
+</body>
 </html>
