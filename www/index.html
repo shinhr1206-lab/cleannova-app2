@@ -5883,6 +5883,22 @@ if ('serviceWorker' in navigator) { window.addEventListener('load', function(){ 
 /* 앱 최초 실행은 항상 홈만 표시 */
 #app > .page{display:none !important;}
 #app > #home.page{display:block !important;}
+  /* Android 시스템 영역 안전 여백 */
+html {
+  padding-top: max(env(safe-area-inset-top), 24px);
+}
+
+#app {
+  min-height: 100dvh;
+  box-sizing: border-box;
+  padding-bottom: 80px;
+}
+
+#app > nav {
+  bottom: max(env(safe-area-inset-bottom), 48px) !important;
+  padding-bottom: 8px !important;
+  box-sizing: border-box;
+  }
 </style>
 <script id="cn-home-boot-fix-js">
 (function(){
@@ -5903,6 +5919,84 @@ if ('serviceWorker' in navigator) { window.addEventListener('load', function(){ 
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',bootHome,{once:true});
   else bootHome();
   window.addEventListener('pageshow',function(){setTimeout(bootHome,0);},{once:true});
+<script id="cn-app-start-reset">
+(function () {
+  function resetAppStart() {
+    try {
+      // 모든 일반 모달/팝업 닫기
+      document.querySelectorAll(
+        '.modal, .cn-modal, .cn-cal-modal, .cn-gallery-modal, .cn-cloud-modal'
+      ).forEach(function (el) {
+        el.style.display = 'none';
+        el.classList.remove('on', 'open', 'show', 'active');
+      });
+
+      // 모든 시트 닫기
+      document.querySelectorAll(
+        '.sheet, .customer-edit-sheet, .cn-gallery-sheet, .cn-setting-sheet, .cn-price-sheet, .cn-guide-settings-sheet, .cn-msg-channel-sheet'
+      ).forEach(function (el) {
+        el.style.display = 'none';
+        el.classList.remove('on', 'open', 'show', 'active');
+      });
+
+      // 예약/고객 관련 팝업 강제 닫기
+      [
+        'modal',
+        'customerAddModal',
+        'customerEditModal',
+        'bookingCalendarModal',
+        'rescheduleCalendarModal',
+        'cnCustomerGalleryModal',
+        'cnRestoreModal',
+        'cnPhotoSettingsModal',
+        'cnPriceModal',
+        'cnServiceItemModal',
+        'cnGuideSettingsModal',
+        'cnMessageChannelModal',
+        'cnCloudModal',
+        'cnCostProfitModal'
+      ].forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) {
+          el.style.display = 'none';
+          el.classList.remove('on', 'open', 'show', 'active');
+        }
+      });
+
+      // 홈 화면으로 초기화
+      document.querySelectorAll('#app > .page').forEach(function (p) {
+        p.classList.remove('on');
+      });
+
+      var home = document.getElementById('home');
+      if (home) home.classList.add('on');
+
+      document.querySelectorAll('#app > nav .nav').forEach(function (b) {
+        b.classList.toggle('on', b.getAttribute('data-page') === 'home');
+      });
+
+      window.cnCurrentPage = 'home';
+
+      // 토스트/고객 자동완성 등도 닫기
+      var toast = document.getElementById('toast');
+      if (toast) toast.style.display = 'none';
+
+      var suggest = document.getElementById('cnBookingCustomerSuggest');
+      if (suggest) suggest.style.display = 'none';
+
+      window.scrollTo(0, 0);
+    } catch (e) {}
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', resetAppStart, { once: true });
+  } else {
+    resetAppStart();
+  }
+
+  window.addEventListener('pageshow', function () {
+    setTimeout(resetAppStart, 0);
+  });
 })();
 </script>
 </body>
