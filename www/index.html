@@ -7,10 +7,10 @@
 <title>클린노바 고객관리</title>
 <style>
 *{box-sizing:border-box}
-html,body{margin:0;padding:0;background:#eef5f9;color:#24445b;font-family:Arial,"Noto Sans KR",sans-serif}
+html,body{margin:0;padding:0;background:#eef5f9;color:#24445b;font-family:Arial,"Noto Sans KR",sans-serif;min-height:100%;overflow-x:hidden}
 button,input,select{font:inherit}
 button{cursor:pointer}
-#app{width:100%;max-width:430px;min-height:100vh;margin:auto;background:#f7fbfd;padding-bottom:75px}
+#app{width:100%;max-width:430px;min-height:100vh;margin:auto;background:#f7fbfd;padding-bottom:calc(75px + env(safe-area-inset-bottom, 0px))}
 header{padding:12px 14px;background:linear-gradient(135deg,#e2f6ff,#f8fcff);border-bottom:1px solid #d9e8ef}
 .head{display:flex;align-items:center;gap:9px}.logo{width:52px;height:52px;border-radius:16px;background:#fff;display:flex;align-items:center;justify-content:center;color:#148bd7;font-size:12px;font-weight:900;text-align:center;box-shadow:0 3px 12px #0000000d}.brand{flex:1}.brand b{font-size:18px;color:#1488d1}.brand small{display:block;font-size:9px;color:#78909d;margin-top:3px}.logout{font-size:10px;color:#d55b5b;background:#fff;border:1px solid #efb4b4;border-radius:10px;padding:7px}
 .tools{display:flex;justify-content:flex-end;gap:5px;margin-top:8px}.tools button{font-size:9px;background:#fff;border:1px solid #dce9ef;border-radius:9px;padding:7px 9px;color:#597181;font-weight:700}
@@ -27,7 +27,7 @@ header{padding:12px 14px;background:linear-gradient(135deg,#e2f6ff,#f8fcff);bord
 .search{width:calc(100% - 28px);margin:0 14px 10px;border:1px solid #dce8ed;border-radius:11px;padding:10px;background:#fff;outline:0;font-size:11px}.customer{margin:7px 14px;background:#fff;border:1px solid #dfebf0;border-radius:15px;padding:12px}.crow{display:flex;justify-content:space-between;align-items:center}.customer b{font-size:12px}.badge{font-size:8px;background:#edf7ff;color:#1688d4;border-radius:6px;padding:4px 6px}.customer-actions{display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:6px;margin-top:10px}.customer-actions button{min-height:38px;border:1px solid #d8e7ee;background:#f5f9fb;border-radius:10px;padding:8px 4px;font-size:10px;color:#355f73;font-weight:900;touch-action:manipulation}.customer-actions button:first-child{background:#edf7ff;color:#147fbe;border-color:#cce7f7}.customer-actions .editBtn{background:#fff8e8;color:#9a6810;border-color:#f0d79b}.customer-actions .danger{background:#fff4f4;color:#b42318;border-color:#efb5b5}.customer-actions button:active{transform:scale(.98)}
 .detailhero{margin:14px;background:#edf9ff;border:1px solid #d9eaf2;border-radius:18px;padding:14px}.detailhero b{font-size:17px}.detailhero small{display:block;font-size:9px;color:#758a97;margin-top:4px}.actions{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:0 14px 12px}.actions button{border:1px solid #dce8ed;background:#fff;border-radius:11px;padding:10px 4px;font-size:9px;font-weight:900;color:#31596d}.actions .bluebtn{background:#168fe0;color:#fff;border-color:#168fe0}.photo{margin:0 14px 12px;background:#fff;border:1px solid #dfeaed;border-radius:17px;padding:12px}.photohead{display:flex;justify-content:space-between;font-size:11px;font-weight:900}.photos{display:none !important;grid-template-columns:grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px}.ph{aspect-ratio:1;border-radius:8px;background:#edf3f6;display:flex;align-items:center;justify-content:center;color:#718894;font-size:9px;text-align:center;overflow:hidden}.ph img{width:100%;height:100%;object-fit:cover}.info{margin:0 14px 12px;background:#fff;border:1px solid #dfeaed;border-radius:17px;padding:12px}.info div{display:flex;justify-content:space-between;border-bottom:1px solid #edf2f4;padding:8px 0;font-size:9px}.info div:last-child{border:0}.info b{font-size:10px}
 .more{margin:14px;background:#fff;border:1px solid #dfeaed;border-radius:17px;overflow:hidden}.more button{width:100%;text-align:left;border:0;border-bottom:1px solid #edf2f4;background:#fff;padding:14px;font-size:11px;color:#31566b;font-weight:800}.more button:last-child{border:0}
-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;height:68px;background:#fff;border-top:1px solid #dce8ed;display:flex;z-index:10}.nav{flex:1;border:0;background:#fff;color:#84939d;font-size:8px;font-weight:800}.nav strong{display:block;font-size:18px;margin-bottom:2px}.nav.on{color:#168bd8}
+nav{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:100%;max-width:430px;height:calc(68px + env(safe-area-inset-bottom, 0px));padding-bottom:env(safe-area-inset-bottom, 0px);box-sizing:border-box;background:#fff;border-top:1px solid #dce8ed;display:flex;z-index:100;overflow:hidden}.nav{flex:1;border:0;background:#fff;color:#84939d;font-size:8px;font-weight:800}.nav strong{display:block;font-size:18px;margin-bottom:2px}.nav.on{color:#168bd8}
 .modal{position:fixed;inset:0;background:rgba(15,35,48,.58);display:none;align-items:flex-end;z-index:30;padding:0}.sheet{width:100%;max-width:430px;margin:auto;background:#fff;border-radius:24px 24px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom));box-sizing:border-box;max-height:92vh;overflow:auto}.sheet h2{font-size:17px;margin:0 0 12px}.field{margin:11px 0}.field label{display:block;font-size:10px;color:#516b79;margin-bottom:6px;font-weight:800}.field input,.field select{width:100%;box-sizing:border-box;border:1px solid #cfdfe7;border-radius:12px;padding:13px 12px;font-size:14px;min-height:48px;background:#fff;outline:none}.field input:focus,.field select:focus{border-color:#168fe0;box-shadow:0 0 0 3px rgba(22,143,224,.12)}.modalbuttons{display:grid;grid-template-columns:1fr 1.35fr;gap:8px;margin-top:16px;padding-top:12px;border-top:1px solid #edf2f4;position:sticky;bottom:0;background:#fff}.modalbuttons button{min-height:48px;border:0;border-radius:12px;padding:12px;font-size:12px;font-weight:900;touch-action:manipulation}.cancel{background:#eef2f4;color:#526773}.save{background:#168fe0;color:#fff;box-shadow:0 4px 10px rgba(22,143,224,.18)}
 .customer-edit-modal{align-items:flex-end}.customer-edit-sheet{padding-top:12px}.customer-edit-handle{width:38px;height:4px;background:#d6e0e5;border-radius:99px;margin:0 auto 14px}.customer-edit-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}.customer-edit-head b{font-size:19px;color:#183e53}.customer-edit-head small{display:block;color:#7a8d98;font-size:10px;margin-top:4px}.customer-edit-close{width:38px;height:38px;border:0;border-radius:50%;background:#f1f5f7;color:#536b77;font-size:23px;line-height:1}.customer-edit-section{margin-top:16px;padding:13px;border:1px solid #e1ebef;border-radius:15px;background:#fbfdfe}.customer-edit-section-title{font-size:11px;font-weight:900;color:#31566b;margin-bottom:8px}.customer-edit-help{font-size:10px;color:#7b8e99;line-height:1.5;margin-top:5px}.customer-edit-danger{margin-top:12px}.customer-edit-danger button{width:100%;min-height:44px;border:1px solid #efc1c1;background:#fff6f6;color:#b42318;border-radius:11px;font-size:11px;font-weight:900}
 .toast{display:none;position:fixed;bottom:82px;left:50%;transform:translateX(-50%);background:#17364b;color:#fff;padding:10px 13px;border-radius:10px;font-size:10px;z-index:50;white-space:nowrap}
@@ -912,7 +912,7 @@ body{padding-bottom:0!important}
 /* Floating buttons/cards cannot sit behind the bottom navigation. */
 #app .fab,.fab{z-index:8500}
 /* Modal always sits above both app bars and scrolls inside its own viewport. */
-.modal{position:fixed!important;inset:0!important;z-index:10000!important;padding:calc(12px + env(safe-area-inset-top,0px)) 10px calc(12px + var(--cn-safe-bottom))!important;display:flex;align-items:flex-end;justify-content:center;overflow:hidden}
+.modal{position:fixed!important;inset:0!important;z-index:10000!important;display:none!important;align-items:flex-end;justify-content:center;}
 .modal .sheet{width:min(430px,100%);max-height:calc(100dvh - 24px - env(safe-area-inset-top,0px) - var(--cn-safe-bottom));margin:0 auto;overflow:auto;-webkit-overflow-scrolling:touch;padding-bottom:18px!important;border-radius:24px 24px 18px 18px;position:relative;z-index:10001}
 .modal .sheet .modalbuttons,.modal .sheet .actions{position:sticky;bottom:0;z-index:5;background:linear-gradient(to bottom,rgba(255,255,255,.78),#fff 18%);padding-top:10px;padding-bottom:calc(4px + env(safe-area-inset-bottom,0px))}
 /* Inputs remain visible when the keyboard opens. */
@@ -4686,6 +4686,12 @@ function cnRestoreData(){
 @media (max-width:430px){
   #modal .sheet{border-radius:22px 22px 0 0 !important;}
 }
+
+/* Android/Capacitor safe-area shell: content stays below system bars and above the bottom tab. */
+@supports (padding-top: env(safe-area-inset-top)) {
+  body { padding-top: env(safe-area-inset-top, 0px); }
+}
+
 </style>
 </head><body><div class="wrap"><div class="head"><div><div class="brand">클린노바</div><div class="biz">사업자등록번호 863-24-02308</div><div class="biz">에어컨 청소 전문</div></div><div class="title">견적서<br><span style="font-size:11px;color:#64748b;font-weight:400">견적번호 ${esc(q.no)} · ${esc(q.date)}</span></div></div><div class="meta"><div class="box"><span>고객명</span><b>${esc(q.name)}</b></div><div class="box"><span>연락처</span><b>${esc(q.phone||'-')}</b></div><div class="box" style="grid-column:1/-1"><span>주소</span><b>${esc(q.addr||'-')}</b></div></div><table class="items"><thead><tr><th>번호</th><th>서비스</th><th>수량</th><th>단가</th><th>금액</th></tr></thead><tbody>${rows}</tbody></table><div class="summary"><div><span>공급가액</span><b>${money(q.supply)}</b></div><div><span>부가세</span><b>${money(q.vat)}</b></div><div class="total"><span>총 견적금액</span><b>${money(q.total)}</b></div></div>${q.memo?`<div class="memo"><b>메모</b><div style="margin-top:8px;white-space:pre-wrap;font-size:12px">${esc(q.memo)}</div></div>`:''}<div class="foot">본 견적서는 청소 서비스 상담 및 견적을 위한 문서입니다.<br>문의 : 010-2488-9109</div><div class="no-print" style="text-align:center;margin-top:20px"><button onclick="window.print()" style="padding:12px 24px;border:0;border-radius:9px;background:#111827;color:white;font-weight:700">인쇄 / PDF 저장</button></div></div>
 
@@ -5883,22 +5889,6 @@ if ('serviceWorker' in navigator) { window.addEventListener('load', function(){ 
 /* 앱 최초 실행은 항상 홈만 표시 */
 #app > .page{display:none !important;}
 #app > #home.page{display:block !important;}
-  /* Android 시스템 영역 안전 여백 */
-html {
-  padding-top: max(env(safe-area-inset-top), 24px);
-}
-
-#app {
-  min-height: 100dvh;
-  box-sizing: border-box;
-  padding-bottom: 80px;
-}
-
-#app > nav {
-  bottom: max(env(safe-area-inset-bottom), 48px) !important;
-  padding-bottom: 8px !important;
-  box-sizing: border-box;
-  }
 </style>
 <script id="cn-home-boot-fix-js">
 (function(){
@@ -5919,92 +5909,156 @@ html {
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',bootHome,{once:true});
   else bootHome();
   window.addEventListener('pageshow',function(){setTimeout(bootHome,0);},{once:true});
-<script id="cn-app-start-reset">
-(function () {
-  var startupLock = true;
-
-  function closeAllWindows() {
-    try {
-      var selectors = [
-        '#modal',
-        '#customerAddModal',
-        '#customerEditModal',
-        '#bookingCalendarModal',
-        '#rescheduleCalendarModal',
-        '#photoViewer',
-        '#cnCustomerGalleryModal',
-        '#cnRestoreModal',
-        '#cnPhotoSettingsModal',
-        '#cnPriceModal',
-        '#cnServiceItemModal',
-        '#cnGuideSettingsModal',
-        '#cnMessageChannelModal',
-        '#cnCloudModal',
-        '#cnCostProfitModal',
-        '.modal',
-        '.cn-modal',
-        '.cn-cal-modal',
-        '.photoViewer',
-        '.cn-gallery-modal'
-      ];
-
-      document.querySelectorAll(selectors.join(',')).forEach(function (el) {
-        el.style.setProperty('display', 'none', 'important');
-        el.classList.remove('on', 'open', 'show', 'active');
-      });
-
-      document.querySelectorAll('.sheet').forEach(function (el) {
-        var parent = el.parentElement;
-        if (parent && (
-          parent.classList.contains('modal') ||
-          parent.classList.contains('cn-modal') ||
-          parent.classList.contains('cn-cal-modal') ||
-          parent.classList.contains('cn-gallery-modal')
-        )) {
-          parent.style.setProperty('display', 'none', 'important');
-        }
-      });
-
-      document.querySelectorAll('#app > .page').forEach(function (p) {
-        p.classList.remove('on');
-      });
-
-      var home = document.getElementById('home');
-      if (home) home.classList.add('on');
-
-      document.querySelectorAll('#app > nav .nav').forEach(function (b) {
-        b.classList.toggle('on', b.getAttribute('data-p') === 'home');
-      });
-
-      window.cnCurrentPage = 'home';
-      window.scrollTo(0, 0);
-    } catch (e) {}
-  }
-
-  function startupReset() {
-    closeAllWindows();
-    setTimeout(closeAllWindows, 100);
-    setTimeout(closeAllWindows, 500);
-    setTimeout(function () {
-      closeAllWindows();
-      startupLock = false;
-    }, 1200);
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', startupReset, { once: true });
-  } else {
-    startupReset();
-  }
-
-  window.addEventListener('load', function () {
-    startupReset();
-  });
-
-  window.addEventListener('pageshow', function () {
-    startupReset();
-  });
 })();
 </script>
+<style id="cn-final-modal-safearea-fix">
+/* 최종: 예약창이 하단 72px 위에서 멈추지 않도록 수정 */
+#modal{
+  position:fixed !important;
+  inset:0 !important;
+  bottom:0 !important;
+  padding:calc(12px + env(safe-area-inset-top,0px)) 10px calc(12px + env(safe-area-inset-bottom,0px)) !important;
+  align-items:flex-end !important;
+  justify-content:center !important;
+  overflow:hidden !important;
+  box-sizing:border-box !important;
+}
+#modal .sheet{
+  width:min(430px,100%) !important;
+  max-width:430px !important;
+  max-height:calc(100dvh - 24px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px)) !important;
+  margin:0 auto !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  box-sizing:border-box !important;
+  padding-bottom:calc(18px + env(safe-area-inset-bottom,0px)) !important;
+  border-radius:22px 22px 0 0 !important;
+}
+#modal .modalbuttons{
+  position:sticky !important;
+  bottom:0 !important;
+  margin-bottom:0 !important;
+  padding-bottom:calc(12px + env(safe-area-inset-bottom,0px)) !important;
+  background:#fff !important;
+}
+</style>
+
+<style id="cn-startup-overlay-fix">
+/* 앱 시작/복귀 시 열려 있던 모든 팝업·모달을 닫고 홈으로 시작 */
+</style>
+<script id="cn-startup-overlay-fix-js">
+(function(){
+  var ids=[
+    'modal','customerAddModal','customerEditModal','bookingCalendarModal','rescheduleCalendarModal',
+    'cnCustomerGalleryModal','cnRestoreModal','cnPhotoSettingsModal','cnPriceModal','cnServiceItemModal',
+    'cnGuideSettingsModal','cnMessageChannelModal','cnCloudModal'
+  ];
+  function closeOne(el){
+    if(!el)return;
+    el.classList.remove('on');
+    el.style.removeProperty('display');
+    // 기본 CSS가 display:none인 모달은 그대로 숨김. 인라인 display가 남아 있는 경우 강제 제거.
+    if(el.id==='cnServiceItemModal') el.style.display='none';
+    if(el.id==='cnCloudModal') el.style.display='none';
+  }
+  function closeAll(){
+    try{
+      ids.forEach(function(id){closeOne(document.getElementById(id));});
+      document.querySelectorAll('.modal.on,.cn-cal-modal.on,.cn-gallery-modal.on,.cn-guide-settings-modal.on,.cn-msg-channel-modal.on,.photoViewer.on').forEach(function(el){closeOne(el);});
+      var dynamic=document.getElementById('cnCostProfitModal');
+      if(dynamic) dynamic.remove();
+      // 시작 시 열려 있는 드롭다운/메뉴도 초기화
+      document.querySelectorAll('.menu.on,.dropdown.on,[aria-expanded="true"]').forEach(function(el){
+        el.classList.remove('on');
+        if(el.hasAttribute('aria-expanded'))el.setAttribute('aria-expanded','false');
+      });
+    }catch(e){}
+  }
+  function boot(){
+    closeAll();
+    var home=document.getElementById('home');
+    if(home){
+      document.querySelectorAll('#app > .page').forEach(function(p){p.classList.remove('on');});
+      home.classList.add('on');
+    }
+    document.querySelectorAll('#app > nav .nav').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-p')==='home');});
+    window.cnCurrentPage='home';
+    try{window.scrollTo(0,0);}catch(e){}
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot,{once:true}); else boot();
+  window.addEventListener('pageshow',function(){boot();setTimeout(closeAll,50);setTimeout(closeAll,300);});
+  window.addEventListener('focus',function(){setTimeout(closeAll,0);});
+})();
+</script>
+
+<style id="cn-modal-visibility-final-fix">
+/* Critical: modal overlays are hidden by default. JS adds cn-force-open when a modal is explicitly opened. */
+.modal{display:none!important}
+.modal.cn-force-open{display:flex!important}
+</style>
+<script id="cn-modal-visibility-final-fix-script">
+(function(){
+  var modalIds=[
+    'modal','customerAddModal','customerEditModal','cnRestoreModal',
+    'cnPhotoSettingsModal','cnPriceModal','cnCostProfitModal'
+  ];
+  function syncModal(el){
+    if(!el || !el.classList || !el.matches('.modal')) return;
+    var s=(el.getAttribute('style')||'').replace(/\s+/g,'').toLowerCase();
+    var open=s.indexOf('display:flex')>=0 || el.classList.contains('on');
+    el.classList.toggle('cn-force-open',open);
+  }
+  function syncAll(){
+    document.querySelectorAll('.modal').forEach(syncModal);
+  }
+  function hardCloseAll(){
+    modalIds.forEach(function(id){
+      var el=document.getElementById(id);
+      if(el){
+        el.classList.remove('on','cn-force-open');
+        el.style.setProperty('display','none','important');
+      }
+    });
+    document.querySelectorAll('.modal').forEach(function(el){
+      el.classList.remove('on','cn-force-open');
+      el.style.setProperty('display','none','important');
+    });
+  }
+  function boot(){
+    hardCloseAll();
+    var home=document.getElementById('home');
+    if(home){
+      document.querySelectorAll('#app > .page').forEach(function(p){p.classList.remove('on');});
+      home.classList.add('on');
+    }
+    document.querySelectorAll('#app > nav .nav').forEach(function(b){
+      b.classList.toggle('on',b.getAttribute('data-p')==='home');
+    });
+    try{window.scrollTo(0,0)}catch(e){}
+    /* release the important inline hide after startup; explicit open functions can then be observed */
+    document.querySelectorAll('.modal').forEach(function(el){
+      el.style.removeProperty('display');
+      el.classList.remove('cn-force-open');
+      syncModal(el);
+    });
+  }
+  var observer=new MutationObserver(function(ms){
+    ms.forEach(function(m){
+      if(m.type==='attributes' && m.attributeName==='style') syncModal(m.target);
+      if(m.type==='attributes' && m.attributeName==='class') syncModal(m.target);
+    });
+  });
+  function start(){
+    observer.observe(document.body,{subtree:true,attributes:true,attributeFilter:['style','class']});
+    boot();
+    setTimeout(boot,100);
+    setTimeout(boot,400);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',start,{once:true});
+  else start();
+  window.addEventListener('pageshow',boot);
+})();
+</script>
+
 </body>
 </html>
