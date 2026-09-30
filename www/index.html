@@ -5862,12 +5862,12 @@ function cnRestoreData(){
 
 
 
-<style id="cn-app-shell-fix-v8">
-/* CleanNova v8: native Capacitor insets handle the Android system bars.
+<style id="cn-app-shell-fix-v9">
+/* CleanNova v9: native Capacitor insets handle the Android system bars; app content uses a dedicated vertical scroll container.
    Do not fake status/navigation-bar offsets in CSS. */
-html,body{margin:0!important;padding:0!important;width:100%;min-height:100%;overflow-x:hidden;overscroll-behavior-y:none}
+html,body{margin:0!important;padding:0!important;width:100%;min-height:100%;overflow-x:hidden;overflow-y:hidden!important;overscroll-behavior-y:auto}
 body{background:#f4f7fb}
-#app{position:relative;width:100%;max-width:430px;min-height:100dvh;margin:0 auto;padding-bottom:78px!important;box-sizing:border-box;overflow-x:hidden;background:#f7fbfd}
+#app{position:relative;width:100%;max-width:430px;height:100dvh;min-height:100dvh;margin:0 auto;padding-bottom:96px!important;box-sizing:border-box;overflow-x:hidden;overflow-y:auto!important;-webkit-overflow-scrolling:touch;overscroll-behavior-y:auto;touch-action:pan-y;background:#f7fbfd}
 #app>header{position:sticky;top:0;z-index:200;width:100%;background:linear-gradient(135deg,#e2f6ff,#f8fcff)}
 #app>.tabs{position:sticky;top:0;z-index:190;width:100%;background:#fff}
 #app>.page{position:relative;z-index:1}
