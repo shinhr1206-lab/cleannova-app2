@@ -5921,49 +5921,50 @@ html {
   window.addEventListener('pageshow',function(){setTimeout(bootHome,0);},{once:true});
 <script id="cn-app-start-reset">
 (function () {
-  function resetAppStart() {
+  var startupLock = true;
+
+  function closeAllWindows() {
     try {
-      // 모든 일반 모달/팝업 닫기
-      document.querySelectorAll(
-        '.modal, .cn-modal, .cn-cal-modal, .cn-gallery-modal, .cn-cloud-modal'
-      ).forEach(function (el) {
-        el.style.display = 'none';
+      var selectors = [
+        '#modal',
+        '#customerAddModal',
+        '#customerEditModal',
+        '#bookingCalendarModal',
+        '#rescheduleCalendarModal',
+        '#photoViewer',
+        '#cnCustomerGalleryModal',
+        '#cnRestoreModal',
+        '#cnPhotoSettingsModal',
+        '#cnPriceModal',
+        '#cnServiceItemModal',
+        '#cnGuideSettingsModal',
+        '#cnMessageChannelModal',
+        '#cnCloudModal',
+        '#cnCostProfitModal',
+        '.modal',
+        '.cn-modal',
+        '.cn-cal-modal',
+        '.photoViewer',
+        '.cn-gallery-modal'
+      ];
+
+      document.querySelectorAll(selectors.join(',')).forEach(function (el) {
+        el.style.setProperty('display', 'none', 'important');
         el.classList.remove('on', 'open', 'show', 'active');
       });
 
-      // 모든 시트 닫기
-      document.querySelectorAll(
-        '.sheet, .customer-edit-sheet, .cn-gallery-sheet, .cn-setting-sheet, .cn-price-sheet, .cn-guide-settings-sheet, .cn-msg-channel-sheet'
-      ).forEach(function (el) {
-        el.style.display = 'none';
-        el.classList.remove('on', 'open', 'show', 'active');
-      });
-
-      // 예약/고객 관련 팝업 강제 닫기
-      [
-        'modal',
-        'customerAddModal',
-        'customerEditModal',
-        'bookingCalendarModal',
-        'rescheduleCalendarModal',
-        'cnCustomerGalleryModal',
-        'cnRestoreModal',
-        'cnPhotoSettingsModal',
-        'cnPriceModal',
-        'cnServiceItemModal',
-        'cnGuideSettingsModal',
-        'cnMessageChannelModal',
-        'cnCloudModal',
-        'cnCostProfitModal'
-      ].forEach(function (id) {
-        var el = document.getElementById(id);
-        if (el) {
-          el.style.display = 'none';
-          el.classList.remove('on', 'open', 'show', 'active');
+      document.querySelectorAll('.sheet').forEach(function (el) {
+        var parent = el.parentElement;
+        if (parent && (
+          parent.classList.contains('modal') ||
+          parent.classList.contains('cn-modal') ||
+          parent.classList.contains('cn-cal-modal') ||
+          parent.classList.contains('cn-gallery-modal')
+        )) {
+          parent.style.setProperty('display', 'none', 'important');
         }
       });
 
-      // 홈 화면으로 초기화
       document.querySelectorAll('#app > .page').forEach(function (p) {
         p.classList.remove('on');
       });
@@ -5972,30 +5973,36 @@ html {
       if (home) home.classList.add('on');
 
       document.querySelectorAll('#app > nav .nav').forEach(function (b) {
-        b.classList.toggle('on', b.getAttribute('data-page') === 'home');
+        b.classList.toggle('on', b.getAttribute('data-p') === 'home');
       });
 
       window.cnCurrentPage = 'home';
-
-      // 토스트/고객 자동완성 등도 닫기
-      var toast = document.getElementById('toast');
-      if (toast) toast.style.display = 'none';
-
-      var suggest = document.getElementById('cnBookingCustomerSuggest');
-      if (suggest) suggest.style.display = 'none';
-
       window.scrollTo(0, 0);
     } catch (e) {}
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', resetAppStart, { once: true });
-  } else {
-    resetAppStart();
+  function startupReset() {
+    closeAllWindows();
+    setTimeout(closeAllWindows, 100);
+    setTimeout(closeAllWindows, 500);
+    setTimeout(function () {
+      closeAllWindows();
+      startupLock = false;
+    }, 1200);
   }
 
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', startupReset, { once: true });
+  } else {
+    startupReset();
+  }
+
+  window.addEventListener('load', function () {
+    startupReset();
+  });
+
   window.addEventListener('pageshow', function () {
-    setTimeout(resetAppStart, 0);
+    startupReset();
   });
 })();
 </script>
