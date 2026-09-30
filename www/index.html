@@ -704,7 +704,6 @@ small,.muted,.sub,.hint{color:var(--cn-muted)!important}
 @media(max-width:430px){section{padding-left:12px!important;padding-right:12px!important}.card,.box,.panel{padding:14px!important}}
 
 </style>
-
 <style id="cn-usability-polish">
 :root{--cn-primary:#2563eb;--cn-primary2:#1d4ed8;--cn-bg:#f6f8fb;--cn-card:#fff;--cn-text:#17212b;--cn-muted:#6b7785;--cn-line:#e7ecf2;--cn-radius:16px}
 body{background:var(--cn-bg);color:var(--cn-text);padding-bottom:78px}
@@ -728,7 +727,6 @@ nav{height:70px;padding:7px 8px calc(7px + env(safe-area-inset-bottom));backgrou
 .cn-receivable-filter{display:flex;gap:7px;overflow-x:auto;padding:10px 0}.cn-receivable-filter button{white-space:nowrap;min-height:40px;border-radius:10px}.cn-r-card{border-radius:13px!important}
 @media(max-width:380px){.more{grid-template-columns:1fr}.cards{grid-template-columns:1fr 1fr}.title h1{font-size:20px}.tools button{padding:0 9px;font-size:11px}}
 </style>
-
 <style id="cn-booking-customer-usability">
 #modal .sheet{max-height:calc(100vh - 24px);overflow-y:auto;padding:20px 18px 18px;border-radius:24px 24px 18px 18px;}
 #modal .sheet h2{font-size:21px;margin:0 0 6px;}
@@ -746,7 +744,6 @@ nav{height:70px;padding:7px 8px calc(7px + env(safe-area-inset-bottom));backgrou
 .cn-customer-suggest button:last-child{border-bottom:0;}
 .cn-customer-suggest small{display:block;color:#7a8a94;font-size:11px;font-weight:500;margin-top:3px;}
 </style>
-
 <style id="cn-booking-modal-final-viewport-fix">
 /* 실제 앱 문서에 적용되는 예약창 최종 표시 보정 */
 #modal{
@@ -787,7 +784,6 @@ nav{height:70px;padding:7px 8px calc(7px + env(safe-area-inset-bottom));backgrou
   #modal{bottom:72px !important;}
 }
 </style>
-
 <style id="cn-font-size-tune">
 /* 모바일 가독성 조정: 기존 기능/레이아웃은 유지하고 글자만 한 단계 컴팩트하게 */
 body{font-size:13px}
@@ -809,7 +805,6 @@ body{font-size:13px}
   .title h1{font-size:17px}.panelhead b{font-size:13px}.field input,.field select{font-size:12.5px}.modalbuttons button{font-size:10.5px}
 }
 </style>
-
 <style id="cn-final-design-system">
 /* Final visual system: alignment + hierarchy + spacing only */
 :root{
@@ -861,8 +856,6 @@ nav .nav strong{font-size:18px!important;line-height:18px!important;margin:0!imp
 @media(max-width:430px){#app{width:100%}.panel,.workToday{border-radius:16px!important}.card{border-radius:16px!important}.title h1{font-size:18px!important}}
 @media(max-width:360px){section.page{padding-left:10px!important;padding-right:10px!important}.more{grid-template-columns:1fr 1fr!important}.more button{font-size:10px!important}.title h1{font-size:17px!important}}
 </style>
-
-
 <style id="cn-final-design-system">
 :root{--cn-primary:#2563eb;--cn-primary2:#1d4ed8;--cn-ink:#172033;--cn-muted:#6b7280;--cn-bg:#f4f7fb;--cn-card:#fff;--cn-line:#e7ebf2;--cn-success:#16a34a;--cn-warn:#f59e0b;--cn-danger:#ef4444;--cn-radius:16px;--cn-shadow:0 8px 24px rgba(15,23,42,.06)}
 *{box-sizing:border-box} body{background:var(--cn-bg);color:var(--cn-ink);font-family:Inter,Pretendard,"Noto Sans KR",system-ui,-apple-system,sans-serif;letter-spacing:-.02em} .app,.wrap,main{max-width:760px;margin:auto}
@@ -893,46 +886,14 @@ nav{height:72px!important;padding:8px 10px calc(8px + env(safe-area-inset-bottom
 })();
 </script>
 
-<style id="cn-app-shell-fix">
-/* CleanNova app shell: keep content clear of the top/bottom chrome */
-:root{--cn-bottom-nav:78px;--cn-safe-bottom:env(safe-area-inset-bottom,0px);--cn-top-gap:0px}
-html{background:#eef5f9}
-html,body{margin:0;width:100%;min-height:100%;overscroll-behavior-y:none}
-body{padding-bottom:0!important}
-#app{position:relative;width:100%;max-width:430px;min-height:100dvh;margin:0 auto;padding-bottom:calc(var(--cn-bottom-nav) + var(--cn-safe-bottom) + 18px)!important;overflow-x:hidden;background:#f7fbfd}
-/* Top app bar stays in its own lane; page content never slides underneath it. */
-#app>header{position:sticky;top:0;z-index:200;width:100%;flex:none;padding-top:max(12px,env(safe-area-inset-top,0px));background:linear-gradient(135deg,#e2f6ff,#f8fcff);box-shadow:0 1px 0 rgba(31,76,104,.06)}
-/* Secondary tab bar sits directly below the top app bar. */
-#app>.tabs{position:sticky;top:0;z-index:190;width:100%;flex:none;background:#fff;box-shadow:0 2px 8px rgba(30,70,98,.05)}
-/* Do not use a negative margin/transform that can push page content into the bars. */
-#app>.page{position:relative;z-index:1;scroll-margin-top:12px;padding-bottom:2px}
-/* Fixed bottom navigation gets its own protected area. */
-#app>nav{position:fixed!important;left:50%;bottom:0;transform:translateX(-50%);z-index:9000;width:min(430px,100vw);height:calc(var(--cn-bottom-nav) + var(--cn-safe-bottom));min-height:var(--cn-bottom-nav);padding:0 8px var(--cn-safe-bottom);display:flex;align-items:stretch;background:rgba(255,255,255,.97);border-top:1px solid #d9e8ef;box-shadow:0 -6px 22px rgba(33,73,96,.10);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
-#app>nav .nav{height:var(--cn-bottom-nav);min-height:var(--cn-bottom-nav);padding:7px 2px 6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
-/* Floating buttons/cards cannot sit behind the bottom navigation. */
-#app .fab,.fab{z-index:8500}
-/* Modal always sits above both app bars and scrolls inside its own viewport. */
-.modal{position:fixed!important;inset:0!important;z-index:10000!important;display:none!important;align-items:flex-end;justify-content:center;}
-.modal .sheet{width:min(430px,100%);max-height:calc(100dvh - 24px - env(safe-area-inset-top,0px) - var(--cn-safe-bottom));margin:0 auto;overflow:auto;-webkit-overflow-scrolling:touch;padding-bottom:18px!important;border-radius:24px 24px 18px 18px;position:relative;z-index:10001}
-.modal .sheet .modalbuttons,.modal .sheet .actions{position:sticky;bottom:0;z-index:5;background:linear-gradient(to bottom,rgba(255,255,255,.78),#fff 18%);padding-top:10px;padding-bottom:calc(4px + env(safe-area-inset-bottom,0px))}
-/* Inputs remain visible when the keyboard opens. */
-input,select,textarea,button{touch-action:manipulation}
-@media (max-width:430px){
-  #app{max-width:none}
-  #app>nav{width:100%}
-  .title{margin-left:12px;margin-right:12px}
-  .cards,.list,.panel,.section,.box{margin-left:12px;margin-right:12px}
-}
-@media (min-width:431px){body{display:flex;justify-content:center}#app{box-shadow:0 0 30px rgba(24,67,91,.08)}}
-</style>
-<link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#2563eb">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="클린노바">
-<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link href="manifest.webmanifest" rel="manifest"/>
+<meta content="#2563eb" name="theme-color"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="default" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="클린노바" name="apple-mobile-web-app-title"/>
+<link href="icons/icon.svg" rel="icon" type="image/svg+xml"/>
+<link href="icons/icon-192.png" rel="apple-touch-icon"/>
 </head>
 <body>
 <div id="app">
@@ -940,7 +901,6 @@ input,select,textarea,button{touch-action:manipulation}
 <div class="head"><div class="logo">클린<br/>노바</div><div class="brand"><b>클린노바</b><small>에어컨청소 · 고객관리</small></div><button class="logout" onclick="msg('클린노바 고객관리')">로그아웃</button></div>
 <div class="tools"><button onclick="cnOpenPhotoSettings()">사진설정</button><button onclick="cnOpenStandaloneQuote()">견적서</button><button onclick="cnOpenPriceTable()">단가표</button><button onclick="cnBackupData()">백업</button><button onclick="cnOpenRestore()">복구</button></div>
 </header>
-
 <section class="page on" id="home">
 <div class="title"><h1>오늘의 현황</h1><button class="primary" onclick="openBooking()">＋ 예약 추가</button></div>
 <div class="workToday">
@@ -5226,20 +5186,7 @@ function cnRestoreData(){
   };
   document.addEventListener('DOMContentLoaded',function(){setTimeout(function(){if(typeof window.cnRenderPrice==='function')window.cnRenderPrice();},250);});
 })();
-</script><script id="cn-single-touch-tabs-fix">(function(){
-  function bind(){
-    document.querySelectorAll('.tab,.nav').forEach(function(btn){
-      if(btn.dataset.cnSingleTouch) return;
-      btn.dataset.cnSingleTouch='1';
-      btn.addEventListener('touchend',function(e){
-        if(e.cancelable) e.preventDefault();
-        var p=this.dataset.p;
-        if(p && typeof window.go==='function') window.go(p);
-      },{passive:false});
-    });
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',bind,{once:true}); else bind();
-})();</script>
+</script>
 <script>/* step6: 중복 고객 필터 보정 제거 */</script>
 <script>
 /* v-next: 고객 목록 필터 단일 클릭 보정 */
@@ -5606,7 +5553,6 @@ function cnRestoreData(){
   document.addEventListener('DOMContentLoaded',()=>setTimeout(renderAll,700));
 })();
 </script>
-
 <script>
 /* v74: 예약 → 출발 → 작업중 → 사진 → 완료 → 결제/미수금 흐름 안정화 */
 (function(){
@@ -5762,8 +5708,6 @@ function cnRestoreData(){
   document.addEventListener('DOMContentLoaded',()=>setTimeout(()=>{try{renderFlow()}catch(e){}},700));
 })();
 </script>
-
-
 <script id="cn-booking-customer-usability-js">
 (function(){
  function fillCustomer(c){
@@ -5797,7 +5741,6 @@ function cnRestoreData(){
  });
 })();
 </script>
-
 <script id="cn-booking-modal-scroll-fix">
 (function(){
   function resetBookingSheet(){
@@ -5822,7 +5765,6 @@ function cnRestoreData(){
   }
 })();
 </script>
-
 <script>
 /* v74: 예약 추가 수량 입력 UX 보정
    - 입력 중에는 빈칸을 허용하여 기존 '1'을 지운 뒤 새 숫자를 입력할 수 있게 함
@@ -5882,35 +5824,9 @@ function cnRestoreData(){
   setTimeout(bind,0);
 })();
 </script>
-<script>
-if ('serviceWorker' in navigator) { window.addEventListener('load', function(){ navigator.serviceWorker.register('./sw.js').catch(function(){}); }); }
-</script>
-<style id="cn-home-boot-fix">
-/* 앱 최초 실행은 항상 홈만 표시 */
-#app > .page{display:none !important;}
-#app > #home.page{display:block !important;}
-</style>
-<script id="cn-home-boot-fix-js">
-(function(){
-  function bootHome(){
-    try{
-      var pages=document.querySelectorAll('#app > .page');
-      pages.forEach(function(p){p.classList.remove('on');});
-      var home=document.getElementById('home');
-      if(home) home.classList.add('on');
-      document.querySelectorAll('#app > nav .nav').forEach(function(b){
-        b.classList.toggle('on', b.getAttribute('data-p')==='home');
-      });
-      window.cnCurrentPage='home';
-      try{history.replaceState(null,'',location.pathname+location.search);}catch(e){}
-      try{window.scrollTo(0,0);}catch(e){}
-    }catch(e){}
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',bootHome,{once:true});
-  else bootHome();
-  window.addEventListener('pageshow',function(){setTimeout(bootHome,0);},{once:true});
-})();
-</script>
+
+
+
 <style id="cn-final-modal-safearea-fix">
 /* 최종: 예약창이 하단 72px 위에서 멈추지 않도록 수정 */
 #modal{
@@ -5943,122 +5859,21 @@ if ('serviceWorker' in navigator) { window.addEventListener('load', function(){ 
 }
 </style>
 
-<style id="cn-startup-overlay-fix">
-/* 앱 시작/복귀 시 열려 있던 모든 팝업·모달을 닫고 홈으로 시작 */
-</style>
-<script id="cn-startup-overlay-fix-js">
-(function(){
-  var ids=[
-    'modal','customerAddModal','customerEditModal','bookingCalendarModal','rescheduleCalendarModal',
-    'cnCustomerGalleryModal','cnRestoreModal','cnPhotoSettingsModal','cnPriceModal','cnServiceItemModal',
-    'cnGuideSettingsModal','cnMessageChannelModal','cnCloudModal'
-  ];
-  function closeOne(el){
-    if(!el)return;
-    el.classList.remove('on');
-    el.style.removeProperty('display');
-    // 기본 CSS가 display:none인 모달은 그대로 숨김. 인라인 display가 남아 있는 경우 강제 제거.
-    if(el.id==='cnServiceItemModal') el.style.display='none';
-    if(el.id==='cnCloudModal') el.style.display='none';
-  }
-  function closeAll(){
-    try{
-      ids.forEach(function(id){closeOne(document.getElementById(id));});
-      document.querySelectorAll('.modal.on,.cn-cal-modal.on,.cn-gallery-modal.on,.cn-guide-settings-modal.on,.cn-msg-channel-modal.on,.photoViewer.on').forEach(function(el){closeOne(el);});
-      var dynamic=document.getElementById('cnCostProfitModal');
-      if(dynamic) dynamic.remove();
-      // 시작 시 열려 있는 드롭다운/메뉴도 초기화
-      document.querySelectorAll('.menu.on,.dropdown.on,[aria-expanded="true"]').forEach(function(el){
-        el.classList.remove('on');
-        if(el.hasAttribute('aria-expanded'))el.setAttribute('aria-expanded','false');
-      });
-    }catch(e){}
-  }
-  function boot(){
-    closeAll();
-    var home=document.getElementById('home');
-    if(home){
-      document.querySelectorAll('#app > .page').forEach(function(p){p.classList.remove('on');});
-      home.classList.add('on');
-    }
-    document.querySelectorAll('#app > nav .nav').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-p')==='home');});
-    window.cnCurrentPage='home';
-    try{window.scrollTo(0,0);}catch(e){}
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot,{once:true}); else boot();
-  window.addEventListener('pageshow',function(){boot();setTimeout(closeAll,50);setTimeout(closeAll,300);});
-  window.addEventListener('focus',function(){setTimeout(closeAll,0);});
-})();
-</script>
 
-<style id="cn-modal-visibility-final-fix">
-/* Critical: modal overlays are hidden by default. JS adds cn-force-open when a modal is explicitly opened. */
-.modal{display:none!important}
-.modal.cn-force-open{display:flex!important}
-</style>
-<script id="cn-modal-visibility-final-fix-script">
-(function(){
-  var modalIds=[
-    'modal','customerAddModal','customerEditModal','cnRestoreModal',
-    'cnPhotoSettingsModal','cnPriceModal','cnCostProfitModal'
-  ];
-  function syncModal(el){
-    if(!el || !el.classList || !el.matches('.modal')) return;
-    var s=(el.getAttribute('style')||'').replace(/\s+/g,'').toLowerCase();
-    var open=s.indexOf('display:flex')>=0 || el.classList.contains('on');
-    el.classList.toggle('cn-force-open',open);
-  }
-  function syncAll(){
-    document.querySelectorAll('.modal').forEach(syncModal);
-  }
-  function hardCloseAll(){
-    modalIds.forEach(function(id){
-      var el=document.getElementById(id);
-      if(el){
-        el.classList.remove('on','cn-force-open');
-        el.style.setProperty('display','none','important');
-      }
-    });
-    document.querySelectorAll('.modal').forEach(function(el){
-      el.classList.remove('on','cn-force-open');
-      el.style.setProperty('display','none','important');
-    });
-  }
-  function boot(){
-    hardCloseAll();
-    var home=document.getElementById('home');
-    if(home){
-      document.querySelectorAll('#app > .page').forEach(function(p){p.classList.remove('on');});
-      home.classList.add('on');
-    }
-    document.querySelectorAll('#app > nav .nav').forEach(function(b){
-      b.classList.toggle('on',b.getAttribute('data-p')==='home');
-    });
-    try{window.scrollTo(0,0)}catch(e){}
-    /* release the important inline hide after startup; explicit open functions can then be observed */
-    document.querySelectorAll('.modal').forEach(function(el){
-      el.style.removeProperty('display');
-      el.classList.remove('cn-force-open');
-      syncModal(el);
-    });
-  }
-  var observer=new MutationObserver(function(ms){
-    ms.forEach(function(m){
-      if(m.type==='attributes' && m.attributeName==='style') syncModal(m.target);
-      if(m.type==='attributes' && m.attributeName==='class') syncModal(m.target);
-    });
-  });
-  function start(){
-    observer.observe(document.body,{subtree:true,attributes:true,attributeFilter:['style','class']});
-    boot();
-    setTimeout(boot,100);
-    setTimeout(boot,400);
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',start,{once:true});
-  else start();
-  window.addEventListener('pageshow',boot);
-})();
-</script>
 
-</body>
+
+<style id="cn-app-shell-fix-v6">
+/* CleanNova v6: no forced home page, no touch hacks, no browser-toolbar compensation. */
+html,body{margin:0!important;padding:0!important;width:100%;min-height:100%;overflow-x:hidden;overscroll-behavior-y:none}
+body{background:#f4f7fb}
+#app{position:relative;width:100%;max-width:430px;min-height:100dvh;margin:0 auto;padding-bottom:96px!important;box-sizing:border-box;overflow-x:hidden;background:#f7fbfd}
+#app>header{position:sticky;top:0;z-index:200;width:100%;background:linear-gradient(135deg,#e2f6ff,#f8fcff)}
+#app>.tabs{position:sticky;top:0;z-index:190;width:100%;background:#fff}
+#app>.page{position:relative;z-index:1}
+#app>nav{position:fixed!important;left:50%!important;bottom:0!important;transform:translateX(-50%)!important;z-index:9999!important;width:min(430px,100vw)!important;height:72px!important;min-height:72px!important;padding:8px 10px!important;box-sizing:border-box!important;display:flex!important;align-items:stretch!important;background:rgba(255,255,255,.98)!important;border-top:1px solid #e6eaf0!important;box-shadow:0 -7px 20px rgba(15,23,42,.07)!important}
+#app>nav .nav{height:56px!important;min-height:50px!important;flex:1!important;touch-action:manipulation!important}
+.modal{z-index:10000!important}
+button,input,select,textarea{touch-action:manipulation}
+@media(min-width:431px){body{display:flex;justify-content:center}#app{box-shadow:0 0 30px rgba(24,67,91,.08)}}
+</style></body>
 </html>
