@@ -896,6 +896,52 @@ nav{height:72px!important;padding:8px 10px calc(8px + env(safe-area-inset-bottom
 <link href="icons/icon.svg" rel="icon" type="image/svg+xml"/>
 <link href="icons/icon-192.png" rel="apple-touch-icon"/>
 <!-- CleanNova v94 -->
+<style id="cn-one-screen-calendar">
+/* 일정이 등록되어도 달력 행 높이가 늘어나지 않도록 한 화면형으로 고정 */
+.cn-calendar .cn-days, #cnMonthView .cn-days{
+  grid-auto-rows:50px !important;
+  align-items:stretch !important;
+}
+.cn-calendar .cn-day, #cnMonthView .cn-day{
+  min-height:0 !important;
+  height:50px !important;
+  padding:4px !important;
+  overflow:hidden !important;
+}
+.cn-calendar .cn-day-num, #cnMonthView .cn-day-num{
+  font-size:10px !important;
+  line-height:14px !important;
+}
+.cn-calendar .cn-day-dot, #cnMonthView .cn-day-dot{
+  margin-top:2px !important;
+  font-size:7px !important;
+  line-height:10px !important;
+  white-space:nowrap !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+}
+.cn-day-more{
+  display:block;
+  margin-top:1px;
+  font-size:7px;
+  line-height:9px;
+  color:#64748b;
+  font-weight:800;
+}
+.cn-calendar .cn-selected-summary, #cnMonthView .cn-selected-summary{
+  margin-top:7px !important;
+  padding:7px 9px !important;
+  font-size:10px !important;
+  line-height:1.35 !important;
+  max-height:48px !important;
+  overflow:hidden !important;
+}
+@media(max-width:430px){
+  .cn-calendar .cn-days, #cnMonthView .cn-days{grid-auto-rows:46px !important}
+  .cn-calendar .cn-day, #cnMonthView .cn-day{height:46px !important;padding:3px !important}
+  .cn-calendar .cn-day-dot, #cnMonthView .cn-day-dot{font-size:6.5px !important;line-height:9px !important}
+}
+</style>
 </head>
 <body>
 <div id="app">
@@ -2566,6 +2612,14 @@ function cnCalSelect(key){
   cnScheduleDate=new Date(parts[0],parts[1]-1,parts[2]);
   cnRenderCalendar();
   cnRenderHomeCalendar();
+
+  // 월간 캘린더에서 선택한 날짜의 예약을 아래 예약현황에 즉시 표시
+  const selectedJobs=(bookings||[]).filter(b=>b.date===key).sort((a,b)=>(a.time||"99:99").localeCompare(b.time||"99:99"));
+  const label=document.getElementById("calendarSelectedLabel");
+  const box=document.getElementById("calendarBookings");
+  if(label) label.textContent=key+" 예약";
+  if(box) box.innerHTML=rows(selectedJobs);
+
   cnRenderTodayJobs();
 }
 function cnRenderCalendar(){
@@ -2593,11 +2647,14 @@ function cnRenderCalendar(){
     else{d=new Date(y,m,num);dayNum=num;}
     const key=cnDateKeyObj(d);
     const jobs=(bookings||[]).filter(b=>b.date===key);
-    const dots=jobs.slice(0,2).map(b=>{
+    const dots=jobs.length?(()=>{
+      const b=jobs[0];
       const s=cnTodayGetStatus(b);
       const cls=s==="완료"?"done":s==="청소중"?"work":"reserve";
-      return `<span class="cn-day-dot ${cls}">${b.time||""} ${b.name||""}</span>`;
-    }).join("");
+      const first=`<span class="cn-day-dot ${cls}">${b.time||""} ${b.name||""}</span>`;
+      const more=jobs.length>1?`<span class="cn-day-more">+${jobs.length-1}건</span>`:"";
+      return first+more;
+    })():"";
     out+=`<div class="cn-day ${muted?"muted ":""}${key===todayKey?"today ":""}${key===selectedKey?"selected":""}" onclick="cnCalSelect('${key}')">
       <div class="cn-day-num">${dayNum}</div>${dots}
     </div>`;
