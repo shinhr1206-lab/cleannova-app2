@@ -2218,22 +2218,31 @@ async function savePhotoFiles(fileList,type){
   const d=detail();
   d.photos=Array.isArray(d.photos)?d.photos:[];
   const newPhotos=[];
+  let uploadedCount=0;
 
   msg(files.length+"장 사진을 처리하고 있습니다...");
 
   for(const file of files){
     try{
+      // 사진은 먼저 압축한 뒤 Cloudinary에 바로 올리고, 브라우저에는 URL만 저장합니다.
       const src=await compressPhoto(file,1600,0.72);
+      let storedSrc=src;
+      if(typeof window.cnUploadPhotoDirect==='function'){
+        storedSrc=await window.cnUploadPhotoDirect(src,d?.bookingId||selectedBookingId||"photos");
+        if(storedSrc)uploadedCount++;
+      }
       newPhotos.push({
-        src:src,
+        src:storedSrc,
         type:type,
         date:new Date().toLocaleString("ko-KR")
       });
-    }catch(e){}
+    }catch(e){
+      console.error("photo upload error",e);
+    }
   }
 
   if(!newPhotos.length){
-    msg("사진을 등록하지 못했습니다.");
+    msg("사진을 등록하지 못했습니다. 인터넷 연결과 사진 설정을 확인해주세요.");
     return;
   }
 
@@ -2242,19 +2251,14 @@ async function savePhotoFiles(fileList,type){
   try{
     setDetail(d);
   }catch(e){
-    // 저장공간이 부족하면 더 강하게 압축해서 다시 시도
-    const retry=[];
-    for(const file of files){
-      try{
-        const src=await compressPhoto(file,1000,0.55);
-        retry.push({src:src,type:type,date:new Date().toLocaleString("ko-KR")});
-      }catch(err){}
-    }
-    d.photos=d.photos.slice(0,-newPhotos.length).concat(retry);
+    // URL 저장은 매우 작기 때문에 기존 사진이 많아도 용량 부담이 거의 없습니다.
+    // 그래도 저장에 실패하면 마지막으로 새 사진만 보존해 재시도합니다.
+    const beforeCount=d.photos.length-newPhotos.length;
+    const minimal={...d,photos:d.photos.slice(Math.max(0,beforeCount))};
     try{
-      setDetail(d);
+      setDetail(minimal);
     }catch(err){
-      msg("사진 저장공간이 부족합니다. 일부 사진을 삭제한 후 다시 시도해주세요.");
+      msg("사진 정보 저장에 실패했습니다. 브라우저 저장공간을 확인해주세요.");
       return;
     }
   }
@@ -2263,7 +2267,7 @@ async function savePhotoFiles(fileList,type){
   renderDocuments();
   renderReports();
   renderTodayWork();
-  msg((type==="before"?"작업 전 ":"작업 후 ")+newPhotos.length+"장의 사진이 등록되었습니다.");
+  msg((type==="before"?"작업 전 ":"작업 후 ")+newPhotos.length+"장의 사진이 등록되었습니다."+(uploadedCount?" ☁️":""));
 }
 
 function choosePhotos(type){
@@ -6283,305 +6287,119 @@ function cnSetCalendarView(mode){
   function normalizePublicBase(v){const s=String(v||'').trim();return /^https?:\/\/shinhr1206-lab\.github\.io\/cleannova-app2(?:\/|$)/i.test(s)?s.replace(/\/?$/,'/') : CN_DEFAULT_PUBLIC;}
   function cfg(){try{const v=JSON.parse(localStorage.getItem(KEY)||'{}');const out=Object.assign({cloud:CN_DEFAULT_CLOUD,preset:CN_DEFAULT_PRESET,publicBase:CN_DEFAULT_PUBLIC},v||{});out.publicBase=normalizePublicBase(out.publicBase);if(out.publicBase!==v?.publicBase){try{localStorage.setItem(KEY,JSON.stringify(out));}catch(e){}}return out;}catch(e){return {cloud:CN_DEFAULT_CLOUD,preset:CN_DEFAULT_PRESET,publicBase:CN_DEFAULT_PUBLIC};}}
   function saveCfg(){const cloud=(document.getElementById('cnCloudName')?.value||CN_DEFAULT_CLOUD).trim();const preset=(document.getElementById('cnCloudPreset')?.value||CN_DEFAULT_PRESET).trim();const publicBase=normalizePublicBase(document.getElementById('cnPhotoPublicBase')?.value||CN_DEFAULT_PUBLIC);localStorage.setItem(KEY,JSON.stringify({cloud,preset,publicBase}));}
-  function isValidCustomerPhotoLink(v){return /^https:\/\/shinhr1206-lab\.github\.io\/cleannova-app2\/index\.html#cn-photo-view=/i.test(String(v||''));}
+  function isValidCustomerPhotoLink(v){const s=String(v||'');return /^https:\/\/shinhr1206-lab\.github\.io\/cleannova-app2\/(?:index\.html)?(?:[?#].*)?$/i.test(s)&&/cn-photo-view=/.test(s)||/^https:\/\/(?:is\.gd|v\.gd)\/[A-Za-z0-9_-]+$/i.test(s)||/^https:\/\/cleanuri\.com\/[A-Za-z0-9_-]+$/i.test(s);}
   try{if(Array.isArray(bookings)){let dirty=false;bookings.forEach(b=>{if(b&&b.customerPhotoLink&&!isValidCustomerPhotoLink(b.customerPhotoLink)){delete b.customerPhotoLink;delete b.customerPhotoLinkAt;dirty=true;}});if(dirty&&typeof save==='function')save();}}catch(e){}
   window.cnGetCustomerPhotoLink=function(){const b=(bookings||[]).find(x=>x.id===selectedBookingId);return isValidCustomerPhotoLink(b?.customerPhotoLink)?b.customerPhotoLink:''};
   window.cnOpenPhotoSettings=(function(orig){return function(){if(typeof orig==='function')orig();setTimeout(()=>{const c=cfg();const a=document.getElementById('cnCloudName'),p=document.getElementById('cnCloudPreset'),u=document.getElementById('cnPhotoPublicBase');if(a)a.value=c.cloud||CN_DEFAULT_CLOUD;if(p)p.value=c.preset||CN_DEFAULT_PRESET;if(u)u.value=c.publicBase||CN_DEFAULT_PUBLIC},0)}})(window.cnOpenPhotoSettings);
   window.cnSavePhotoSettings=(function(orig){return function(){saveCfg();if(typeof orig==='function')orig();else msg('사진 설정을 저장했습니다.')}})(window.cnSavePhotoSettings);
   function esc(v){return String(v??'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));}
   function getSharePayload(b){const c=(customers||[]).find(x=>x.name===b.name)||{};const d=detailDataForBooking(b);const photos=(Array.isArray(d.photos)?d.photos:[]).map((p,i)=>({url:typeof p==='string'?p:p?.src||'',type:typeof p==='object'&&p?.type==='before'?'before':'after',date:typeof p==='object'?p?.date||'':''})).filter(x=>x.url);return {id:b.id,bookingNo:b.bookingNo||b.reservationNo||'',name:b.name||c.name||'',date:b.date||'',time:b.time||'',service:b.type||c.type||'서비스',photos};}
-  async function uploadPhoto(cloud,preset,dataUrl,publicId){const blob=await (await fetch(dataUrl)).blob();const fd=new FormData();fd.append('file',blob,'cleannova.jpg');fd.append('upload_preset',preset);fd.append('folder','cleannova/'+(publicId||'photos'));const r=await fetch('https://api.cloudinary.com/v1_1/'+encodeURIComponent(cloud)+'/image/upload',{method:'POST',body:fd});if(!r.ok)throw new Error('사진 업로드 실패');const j=await r.json();return j.secure_url||j.url;}
-  function buildViewUrl(payload){const c=cfg();const base=normalizePublicBase(c.publicBase);const finalBase=/index\.html(?:$|[?#])/i.test(base)?base:base+'index.html';const token=btoa(unescape(encodeURIComponent(JSON.stringify(payload)))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');return finalBase+'#cn-photo-view='+token;}
-  function renderShareState(b){const url=b?.customerPhotoLink||'';const st=document.getElementById('cnPhotoShareStatus'),box=document.getElementById('cnPhotoShareUrl');if(st)st.textContent=url?'링크 발급됨':'미발급';if(box){box.style.display=url?'block':'none';box.textContent=url||'';}}
-  window.cnCreateCustomerPhotoLink=async function(){
-    const b=(bookings||[]).find(x=>x.id===selectedBookingId);if(!b){msg('현재 예약을 찾을 수 없습니다.');return;}
-    const payload=getSharePayload(b);if(!payload.photos.length){msg('먼저 작업 전·후 사진을 등록해주세요.');return;}
-    const c=cfg();if(!c.cloud||!c.preset){msg('사진설정에서 Cloudinary 설정을 먼저 입력해주세요.');if(typeof cnOpenPhotoSettings==='function')cnOpenPhotoSettings();return;}
-    try{msg('고객용 사진 링크를 만드는 중입니다...');const uploaded=[];for(let i=0;i<payload.photos.length;i++){const p=payload.photos[i];uploaded.push({...p,url:await uploadPhoto(c.cloud,c.preset,p.url,b.id)});}payload.photos=uploaded;
-      // Link embeds the uploaded URLs, not local browser data.
-      const link=buildViewUrl(payload);b.customerPhotoLink=link;b.customerPhotoLinkAt=new Date().toISOString();save();renderShareState(b);msg('고객용 사진 링크가 만들어졌습니다.');
-    }catch(e){console.error(e);msg('사진 업로드에 실패했습니다. Cloudinary 설정과 인터넷 연결을 확인해주세요.');}
-  };
-  window.cnSendCustomerPhotoLink=function(){const b=(bookings||[]).find(x=>x.id===selectedBookingId),c=(customers||[]).find(x=>x.name===b?.name)||{};if(!b||!c.phone){msg('고객 전화번호가 없습니다.');return}const link=window.cnGetCustomerPhotoLink();if(!link){msg('사진 링크를 다시 만들어주세요.');return}const text='안녕하세요, 클린노바입니다.\n\n작업 전·후 사진을 확인하실 수 있습니다.\n'+link;location.href='sms:'+c.phone.replace(/[^0-9+]/g,'')+'?body='+encodeURIComponent(text)};
-  window.cnRenderPhotoShare=window.cnRenderPhotoShare||function(){const b=(bookings||[]).find(x=>x.id===selectedBookingId);if(b)renderShareState(b)};
-  function renderPublic(){const h=location.hash||'';if(!h.startsWith('#cn-photo-view='))return;try{const token=h.slice(15);const json=decodeURIComponent(escape(atob(token.replace(/-/g,'+').replace(/_/g,'/'))));const p=JSON.parse(json);document.body.innerHTML='<div style="font-family:system-ui,sans-serif;max-width:760px;margin:0 auto;padding:22px;background:#f7fbfd;min-height:100vh;box-sizing:border-box"><h2 style="color:#183e53;margin:0 0 6px">📷 클린노바 작업사진</h2><div style="color:#6d808c;font-size:13px;margin-bottom:18px">'+esc(p.name)+' · '+esc(p.date)+' '+esc(p.time)+'</div><div style="display:grid;gap:18px">'+p.photos.map(x=>'<section style="background:#fff;border:1px solid #dce7ec;border-radius:16px;padding:12px"><b style="display:block;margin-bottom:8px;color:#31566b">'+(x.type==='before'?'작업 전':'작업 후')+'</b><img src="'+esc(x.url)+'" style="display:block;width:100%;height:auto;border-radius:12px" loading="lazy"><small style="display:block;margin-top:6px;color:#8a9aa3">'+esc(x.date||'')+'</small></section>').join('')+'</div><div style="margin-top:22px;padding:12px;background:#eef7fb;border-radius:12px;color:#5c7480;font-size:11px;line-height:1.5">클린노바 고객 전용 사진 페이지입니다.</div></div>';}catch(e){document.body.innerHTML='<div style="font-family:system-ui,sans-serif;padding:30px">사진 링크를 열 수 없습니다.</div>';}}
-  window.addEventListener('hashchange',renderPublic);if(location.hash.startsWith('#cn-photo-view='))renderPublic();
-  const oldOpen=window.openDetail;window.openDetail=function(){const r=oldOpen&&oldOpen.apply(this,arguments);setTimeout(()=>window.cnRenderPhotoShare(),0);return r};
-})();
-</script>
-
-<script>
-/* CleanNova customer photo sharing — stable URLVanish short-link implementation */
-(function(){
-  const KEY='cn8_cloudinary';
-  const DEF={
-    cloud:'aaud0ax6',
-    preset:'cleannova_upload',
-    publicBase:'https://shinhr1206-lab.github.io/cleannova-app2/'
-  };
-
-  function readCfg(){
-    try{return Object.assign({},DEF,JSON.parse(localStorage.getItem(KEY)||'{}'));}
-    catch(e){return {...DEF};}
-  }
-  function writeCfg(v){
-    try{localStorage.setItem(KEY,JSON.stringify(Object.assign({},DEF,v||{})));}catch(e){}
-  }
-  function normalizeBase(v){
-    const s=String(v||'').trim();
-    return /^https?:\/\/shinhr1206-lab\.github\.io\/cleannova-app2(?:\/|$)/i.test(s)
-      ? s.replace(/\/?$/,'/')
-      : DEF.publicBase;
-  }
-  function cfg(){
-    const v=readCfg();
-    v.publicBase=normalizeBase(v.publicBase);
-    return v;
-  }
-
-  const c0=cfg();
-  writeCfg(c0);
-
-  const origOpen=window.cnOpenPhotoSettings;
-  window.cnOpenPhotoSettings=function(){
-    if(typeof origOpen==='function')origOpen();
-    setTimeout(function(){
-      const v=cfg();
-      [['cnCloudName',v.cloud],['cnCloudPreset',v.preset],['cnPhotoPublicBase',v.publicBase]]
-        .forEach(function(a){const el=document.getElementById(a[0]);if(el)el.value=a[1];});
-    },30);
-  };
-
-  const origSave=window.cnSavePhotoSettings;
-  window.cnSavePhotoSettings=function(){
-    const v={
-      cloud:(document.getElementById('cnCloudName')?.value||DEF.cloud).trim(),
-      preset:(document.getElementById('cnCloudPreset')?.value||DEF.preset).trim(),
-      publicBase:normalizeBase(document.getElementById('cnPhotoPublicBase')?.value||DEF.publicBase)
-    };
-    writeCfg(v);
-    if(typeof origSave==='function')origSave();
-    else if(typeof msg==='function')msg('사진 설정을 저장했습니다.');
-  };
-
-  function esc(v){
-    return String(v??'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
-  }
-
-  function getSharePayload(b){
-    const c=(customers||[]).find(x=>x.name===b.name)||{};
-    const d=detailDataForBooking(b);
-    const photos=(Array.isArray(d.photos)?d.photos:[])
-      .map(p=>({
-        url:typeof p==='string'?p:p?.src||'',
-        type:typeof p==='object'&&p?.type==='before'?'before':'after',
-        date:typeof p==='object'?p?.date||'':''
-      }))
-      .filter(x=>x.url);
-    return {
-      id:b.id,
-      bookingNo:b.bookingNo||b.reservationNo||'',
-      name:b.name||c.name||'',
-      date:b.date||'',
-      time:b.time||'',
-      service:b.type||c.type||'서비스',
-      photos
-    };
-  }
-
   async function uploadPhoto(cloud,preset,dataUrl,publicId){
+    // 이미 Cloudinary URL이면 다시 업로드하지 않습니다.
+    if(/^https?:\/\//i.test(String(dataUrl||''))) return dataUrl;
     const blob=await (await fetch(dataUrl)).blob();
     const fd=new FormData();
     fd.append('file',blob,'cleannova.jpg');
     fd.append('upload_preset',preset);
     fd.append('folder','cleannova/'+(publicId||'photos'));
-    const r=await fetch(
-      'https://api.cloudinary.com/v1_1/'+encodeURIComponent(cloud)+'/image/upload',
-      {method:'POST',body:fd}
-    );
+    const r=await fetch('https://api.cloudinary.com/v1_1/'+encodeURIComponent(cloud)+'/image/upload',{method:'POST',body:fd});
     if(!r.ok)throw new Error('사진 업로드 실패');
     const j=await r.json();
-    const url=j.secure_url||j.url;
-    if(!url)throw new Error('Cloudinary URL 없음');
-    return url;
+    return j.secure_url||j.url;
   }
-
-  function buildViewUrl(payload){
-    const base=normalizeBase(cfg().publicBase);
-    const finalBase=/index\.html(?:$|[?#])/i.test(base)?base:base+'index.html';
-    const token=btoa(unescape(encodeURIComponent(JSON.stringify(payload))))
-      .replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
-    return finalBase+'#cn-photo-view='+token;
-  }
-
-  function isValidCustomerPhotoLink(v){
-    const s=String(v||'');
-    return /^https:\/\/urlvanish\.com\/[A-Za-z0-9_-]+$/i.test(s)
-      || /^https:\/\/is\.gd\/[A-Za-z0-9_-]+$/i.test(s)
-      || /^https:\/\/v\.gd\/[A-Za-z0-9_-]+$/i.test(s)
-      || /^https:\/\/shinhr1206-lab\.github\.io\/cleannova-app2\/index\.html#cn-photo-view=/i.test(s);
-  }
-
-  window.cnGetCustomerPhotoLink=function(){
-    const b=(bookings||[]).find(x=>x.id===selectedBookingId);
-    return isValidCustomerPhotoLink(b?.customerPhotoLink)?b.customerPhotoLink:'';
+  window.cnUploadPhotoDirect=async function(dataUrl,publicId){
+    const c=cfg();
+    if(!c.cloud||!c.preset) throw new Error('Cloudinary 설정이 없습니다.');
+    return await uploadPhoto(c.cloud,c.preset,dataUrl,publicId||'photos');
   };
-
-  function renderShareState(b){
-    const url=b?.customerPhotoLink||'';
-    const st=document.getElementById('cnPhotoShareStatus');
-    const box=document.getElementById('cnPhotoShareUrl');
-    if(st)st.textContent=url?'링크 발급됨':'미발급';
-    if(box){
-      box.style.display=url?'block':'none';
-      box.textContent=url||'';
-    }
-  }
-
-  async function fetchWithTimeout(url,ms){
-    const ctrl=new AbortController();
-    const timer=setTimeout(()=>ctrl.abort(),ms);
-    try{
-      return await fetch(url,{method:'GET',mode:'cors',cache:'no-store',redirect:'follow',signal:ctrl.signal});
-    }finally{
-      clearTimeout(timer);
-    }
-  }
-
-  function toBase64UrlSafeUtf8(s){
-    const bytes=new TextEncoder().encode(String(s));
-    let bin='';
-    for(let i=0;i<bytes.length;i+=0x8000){
-      bin+=String.fromCharCode(...bytes.subarray(i,i+0x8000));
-    }
-    return btoa(bin);
-  }
-
-  async function shortenWithUrlVanish(longUrl){
-    const encoded=encodeURIComponent(longUrl);
-    const url='https://urlvanish.com/api/shorten?format=simple&url='+encoded;
-    const r=await fetchWithTimeout(url,12000);
-    if(!r.ok)throw new Error('URLVanish HTTP '+r.status);
-    const out=(await r.text()).trim();
-    if(!/^https:\/\/urlvanish\.com\/[A-Za-z0-9_-]+$/i.test(out)){
-      throw new Error('단축 응답이 올바르지 않습니다: '+out.slice(0,120));
-    }
-    return out;
-  }
-
-  async function shortenWithIsGdJsonp(longUrl){
-    return new Promise(function(resolve,reject){
-      const callback='__cnShort_'+Date.now()+'_'+Math.random().toString(36).slice(2);
-      let done=false;
+  function shortenUrl(longUrl){
+    if(!longUrl || !/^https?:\/\//i.test(longUrl)) return Promise.reject(new Error('invalid long url'));
+    return new Promise((resolve,reject)=>{
+      const cb='__cnShort_'+Date.now()+'_'+Math.random().toString(36).slice(2);
       const script=document.createElement('script');
-      const timer=setTimeout(function(){
-        finish(new Error('is.gd 응답 시간 초과'));
-      },12000);
-
-      function cleanup(){
-        clearTimeout(timer);
-        try{delete window[callback];}catch(e){window[callback]=undefined;}
-        if(script.parentNode)script.parentNode.removeChild(script);
-      }
-      function finish(err,value){
-        if(done)return;
-        done=true;
-        cleanup();
-        err?reject(err):resolve(value);
-      }
-
-      window[callback]=function(data){
-        const out=String(data?.shorturl||data?.short_url||'').trim();
-        if(/^https:\/\/is\.gd\/[A-Za-z0-9_-]+$/i.test(out))finish(null,out);
-        else finish(new Error(String(data?.error||'is.gd 단축 실패')));
+      let done=false;
+      const timer=setTimeout(()=>finish(new Error('단축서비스 응답시간 초과')),12000);
+      function cleanup(){clearTimeout(timer);try{delete window[cb]}catch(e){window[cb]=undefined}if(script.parentNode)script.parentNode.removeChild(script)}
+      function finish(err,url){if(done)return;done=true;cleanup();if(err)reject(err);else resolve(url)}
+      window[cb]=function(data){
+        const u=String(data?.shorturl||data?.result_url||'').trim();
+        if(/^https:\/\/(?:is\.gd|v\.gd)\/[A-Za-z0-9_-]+$/i.test(u)) finish(null,u);
+        else finish(new Error(String(data?.error||'단축서비스에서 짧은 링크를 반환하지 않았습니다.')));
       };
-      script.onerror=function(){finish(new Error('is.gd 네트워크 오류'));};
-
-      const q='https://is.gd/create.php?format=json&callback='+encodeURIComponent(callback)+'&url='+encodeURIComponent(longUrl);
-      script.src=q;
+      script.async=true;
+      script.src='https://is.gd/create.php?format=json&callback='+encodeURIComponent(cb)+'&url='+encodeURIComponent(longUrl);
+      script.onerror=()=>finish(new Error('단축서비스 연결 실패'));
       document.head.appendChild(script);
     });
   }
-
-  async function createShortLink(longUrl){
-    try{
-      return await shortenWithUrlVanish(longUrl);
-    }catch(e1){
-      console.warn('URLVanish 실패, is.gd 재시도',e1);
-      return await shortenWithIsGdJsonp(longUrl);
-    }
+  function buildViewUrl(payload){
+    const c=cfg();const base=normalizePublicBase(c.publicBase);
+    const finalBase=/index\.html(?:$|[?#])/i.test(base)?base:base+'index.html';
+    const token=btoa(unescape(encodeURIComponent(JSON.stringify(payload)))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+    return finalBase+'?cn-photo-view='+encodeURIComponent(token);
   }
-
+  function renderShareState(b){const url=b?.customerPhotoLink||'';const st=document.getElementById('cnPhotoShareStatus'),box=document.getElementById('cnPhotoShareUrl');if(st)st.textContent=url?'링크 발급됨':'미발급';if(box){box.style.display=url?'block':'none';box.textContent=url||'';}}
   window.cnCreateCustomerPhotoLink=async function(){
     const b=(bookings||[]).find(x=>x.id===selectedBookingId);
     if(!b){msg('현재 예약을 찾을 수 없습니다.');return;}
-
     const payload=getSharePayload(b);
-    if(!payload.photos.length){
-      msg('먼저 작업 전·후 사진을 등록해주세요.');
-      return;
-    }
-
+    if(!payload.photos.length){msg('먼저 작업 전·후 사진을 등록해주세요.');return;}
     const c=cfg();
-    if(!c.cloud||!c.preset){
-      msg('사진설정에서 Cloudinary 설정을 먼저 입력해주세요.');
-      if(typeof cnOpenPhotoSettings==='function')cnOpenPhotoSettings();
-      return;
-    }
-
+    if(!c.cloud||!c.preset){msg('사진설정에서 Cloudinary 설정을 먼저 입력해주세요.');if(typeof cnOpenPhotoSettings==='function')cnOpenPhotoSettings();return;}
     try{
-      msg('사진을 온라인에 올리는 중입니다...');
+      msg('사진을 준비하는 중입니다...');
       const uploaded=[];
       for(let i=0;i<payload.photos.length;i++){
         const p=payload.photos[i];
         uploaded.push({...p,url:await uploadPhoto(c.cloud,c.preset,p.url,b.id)});
       }
       payload.photos=uploaded;
-
-      const longUrl=buildViewUrl(payload);
-      msg('짧은 링크를 만드는 중입니다...');
-
-      const shortUrl=await createShortLink(longUrl);
-
-      // Only save after a real short URL has been returned.
-      b.customerPhotoLink=shortUrl;
+      const longLink=buildViewUrl(payload);
+      msg('짧은 링크 생성 중입니다...');
+      const link=await shortenUrl(longLink);
+      if(!link) throw new Error('짧은 링크가 생성되지 않았습니다.');
+      b.customerPhotoLink=link;
       b.customerPhotoLinkAt=new Date().toISOString();
-      b.customerPhotoLongLink=longUrl;
       save();
       renderShareState(b);
-      msg('짧은 고객 사진 링크가 만들어졌습니다.');
+      msg('고객용 짧은 링크가 만들어졌습니다.');
     }catch(e){
-      console.error('CleanNova photo link error:',e);
+      console.error('customer photo link error',e);
       msg('짧은 링크 생성에 실패했습니다. 잠시 후 다시 시도해주세요.');
     }
   };
-
-  window.cnSendCustomerPhotoLink=function(){
+  window.cnSendCustomerPhotoLink=async function(){
     const b=(bookings||[]).find(x=>x.id===selectedBookingId);
     const c=(customers||[]).find(x=>x.name===b?.name)||{};
     if(!b||!c.phone){msg('고객 전화번호가 없습니다.');return;}
-
-    const link=window.cnGetCustomerPhotoLink();
-    if(!link){
-      msg('먼저 사진 링크를 만들어주세요.');
-      return;
+    let link=window.cnGetCustomerPhotoLink();
+    if(!link){msg('먼저 사진 링크 만들기를 눌러주세요.');return;}
+    if(!/^https:\/\/(?:is\.gd|v\.gd|cleanuri\.com)\/[A-Za-z0-9_-]+$/i.test(link)){
+      msg('저장된 링크가 짧은 링크가 아닙니다. 사진 링크를 다시 만들어주세요.');return;
     }
-
     const text='안녕하세요, 클린노바입니다.\n\n작업 전·후 사진을 확인하실 수 있습니다.\n'+link;
     location.href='sms:'+c.phone.replace(/[^0-9+]/g,'')+'?body='+encodeURIComponent(text);
   };
+  window.cnRenderPhotoShare=window.cnRenderPhotoShare||function(){const b=(bookings||[]).find(x=>x.id===selectedBookingId);if(b)renderShareState(b)};
+  function renderPublic(){const h=location.hash||'';const q=new URLSearchParams(location.search||'');const token=q.get('cn-photo-view')||(h.startsWith('#cn-photo-view=')?h.slice(15):'');if(!token)return;try{const json=decodeURIComponent(escape(atob(token.replace(/-/g,'+').replace(/_/g,'/'))));const p=JSON.parse(json);document.body.innerHTML='<div style="font-family:system-ui,sans-serif;max-width:760px;margin:0 auto;padding:22px;background:#f7fbfd;min-height:100vh;box-sizing:border-box"><h2 style="color:#183e53;margin:0 0 6px">📷 클린노바 작업사진</h2><div style="color:#6d808c;font-size:13px;margin-bottom:18px">'+esc(p.name)+' · '+esc(p.date)+' '+esc(p.time)+'</div><div style="display:grid;gap:18px">'+p.photos.map(x=>'<section style="background:#fff;border:1px solid #dce7ec;border-radius:16px;padding:12px"><b style="display:block;margin-bottom:8px;color:#31566b">'+(x.type==='before'?'작업 전':'작업 후')+'</b><img src="'+esc(x.url)+'" style="display:block;width:100%;height:auto;border-radius:12px" loading="lazy"><small style="display:block;margin-top:6px;color:#8a9aa3">'+esc(x.date||'')+'</small></section>').join('')+'</div><div style="margin-top:22px;padding:12px;background:#eef7fb;border-radius:12px;color:#5c7480;font-size:11px;line-height:1.5">클린노바 고객 전용 사진 페이지입니다.</div></div>';}catch(e){document.body.innerHTML='<div style="font-family:system-ui,sans-serif;padding:30px">사진 링크를 열 수 없습니다.</div>';}}
+  window.addEventListener('hashchange',renderPublic);if(location.hash.startsWith('#cn-photo-view='))renderPublic();
+  const oldOpen=window.openDetail;window.openDetail=function(){const r=oldOpen&&oldOpen.apply(this,arguments);setTimeout(()=>window.cnRenderPhotoShare(),0);return r};
+})();
+</script>
 
-  window.cnRenderPhotoShare=window.cnRenderPhotoShare||function(){
-    const b=(bookings||[]).find(x=>x.id===selectedBookingId);
-    if(b)renderShareState(b);
-  };
-
-  const oldOpen=window.openDetail;
-  window.openDetail=function(){
-    const r=oldOpen&&oldOpen.apply(this,arguments);
-    setTimeout(()=>window.cnRenderPhotoShare(),0);
-    return r;
-  };
+<script>
+/* v-final-photo-link: Cloudinary defaults + public GitHub Pages link hardening */
+(function(){
+  const KEY='cn8_cloudinary';
+  const DEF={cloud:'aaud0ax6',preset:'cleannova_upload',publicBase:'https://shinhr1206-lab.github.io/cleannova-app2/'};
+  function read(){try{return Object.assign({},DEF,JSON.parse(localStorage.getItem(KEY)||'{}'));}catch(e){return {...DEF};}}
+  function write(v){try{localStorage.setItem(KEY,JSON.stringify(Object.assign({},DEF,v||{})));}catch(e){}}
+  const c=read();
+  if(!localStorage.getItem(KEY)||!c.cloud||!c.preset||!c.publicBase)write(c);
+  const origOpen=window.cnOpenPhotoSettings;
+  window.cnOpenPhotoSettings=function(){if(typeof origOpen==='function')origOpen();setTimeout(function(){const v=read();[['cnCloudName',v.cloud],['cnCloudPreset',v.preset],['cnPhotoPublicBase',v.publicBase]].forEach(function(a){const el=document.getElementById(a[0]);if(el)el.value=a[1];});},30);};
+  const origSave=window.cnSavePhotoSettings;
+  window.cnSavePhotoSettings=function(){const v={cloud:(document.getElementById('cnCloudName')?.value||DEF.cloud).trim(),preset:(document.getElementById('cnCloudPreset')?.value||DEF.preset).trim(),publicBase:(document.getElementById('cnPhotoPublicBase')?.value||DEF.publicBase).trim()};write(v);if(typeof origSave==='function')origSave();};
 })();
 </script>
 <script id="cn-v92-reservation-item-lines">
