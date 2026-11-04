@@ -1,4 +1,4 @@
-name: Build CleanNova APK
+name: Build Ssambbakhayu APK
 
 on:
   workflow_dispatch:
@@ -47,5 +47,5 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: cleannova-apk
+          name: ssambbakhayu-apk
           path: android/app/build/outputs/apk/debug/app-debug.apk
