@@ -37,6 +37,67 @@ jobs:
       - name: Add Android platform
         run: npx cap add android
 
+      - name: Apply Ssambbakhayu Android launcher icons
+        run: |
+          python3 -m pip install --quiet Pillow
+          python3 - <<'PYCODE'
+          from pathlib import Path
+          from PIL import Image, ImageOps
+
+          source = Image.open("www/icons/icon-512.png").convert("RGBA")
+          res = Path("android/app/src/main/res")
+
+          # Legacy launcher icons for older Android versions.
+          for density, size in {
+              "mdpi": 48, "hdpi": 72, "xhdpi": 96,
+              "xxhdpi": 144, "xxxhdpi": 192,
+          }.items():
+              folder = res / f"mipmap-{density}"
+              folder.mkdir(parents=True, exist_ok=True)
+              icon = ImageOps.fit(source, (size, size), method=Image.Resampling.LANCZOS)
+              icon.save(folder / "ic_launcher.png", optimize=True)
+              icon.save(folder / "ic_launcher_round.png", optimize=True)
+
+          # Adaptive icon foreground: isolate the blue logo and keep it inside Android's safe area.
+          pixels = source.load()
+          xs, ys = [], []
+          for yy in range(source.height):
+              for xx in range(source.width):
+                  r, g, b, a = pixels[xx, yy]
+                  if a > 0 and min(r, g, b) < 225:
+                      xs.append(xx); ys.append(yy)
+          if xs and ys:
+              bbox = (min(xs), min(ys), max(xs) + 1, max(ys) + 1)
+              mark = source.crop(bbox)
+              mark.thumbnail((286, 286), Image.Resampling.LANCZOS)
+              canvas = Image.new("RGBA", (432, 432), (0, 0, 0, 0))
+              canvas.alpha_composite(mark, ((432 - mark.width) // 2, (432 - mark.height) // 2))
+          else:
+              canvas = ImageOps.fit(source, (432, 432), method=Image.Resampling.LANCZOS)
+
+          for density, size in {
+              "mdpi": 108, "hdpi": 162, "xhdpi": 216,
+              "xxhdpi": 324, "xxxhdpi": 432,
+          }.items():
+              folder = res / f"mipmap-{density}"
+              folder.mkdir(parents=True, exist_ok=True)
+              canvas.resize((size, size), Image.Resampling.LANCZOS).save(
+                  folder / "ic_launcher_foreground.png", optimize=True
+              )
+
+          adaptive = res / "mipmap-anydpi-v26"
+          adaptive.mkdir(parents=True, exist_ok=True)
+          xml = '<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android"><background android:drawable="@color/ic_launcher_background" /><foreground android:drawable="@mipmap/ic_launcher_foreground" /></adaptive-icon>'
+          (adaptive / "ic_launcher.xml").write_text(xml, encoding="utf-8")
+          (adaptive / "ic_launcher_round.xml").write_text(xml, encoding="utf-8")
+          values = res / "values"
+          values.mkdir(parents=True, exist_ok=True)
+          (values / "launcher_colors.xml").write_text(
+              '<resources><color name="ic_launcher_background">#FFFFFF</color></resources>',
+              encoding="utf-8"
+          )
+          PYCODE
+
       - name: Copy web app
         run: npx cap copy
 
