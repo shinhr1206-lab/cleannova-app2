@@ -87,15 +87,12 @@ jobs:
 
           adaptive = res / "mipmap-anydpi-v26"
           adaptive.mkdir(parents=True, exist_ok=True)
-          xml = '<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android"><background android:drawable="@color/ic_launcher_background" /><foreground android:drawable="@mipmap/ic_launcher_foreground" /></adaptive-icon>'
+          # Use the platform white color directly. Do not define a second
+          # ic_launcher_background resource: Capacitor already creates one,
+          # and duplicate definitions make :app:mergeDebugResources fail.
+          xml = '<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android"><background android:drawable="@android:color/white" /><foreground android:drawable="@mipmap/ic_launcher_foreground" /></adaptive-icon>'
           (adaptive / "ic_launcher.xml").write_text(xml, encoding="utf-8")
           (adaptive / "ic_launcher_round.xml").write_text(xml, encoding="utf-8")
-          values = res / "values"
-          values.mkdir(parents=True, exist_ok=True)
-          (values / "launcher_colors.xml").write_text(
-              '<resources><color name="ic_launcher_background">#FFFFFF</color></resources>',
-              encoding="utf-8"
-          )
           PYCODE
 
       - name: Copy web app
