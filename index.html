@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<title>클린노바 고객관리</title>
+<title>쌈빡해유 고객관리</title>
 <style>
 *{box-sizing:border-box}
 html,body{margin:0;padding:0;background:#eef5f9;color:#24445b;font-family:Arial,"Noto Sans KR",sans-serif;min-height:100%;overflow-x:hidden}
@@ -892,15 +892,15 @@ nav{height:72px!important;padding:8px 10px calc(8px + env(safe-area-inset-bottom
 <meta content="yes" name="mobile-web-app-capable"/>
 <meta content="yes" name="apple-mobile-web-app-capable"/>
 <meta content="default" name="apple-mobile-web-app-status-bar-style"/>
-<meta content="클린노바" name="apple-mobile-web-app-title"/>
+<meta content="쌈빡해유" name="apple-mobile-web-app-title"/>
 <link href="icons/icon.svg" rel="icon" type="image/svg+xml"/>
 <link href="icons/icon-192.png" rel="apple-touch-icon"/>
-<!-- CleanNova v94 -->
+<!-- Ssambbakhayu v94 -->
 </head>
 <body>
 <div id="app">
 <header>
-<div class="head"><div class="logo">클린<br/>노바</div><div class="brand"><b>클린노바</b><small>에어컨청소 · 고객관리</small></div><button class="logout" onclick="window.cnLogout && window.cnLogout()">로그아웃</button></div>
+<div class="head"><div class="logo">클린<br/>노바</div><div class="brand"><b>쌈빡해유</b><small>에어컨청소 · 고객관리</small></div><button class="logout" onclick="window.cnLogout && window.cnLogout()">로그아웃</button></div>
 <div class="tools"><button onclick="cnOpenPhotoSettings()">사진설정</button><button onclick="cnOpenStandaloneQuote()">견적서</button><button onclick="cnOpenPriceTable()">단가표</button><button onclick="cnBackupData()">백업</button><button onclick="cnOpenRestore()">복구</button></div>
 </header>
 <section class="page on" id="home">
@@ -1208,7 +1208,7 @@ nav{height:72px!important;padding:8px 10px calc(8px + env(safe-area-inset-bottom
 <div class="panel">
 <div class="panelhead"><b>전체 고객에게 안내하기</b></div>
 <div class="field"><label>안내 내용</label>
-<textarea id="bulkMsg" rows="5" style="width:100%;box-sizing:border-box;border:1px solid #ddd;border-radius:10px;padding:10px;font-size:11px;resize:vertical">안녕하세요, 클린노바입니다.
+<textarea id="bulkMsg" rows="5" style="width:100%;box-sizing:border-box;border:1px solid #ddd;border-radius:10px;padding:10px;font-size:11px;resize:vertical">안녕하세요, 쌈빡해유입니다.
 에어컨 청소 후 관리 및 재방문 안내드립니다.
 궁금하신 점은 언제든 편하게 문의해주세요.
 ☎ 010-2488-9109</textarea></div>
@@ -1248,7 +1248,7 @@ nav{height:72px!important;padding:8px 10px calc(8px + env(safe-area-inset-bottom
 <div class="field"><label>연락처</label><input id="cnqPhone" inputmode="tel" placeholder="010-0000-0000"/></div>
 <div class="field cnq-full"><label>주소</label><input id="cnqAddr" placeholder="주소"/></div>
 </div>
-<div class="cnq-company"><b>클린노바</b><span>사업주 신혜린</span><span>사업자등록번호 863-24-02308</span><span>010-2488-9109</span><span>에어컨 청소 전문</span></div>
+<div class="cnq-company"><b>쌈빡해유</b><span>사업주 신혜린</span><span>사업자등록번호 863-24-02308</span><span>010-2488-9109</span><span>에어컨 청소 전문</span></div>
 <div class="field"><label>서비스 품목</label><div id="cnqItems"></div><button class="additem" onclick="cnQuoteAddItem()" type="button">＋ 품목 추가</button></div>
 <div class="cnq-tax"><label><input id="cnqVat" onchange="cnQuoteRenderTotals()" type="checkbox"/> 부가세 10% 적용</label></div>
 <div class="cnq-total"><div><span>공급가액</span><b id="cnqSupply">0원</b></div><div><span>부가세</span><b id="cnqVatAmount">0원</b></div><div class="grand"><span>총 견적금액</span><b id="cnqTotal">0원</b></div></div>
@@ -1368,7 +1368,7 @@ nav{height:72px!important;padding:8px 10px calc(8px + env(safe-area-inset-bottom
 <div class="cn-gallery-body" id="cnGalleryBody"></div>
 </div>
 </div>
-<div class="modal" id="cnRestoreModal"><div class="sheet"><h2>데이터 복구</h2><div class="sub" style="font-size:10px;line-height:1.6">클린노바 백업 JSON 파일을 선택하면 예약·고객·작업상세·결제·세금계산서 데이터를 복구합니다. 현재 브라우저 데이터는 백업 후 복구하세요.</div><div class="field"><label>백업 파일</label><input accept="application/json,.json" id="cnRestoreFile" onchange="cnPreviewRestore(this)" type="file"/></div><div class="info" id="cnRestorePreview" style="display:none"></div><div class="modalbuttons"><button class="cancel" onclick="cnCloseRestore()">취소</button><button class="save" onclick="cnRestoreData()">복구 실행</button></div></div></div>
+<div class="modal" id="cnRestoreModal"><div class="sheet"><h2>데이터 복구</h2><div class="sub" style="font-size:10px;line-height:1.6">쌈빡해유 백업 JSON 파일을 선택하면 예약·고객·작업상세·결제·세금계산서 데이터를 복구합니다. 현재 브라우저 데이터는 백업 후 복구하세요.</div><div class="field"><label>백업 파일</label><input accept="application/json,.json" id="cnRestoreFile" onchange="cnPreviewRestore(this)" type="file"/></div><div class="info" id="cnRestorePreview" style="display:none"></div><div class="modalbuttons"><button class="cancel" onclick="cnCloseRestore()">취소</button><button class="save" onclick="cnRestoreData()">복구 실행</button></div></div></div>
 <div class="modal" id="cnPhotoSettingsModal"><div class="sheet cn-setting-sheet">
 <h2>📸 사진 설정</h2>
 <div class="sub">작업 사진의 기본 촬영 방식과 저장 품질을 설정합니다.</div>
@@ -1378,8 +1378,8 @@ nav{height:72px!important;padding:8px 10px calc(8px + env(safe-area-inset-bottom
 <div class="cn-cloud-section">
 <b>☁️ 고객 링크용 온라인 저장 설정</b>
 <div class="field"><label>Cloudinary Cloud Name</label><input id="cnCloudName" placeholder="예: mycloud123" autocomplete="off"></div>
-<div class="field"><label>Unsigned Upload Preset</label><input id="cnCloudPreset" placeholder="예: cleannova_public" autocomplete="off"></div>
-<div class="field"><label>고객 링크 주소</label><input id="cnPhotoPublicBase" placeholder="https://shinhr1206-lab.github.io/cleannova-app2/" autocomplete="off"></div>
+<div class="field"><label>Unsigned Upload Preset</label><input id="cnCloudPreset" placeholder="예: ssambbakhayu_public" autocomplete="off"></div>
+<div class="field"><label>고객 링크 주소</label><input id="cnPhotoPublicBase" placeholder="https://shinhr1206-lab.github.io/ssambbakhayu-app2/" autocomplete="off"></div>
 <div class="cn-cloud-help">고객 링크 주소는 고객 휴대폰에서 열리는 공개 웹주소입니다. GitHub Pages 주소를 사용하면 됩니다. 고객에게 사진 링크를 보내려면 사진이 인터넷에 저장되어야 합니다. Cloudinary의 무료/무제한이 아닌 요금 정책은 별도 확인이 필요하며, 여기에는 비밀번호나 API Secret을 입력하지 마세요.</div>
 </div>
 <div class="info" style="margin:8px 0;font-size:9px;line-height:1.5">사진은 브라우저 저장공간에 압축 저장됩니다. 기존 사진에는 설정이 소급 적용되지 않습니다.</div>
@@ -1878,8 +1878,8 @@ function copyDocument(kind){
  const lines=items.map((x,i)=>`${i+1}. ${x.service} / ${x.qty}개 × ${x.unit.toLocaleString()}원 = ${x.amount.toLocaleString()}원`).join("\n");
  const memo=document.getElementById("docMemo").value.trim();
  const text=kind==="견적서"
- ?`[클린노바 견적서]\n고객명: ${n}\n연락처: ${c.phone||"-"}\n${lines}\n총 견적금액: ${total.toLocaleString()}원\n${memo?"메모: "+memo+"\n":""}문의: 010-2488-9109`
- :`[클린노바 영수증]\n고객명: ${n}\n${lines}\n결제금액: ${total.toLocaleString()}원\n작업일: ${new Date().toLocaleDateString("ko-KR")}\n문의: 010-2488-9109`;
+ ?`[쌈빡해유 견적서]\n고객명: ${n}\n연락처: ${c.phone||"-"}\n${lines}\n총 견적금액: ${total.toLocaleString()}원\n${memo?"메모: "+memo+"\n":""}문의: 010-2488-9109`
+ :`[쌈빡해유 영수증]\n고객명: ${n}\n${lines}\n결제금액: ${total.toLocaleString()}원\n작업일: ${new Date().toLocaleDateString("ko-KR")}\n문의: 010-2488-9109`;
  navigator.clipboard?.writeText(text).then(()=>{msg(kind+" 내용이 복사되었습니다.");renderReports()}).catch(()=>msg(kind+" 내용을 복사하지 못했습니다."));
 }
 function renderReports(){
@@ -1902,12 +1902,12 @@ function exportCustomerData(){
  const data={customers,bookings,details:{}};
  customers.forEach(c=>data.details[c.name]=detailData(c.name));
  const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
- const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="클린노바_고객데이터_"+new Date().toISOString().slice(0,10)+".json";a.click();URL.revokeObjectURL(a.href);
+ const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="쌈빡해유_고객데이터_"+new Date().toISOString().slice(0,10)+".json";a.click();URL.revokeObjectURL(a.href);
 }
 function makeReceipt(name){
  const c=customers.find(x=>x.name===name), d=detailData(name);
  if(!c){msg("고객 정보를 찾을 수 없습니다.");return}
- const text=`클린노바 작업내역\n고객명: ${c.name}\n연락처: ${c.phone||"-"}\n주소: ${c.addr||"-"}\n서비스: ${c.type||"-"}\n금액: ${Number(d.price||0).toLocaleString()}원\n작업일: ${new Date().toLocaleDateString("ko-KR")}\n문의: 010-2488-9109`;
+ const text=`쌈빡해유 작업내역\n고객명: ${c.name}\n연락처: ${c.phone||"-"}\n주소: ${c.addr||"-"}\n서비스: ${c.type||"-"}\n금액: ${Number(d.price||0).toLocaleString()}원\n작업일: ${new Date().toLocaleDateString("ko-KR")}\n문의: 010-2488-9109`;
  navigator.clipboard?.writeText(text).then(()=>msg("작업내역이 복사되었습니다. 문자/카톡에 붙여넣어 주세요.")).catch(()=>msg("작업내역을 복사하지 못했습니다."));
 }
 
@@ -1938,7 +1938,7 @@ async function sendOneKakao(i){
  const text=getBulkMessage();
  try{
   await navigator.clipboard.writeText(text);
-  if(navigator.share) await navigator.share({title:"클린노바 고객 안내",text:text});
+  if(navigator.share) await navigator.share({title:"쌈빡해유 고객 안내",text:text});
   else msg(c.name+" 고객 안내문을 복사했습니다. 카카오톡에 붙여넣어 주세요.");
  }catch(e){msg("안내문을 복사했습니다. 카카오톡에서 붙여넣어 주세요.");}
 }
@@ -1959,7 +1959,7 @@ async function sendBulkKakao(){
  try{
   await navigator.clipboard.writeText(text);
   if(navigator.share){
-    await navigator.share({title:"클린노바 고객 안내",text:text});
+    await navigator.share({title:"쌈빡해유 고객 안내",text:text});
   }else{
     msg("안내문을 복사했습니다. 카카오톡에서 고객별로 붙여넣어 보내주세요.");
   }
@@ -2291,9 +2291,9 @@ function takePhoto(type){
 function photoGallery(type="after"){choosePhotos(type)}
 function photoCamera(type="after"){takePhoto(type)}
 function photo(){choosePhotos("after")}
-function messageText(){let c=customers.find(x=>x.name===selected),d=detail();return `안녕하세요, 클린노바입니다 😊\\n\\n에어컨 청소 작업 안내드립니다.\\n청소 금액: ${won(d.price)}\\n${d.revisit?"다음 재방문 권장일: "+d.revisit:""}\\n\\n클린노바 010-2488-9109\\n카카오톡 오픈톡: 클린노바`}
+function messageText(){let c=customers.find(x=>x.name===selected),d=detail();return `안녕하세요, 쌈빡해유입니다 😊\\n\\n에어컨 청소 작업 안내드립니다.\\n청소 금액: ${won(d.price)}\\n${d.revisit?"다음 재방문 권장일: "+d.revisit:""}\\n\\n쌈빡해유 010-2488-9109\\n카카오톡 오픈톡: 쌈빡해유`}
 function sendSMS(){let c=customers.find(x=>x.name===selected);if(!c?.phone){msg("고객 전화번호가 없습니다");return}let link=cnGetCustomerPhotoLink();let text=messageText();if(link)text+="\n\n📷 작업 전·후 사진 보기\n"+link;location.href="sms:"+c.phone.replace(/[^0-9+]/g,"")+"?body="+encodeURIComponent(text)}
-function sendShare(){if(navigator.share)navigator.share({title:"클린노바 안내",text:messageText()}).catch(()=>{});else navigator.clipboard?.writeText(messageText()).then(()=>msg("안내문구를 복사했습니다."))}
+function sendShare(){if(navigator.share)navigator.share({title:"쌈빡해유 안내",text:messageText()}).catch(()=>{});else navigator.clipboard?.writeText(messageText()).then(()=>msg("안내문구를 복사했습니다."))}
 render();renderRevisit();renderMessages();renderReports();renderDocuments();
 </script>
 <script>
@@ -3170,8 +3170,8 @@ function cnSelectWeekDate(key){
     const lines=items.map((x,i)=>`${i+1}. ${x.service} / ${x.qty}개 × ${x.unit.toLocaleString()}원 = ${x.amount.toLocaleString()}원`).join('\n');
     const memo=d.documentMemo;
     const text=kind==='견적서'
-      ?`[클린노바 견적서]\n예약번호: ${no}\n고객명: ${b.name}\n연락처: ${c.phone||'-'}\n예약일: ${b.date||'-'} ${b.time||''}\n서비스: ${b.type||c.type||'-'}\n${lines}\n총 견적금액: ${total.toLocaleString()}원\n${memo?'메모: '+memo+'\n':''}문의: 010-2488-9109`
-      :`[클린노바 영수증]\n예약번호: ${no}\n고객명: ${b.name}\n연락처: ${c.phone||'-'}\n작업일: ${b.date||'-'}\n서비스: ${b.type||c.type||'-'}\n${lines}\n결제금액: ${total.toLocaleString()}원\n문의: 010-2488-9109`;
+      ?`[쌈빡해유 견적서]\n예약번호: ${no}\n고객명: ${b.name}\n연락처: ${c.phone||'-'}\n예약일: ${b.date||'-'} ${b.time||''}\n서비스: ${b.type||c.type||'-'}\n${lines}\n총 견적금액: ${total.toLocaleString()}원\n${memo?'메모: '+memo+'\n':''}문의: 010-2488-9109`
+      :`[쌈빡해유 영수증]\n예약번호: ${no}\n고객명: ${b.name}\n연락처: ${c.phone||'-'}\n작업일: ${b.date||'-'}\n서비스: ${b.type||c.type||'-'}\n${lines}\n결제금액: ${total.toLocaleString()}원\n문의: 010-2488-9109`;
     navigator.clipboard?.writeText(text).then(()=>{msg(kind+' 내용이 복사되었습니다.');renderReports();fillDocBooking();}).catch(()=>msg(kind+' 내용을 복사하지 못했습니다.'));
   };
   window.cnFlowDocument=function(){
@@ -3236,7 +3236,7 @@ function cnToggleChecklist(i,v){const b=getBooking();if(!b)return;const list=cnG
 function cnCustomerGuide(mode){
  const b=getBooking(); if(!b){msg('예약을 먼저 선택하세요.');return}
  const c=customers.find(x=>x.name===b.name)||{}; const d=detailDataForBooking(b); const price=Number(d.price||b.price||0).toLocaleString();
- const text=`[클린노바 작업완료 안내]\n${c.name||b.name} 고객님, 에어컨 청소 작업이 완료되었습니다.\n예약번호: ${b.bookingNo||b.reservationNo||'-'}\n작업일: ${b.date||'-'} ${b.time||''}\n서비스: ${b.type||'-'}\n작업금액: ${price}원\n작업 전/후 사진이 등록되었습니다.\n이용해주셔서 감사합니다.\n문의: 010-2488-9109`;
+ const text=`[쌈빡해유 작업완료 안내]\n${c.name||b.name} 고객님, 에어컨 청소 작업이 완료되었습니다.\n예약번호: ${b.bookingNo||b.reservationNo||'-'}\n작업일: ${b.date||'-'} ${b.time||''}\n서비스: ${b.type||'-'}\n작업금액: ${price}원\n작업 전/후 사진이 등록되었습니다.\n이용해주셔서 감사합니다.\n문의: 010-2488-9109`;
  const guide=document.getElementById('cnGuideText'); if(guide)guide.textContent=text;
  if(mode==='sms'&&c.phone){location.href='sms:'+c.phone.replace(/[^0-9+]/g,'')+'?body='+encodeURIComponent(text);return}
  navigator.clipboard?.writeText(text).then(()=>msg('고객 안내문이 복사되었습니다.')).catch(()=>msg('안내문을 복사하지 못했습니다.'));
@@ -3502,7 +3502,7 @@ window.cnOpenGalleryPhoto=function(id,index){
 <script>
 (function(){
   const KEY='cn8_customer_guide_template';
-  const DEFAULT='안녕하세요, {고객명} 고객님 😊\n\n클린노바입니다. 에어컨 청소 작업이 완료되었습니다.\n예약번호: {예약번호}\n작업일시: {예약일시}\n서비스: {서비스}\n작업금액: {금액}원\n\n이용해주셔서 감사합니다.\n문의: 010-2488-9109';
+  const DEFAULT='안녕하세요, {고객명} 고객님 😊\n\n쌈빡해유입니다. 에어컨 청소 작업이 완료되었습니다.\n예약번호: {예약번호}\n작업일시: {예약일시}\n서비스: {서비스}\n작업금액: {금액}원\n\n이용해주셔서 감사합니다.\n문의: 010-2488-9109';
   function getTemplate(){return localStorage.getItem(KEY)||DEFAULT}
   function getGuideBooking(){return typeof getBooking==='function'?getBooking():(selectedBookingId?(bookings||[]).find(b=>b.id===selectedBookingId):null)}
   function sampleData(b){
@@ -3565,8 +3565,8 @@ window.cnOpenGalleryPhoto=function(id,index){
   const SMS_KEY='cn8_customer_guide_sms_template';
   const KAKAO_KEY='cn8_customer_guide_kakao_template';
   const LEGACY_KEY='cn8_customer_guide_template';
-  const DEFAULT_SMS='안녕하세요, {고객명} 고객님.\n클린노바 에어컨 청소가 완료되었습니다.\n예약번호: {예약번호}\n작업일시: {예약일시}\n서비스: {서비스}\n작업금액: {금액}원\n이용해주셔서 감사합니다.\n문의: 010-2488-9109';
-  const DEFAULT_KAKAO='안녕하세요, {고객명} 고객님 😊\n\n클린노바입니다. 에어컨 청소 작업이 완료되었습니다.\n예약번호: {예약번호}\n작업일시: {예약일시}\n서비스: {서비스}\n작업금액: {금액}원\n\n작업 완료되었습니다. 이용해주셔서 감사합니다.\n문의: 010-2488-9109';
+  const DEFAULT_SMS='안녕하세요, {고객명} 고객님.\n쌈빡해유 에어컨 청소가 완료되었습니다.\n예약번호: {예약번호}\n작업일시: {예약일시}\n서비스: {서비스}\n작업금액: {금액}원\n이용해주셔서 감사합니다.\n문의: 010-2488-9109';
+  const DEFAULT_KAKAO='안녕하세요, {고객명} 고객님 😊\n\n쌈빡해유입니다. 에어컨 청소 작업이 완료되었습니다.\n예약번호: {예약번호}\n작업일시: {예약일시}\n서비스: {서비스}\n작업금액: {금액}원\n\n작업 완료되었습니다. 이용해주셔서 감사합니다.\n문의: 010-2488-9109';
   function booking(){return typeof getBooking==='function'?getBooking():(selectedBookingId?(bookings||[]).find(b=>b.id===selectedBookingId):null)}
   function render(t,b){if(typeof cnRenderGuideTemplate==='function')return cnRenderGuideTemplate(t,b);let out=t||'';b=b||booking()||{};const c=(customers||[]).find(x=>x.name===b.name)||{};const d=typeof detailDataForBooking==='function'?detailDataForBooking(b):{};const m={'{고객명}':c.name||b.name||'-','{예약번호}':String(b.bookingNo||b.reservationNo||'-'),'{예약일시}':(b.date||'-')+' '+(b.time||''),'{서비스}':b.type||c.type||'-','{금액}':Number(d.price||b.price||0).toLocaleString(),'{재방문}':d.revisit||b.revisit||'없음','{연락처}':c.phone||b.phone||'-'};Object.keys(m).forEach(k=>out=out.split(k).join(m[k]));return out}
   function get(k,def){return localStorage.getItem(k)||def}
@@ -3580,7 +3580,7 @@ window.cnOpenGalleryPhoto=function(id,index){
   window.cnPreviewMessageChannels=function(){const s=document.getElementById('cnSmsTemplateInput'),k=document.getElementById('cnKakaoTemplateInput');if(s)document.getElementById('cnSmsPreview').textContent=render(s.value,booking())||'미리보기 내용이 없습니다.';if(k)document.getElementById('cnKakaoPreview').textContent=render(k.value,booking())||'미리보기 내용이 없습니다.'};
   window.cnSaveMessageChannels=function(){const s=document.getElementById('cnSmsTemplateInput'),k=document.getElementById('cnKakaoTemplateInput');if(!s||!k)return;if(!s.value.trim()||!k.value.trim()){alert('문자와 카카오톡 안내문을 모두 입력해주세요.');return}localStorage.setItem(SMS_KEY,s.value.trim());localStorage.setItem(KAKAO_KEY,k.value.trim());localStorage.setItem(LEGACY_KEY,s.value.trim());cnCloseMessageChannels();msg('문자·카카오톡 안내문이 저장되었습니다.')};
   window.cnResetMessageChannels=function(){const s=document.getElementById('cnSmsTemplateInput'),k=document.getElementById('cnKakaoTemplateInput');if(s)s.value=DEFAULT_SMS;if(k)k.value=DEFAULT_KAKAO;cnPreviewMessageChannels()};
-  window.cnSendCompletionGuide=function(mode){const b=booking();if(!b){msg('예약을 먼저 선택하세요.');return}const c=(customers||[]).find(x=>x.name===b.name)||{};const text=render(mode==='kakao'?cnGetKakaoTemplate():cnGetSmsTemplate(),b);const guide=document.getElementById('cnGuideText');if(guide)guide.textContent=text;if(mode==='sms'){if(!c.phone){msg('고객 전화번호가 등록되지 않았습니다.');return}location.href='sms:'+c.phone.replace(/[^0-9+]/g,'')+'?body='+encodeURIComponent(text);return}if(mode==='kakao'){try{navigator.clipboard?.writeText(text);if(navigator.share){navigator.share({title:'클린노바 작업완료 안내',text:text}).catch(()=>{})}else msg('카카오톡 안내문을 복사했습니다.');}catch(e){msg('카카오톡 안내문을 복사했습니다.');}return}navigator.clipboard?.writeText(text).then(()=>msg('고객 안내문이 복사되었습니다.')).catch(()=>msg('안내문을 복사하지 못했습니다.'))};
+  window.cnSendCompletionGuide=function(mode){const b=booking();if(!b){msg('예약을 먼저 선택하세요.');return}const c=(customers||[]).find(x=>x.name===b.name)||{};const text=render(mode==='kakao'?cnGetKakaoTemplate():cnGetSmsTemplate(),b);const guide=document.getElementById('cnGuideText');if(guide)guide.textContent=text;if(mode==='sms'){if(!c.phone){msg('고객 전화번호가 등록되지 않았습니다.');return}location.href='sms:'+c.phone.replace(/[^0-9+]/g,'')+'?body='+encodeURIComponent(text);return}if(mode==='kakao'){try{navigator.clipboard?.writeText(text);if(navigator.share){navigator.share({title:'쌈빡해유 작업완료 안내',text:text}).catch(()=>{})}else msg('카카오톡 안내문을 복사했습니다.');}catch(e){msg('카카오톡 안내문을 복사했습니다.');}return}navigator.clipboard?.writeText(text).then(()=>msg('고객 안내문이 복사되었습니다.')).catch(()=>msg('안내문을 복사하지 못했습니다.'))};
   window.cnCustomerGuide=function(mode){cnSendCompletionGuide(mode==='sms'?'sms':'copy')};
   window.cnOpenGuideSettings=function(){cnOpenMessageChannels()};
   window.cnChecklistHtml=function(b){const list=cnGetChecklist(b),done=list.filter(x=>x.done).length,pct=Math.round(done/list.length*100);return `<div class="cn-checklist-panel"><div class="cn-checklist-head"><b>현장 작업 체크리스트</b><span>${done}/${list.length} 완료 · ${pct}%</span></div><div class="cn-check-progress"><i style="width:${pct}%"></i></div>${list.map((x,i)=>`<label class="cn-check-item ${x.done?'done':''}"><input type="checkbox" ${x.done?'checked':''} onchange="cnToggleChecklist(${i},this.checked)"><span>${x.name}</span></label>`).join('')}<div class="cn-complete-lock">${done===list.length?'✓ 모든 작업이 확인되었습니다.':'완료 전 체크리스트를 확인해 주세요.'}</div><div class="cn-guide-box" id="cnGuideText">작업 완료 후 고객에게 보낼 안내문을 선택하세요.</div><div class="cn-guide-actions"><button class="cn-guide-sms" onclick="cnSendCompletionGuide('sms')">📱 문자 안내</button><button class="cn-guide-kakao" onclick="cnSendCompletionGuide('kakao')">💬 카톡 안내</button><button class="cn-guide-copy" onclick="cnSendCompletionGuide('copy')">📋 복사</button></div><div style="font-size:8px;color:#7b8d98;margin-top:6px">문자와 카톡 문구는 더보기 → 고객 안내문 설정에서 각각 수정할 수 있습니다.</div></div>`};
@@ -3594,7 +3594,7 @@ window.cnOpenGalleryPhoto=function(id,index){
   function guideText(b){
     const c=customers.find(x=>x.name===b.name)||{},d=getD(b);
     const price=Number(d.price||b.price||0).toLocaleString();
-    return `[클린노바 작업완료 안내]\n${c.name||b.name} 고객님, 에어컨 청소 작업이 완료되었습니다.\n예약번호: ${b.bookingNo||b.reservationNo||'-'}\n작업일: ${b.date||'-'} ${b.time||''}\n서비스: ${b.type||'-'}\n작업금액: ${price}원\n이용해주셔서 감사합니다.\n문의: 010-2488-9109`;
+    return `[쌈빡해유 작업완료 안내]\n${c.name||b.name} 고객님, 에어컨 청소 작업이 완료되었습니다.\n예약번호: ${b.bookingNo||b.reservationNo||'-'}\n작업일: ${b.date||'-'} ${b.time||''}\n서비스: ${b.type||'-'}\n작업금액: ${price}원\n이용해주셔서 감사합니다.\n문의: 010-2488-9109`;
   }
   function render(){
     const b=getB(),panel=document.getElementById('cnPaymentPanel'); if(!panel||!b)return;
@@ -3617,7 +3617,7 @@ window.cnOpenGalleryPhoto=function(id,index){
     const b=getB();if(!b){msg('예약을 먼저 선택하세요.');return} const c=customers.find(x=>x.name===b.name)||{}; const text=guideText(b);
     const d=getD(b);d.guide=d.guide||{};d.guide.channel=channel==='sms'?'문자':channel==='kakao'?'카카오톡':'복사';d.guide.time=new Date().toLocaleString('ko-KR');d.guide.bookingNo=b.bookingNo||b.reservationNo||'';setD(d,b);save();render();
     if(channel==='sms'){if(!c.phone){msg('고객 전화번호가 없습니다. 안내 처리 기록만 저장했습니다.');return}location.href='sms:'+c.phone.replace(/[^0-9+]/g,'')+'?body='+encodeURIComponent(text);msg('문자 안내를 실행했습니다.');return}
-    if(channel==='kakao'){try{navigator.share?navigator.share({title:'클린노바 작업완료 안내',text}).catch(()=>{}):navigator.clipboard?.writeText(text).then(()=>msg('카카오톡 안내문을 복사했습니다.'));}catch(e){navigator.clipboard?.writeText(text);msg('카카오톡 안내문을 복사했습니다.')}return}
+    if(channel==='kakao'){try{navigator.share?navigator.share({title:'쌈빡해유 작업완료 안내',text}).catch(()=>{}):navigator.clipboard?.writeText(text).then(()=>msg('카카오톡 안내문을 복사했습니다.'));}catch(e){navigator.clipboard?.writeText(text);msg('카카오톡 안내문을 복사했습니다.')}return}
     navigator.clipboard?.writeText(text).then(()=>msg('고객 안내문을 복사했습니다.')).catch(()=>msg('안내문 복사에 실패했습니다.'));
   };
   window.cnRenderPaymentStatus=render;
@@ -3699,7 +3699,7 @@ window.cnOpenGalleryPhoto=function(id,index){
   window.cnSetReceivablePaid=function(id,v){const b=(bookings||[]).find(x=>x.id===id);if(!b)return;const d=typeof detailDataForBooking==='function'?detailDataForBooking(b):{};d.payment=d.payment||{};d.payment.paidAt=v||'';if(v)d.payment.status='입금완료';d.payment.updatedAt=new Date().toLocaleString('ko-KR');savePayment(b,d,d.payment);render();if(typeof renderReports==='function')renderReports();if(typeof renderFlow==='function')renderFlow();msg(v?'실제 입금일을 저장했습니다.':'실제 입금일을 삭제했습니다.')};
   window.cnMarkReceivablePaid=function(id){const b=(bookings||[]).find(x=>x.id===id);if(!b)return;const d=typeof detailDataForBooking==='function'?detailDataForBooking(b):{};d.payment=d.payment||{};d.payment.status='입금완료';d.payment.paidAt=d.payment.paidAt||today();d.payment.updatedAt=new Date().toLocaleString('ko-KR');savePayment(b,d,d.payment);render();if(typeof renderReports==='function')renderReports();if(typeof renderFlow==='function')renderFlow();msg('입금완료로 저장했습니다.')}
   window.cnOpenReceivableDetail=function(id){const b=(bookings||[]).find(x=>x.id===id);if(!b)return;openDetail(b.name,b);setTimeout(()=>{if(typeof cnRenderPaymentStatus==='function')cnRenderPaymentStatus()},0)};
-  window.cnSendReceivableReminder=function(id,channel){const b=(bookings||[]).find(x=>x.id===id);if(!b)return;const c=(customers||[]).find(x=>x.name===b.name)||{};const d=typeof detailDataForBooking==='function'?detailDataForBooking(b):{};const amount=Number(d.price||b.price||0).toLocaleString();const text=`[클린노바 입금 안내]\
+  window.cnSendReceivableReminder=function(id,channel){const b=(bookings||[]).find(x=>x.id===id);if(!b)return;const c=(customers||[]).find(x=>x.name===b.name)||{};const d=typeof detailDataForBooking==='function'?detailDataForBooking(b):{};const amount=Number(d.price||b.price||0).toLocaleString();const text=`[쌈빡해유 입금 안내]\
 ${c.name||b.name} 고객님, 작업금액 ${amount}원 입금 확인 부탁드립니다.\
 예약번호: ${b.bookingNo||b.reservationNo||'-'}\
 문의: 010-2488-9109`;
@@ -3863,12 +3863,12 @@ function cnBackupData(){
   try{
     save();
     const prefix='cn8_';
-    const data={schema:'cleannova-v55',createdAt:new Date().toISOString(),customers:customers||[],bookings:bookings||[],localStorage:{}};
+    const data={schema:'ssambbakhayu-v55',createdAt:new Date().toISOString(),customers:customers||[],bookings:bookings||[],localStorage:{}};
     for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i); if(k&&k.startsWith(prefix)) data.localStorage[k]=localStorage.getItem(k);}
     const blob=new Blob([JSON.stringify(data)],{type:'application/json'});
     const url=URL.createObjectURL(blob); const a=document.createElement('a');
     const d=new Date(); const stamp=d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0')+'_'+String(d.getHours()).padStart(2,'0')+String(d.getMinutes()).padStart(2,'0');
-    a.href=url; a.download='cleannova_backup_'+stamp+'.json'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    a.href=url; a.download='ssambbakhayu_backup_'+stamp+'.json'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
     msg('백업 파일을 저장했습니다.');
   }catch(e){alert('백업에 실패했습니다. '+e.message)}
 }
@@ -3877,11 +3877,11 @@ function cnCloseRestore(){const m=document.getElementById('cnRestoreModal'); if(
 let cnRestorePayload=null;
 function cnPreviewRestore(input){
   const file=input?.files?.[0]; if(!file)return;
-  const r=new FileReader(); r.onload=()=>{try{const data=JSON.parse(r.result); if(!data||!['cleannova-v51','cleannova-v52','cleannova-v53','cleannova-v54','cleannova-v55','cleannova-v56','cleannova-v57','cleannova-v58','cleannova-v59','cleannova-v60','cleannova-v61','cleannova-v62','cleannova-v63','cleannova-v64'].includes(data.schema)||!Array.isArray(data.customers)||!Array.isArray(data.bookings))throw new Error('클린노바 백업 파일 형식이 아닙니다. v51~v64 백업을 지원합니다.'); cnRestorePayload=data; const p=document.getElementById('cnRestorePreview'); p.style.display='block'; p.innerHTML='<b>백업 확인</b><div class="sub">생성일: '+new Date(data.createdAt||'').toLocaleString('ko-KR')+'</div><div class="sub">고객 '+data.customers.length+'명 · 예약 '+data.bookings.length+'건 · 저장 데이터 '+Object.keys(data.localStorage||{}).length+'개</div>'; }catch(e){cnRestorePayload=null;alert(e.message);}}; r.readAsText(file);
+  const r=new FileReader(); r.onload=()=>{try{const data=JSON.parse(r.result); if(!data||!['ssambbakhayu-v51','ssambbakhayu-v52','ssambbakhayu-v53','ssambbakhayu-v54','ssambbakhayu-v55','ssambbakhayu-v56','ssambbakhayu-v57','ssambbakhayu-v58','ssambbakhayu-v59','ssambbakhayu-v60','ssambbakhayu-v61','ssambbakhayu-v62','ssambbakhayu-v63','ssambbakhayu-v64'].includes(data.schema)||!Array.isArray(data.customers)||!Array.isArray(data.bookings))throw new Error('쌈빡해유 백업 파일 형식이 아닙니다. v51~v64 백업을 지원합니다.'); cnRestorePayload=data; const p=document.getElementById('cnRestorePreview'); p.style.display='block'; p.innerHTML='<b>백업 확인</b><div class="sub">생성일: '+new Date(data.createdAt||'').toLocaleString('ko-KR')+'</div><div class="sub">고객 '+data.customers.length+'명 · 예약 '+data.bookings.length+'건 · 저장 데이터 '+Object.keys(data.localStorage||{}).length+'개</div>'; }catch(e){cnRestorePayload=null;alert(e.message);}}; r.readAsText(file);
 }
 function cnRestoreData(){
   if(!cnRestorePayload){alert('먼저 백업 파일을 선택해주세요.');return;}
-  if(!confirm('현재 클린노바 데이터를 백업 파일 내용으로 교체합니다. 계속할까요?'))return;
+  if(!confirm('현재 쌈빡해유 데이터를 백업 파일 내용으로 교체합니다. 계속할까요?'))return;
   try{
     for(let i=localStorage.length-1;i>=0;i--){const k=localStorage.key(i); if(k&&k.startsWith('cn8_'))localStorage.removeItem(k);}
     localStorage.setItem('cn8_customers',JSON.stringify(cnRestorePayload.customers)); localStorage.setItem('cn8_bookings',JSON.stringify(cnRestorePayload.bookings));
@@ -3979,7 +3979,7 @@ function cnRestoreData(){
   window.cnRevisitContact=function(id,channel){
     const b=(bookings||[]).find(x=>String(x.id)===String(id));if(!b)return;
     const d=getD(b),c=(customers||[]).find(x=>x.name===b.name)||{};
-    const text=`안녕하세요, ${c.name||b.name}님. 클린노바입니다.\n예약번호 ${b.bookingNo||b.reservationNo||'-'} 관련 재방문 예정일은 ${d.revisit||b.revisit||'-'}입니다.\n편하신 일정에 맞춰 예약을 도와드리겠습니다.`;
+    const text=`안녕하세요, ${c.name||b.name}님. 쌈빡해유입니다.\n예약번호 ${b.bookingNo||b.reservationNo||'-'} 관련 재방문 예정일은 ${d.revisit||b.revisit||'-'}입니다.\n편하신 일정에 맞춰 예약을 도와드리겠습니다.`;
     const st={channel,time:new Date().toISOString()};
     if(channel==='SMS'){
       const phone=(c.phone||b.phone||'').replace(/[^0-9+]/g,''); if(!phone){msg('등록된 전화번호가 없습니다.');return;}
@@ -4554,7 +4554,7 @@ function cnRestoreData(){
   window.cnEditExpense=function(id){const arr=loadCosts(),c=arr.find(x=>x.id===id);if(!c)return;const name=prompt('비용명',c.name||'');if(name===null)return;const amount=Number(prompt('금액',c.amount||0));if(!amount)return;const category=prompt('분류 (인건비/세제·소모품/교통·유류/광고·마케팅/장비·수리/통신·구독/사무용품/기타)',c.category||'기타')||'기타';const memo=(prompt('메모',c.memo||'') ?? (c.memo||''));Object.assign(c,{name,amount,category,memo,updatedAt:new Date().toISOString()});saveCosts(arr);render();if(typeof cnRenderManagementDashboard==='function')cnRenderManagementDashboard();msg('지출비용을 수정했습니다.')};
   window.cnDeleteExpense=function(id){if(!confirm('이 지출비용을 삭제할까요?'))return;saveCosts(loadCosts().filter(c=>c.id!==id));render();if(typeof cnRenderManagementDashboard==='function')cnRenderManagementDashboard();msg('지출비용을 삭제했습니다.')};
   window.cnMoveExpenseMonth=function(n){const e=document.getElementById('cn60Month');if(!e)return;const [y,m]=e.value.split('-').map(Number),d=new Date(y,m-1+n,1);e.value=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');render()};
-  window.cnExportExpenses=function(){const mk=document.getElementById('cn60Month')?.value||month(),arr=calcCosts(mk),lines=[['날짜','분류','비용명','금액','메모'],...arr.map(c=>[c.date,c.category||'기타',c.name,Number(c.amount)||0,c.memo||''])];const csv='\\ufeff'+lines.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='cleannova_expenses_'+mk+'.csv';a.click();setTimeout(()=>URL.revokeObjectURL(u),500)};
+  window.cnExportExpenses=function(){const mk=document.getElementById('cn60Month')?.value||month(),arr=calcCosts(mk),lines=[['날짜','분류','비용명','금액','메모'],...arr.map(c=>[c.date,c.category||'기타',c.name,Number(c.amount)||0,c.memo||''])];const csv='\\ufeff'+lines.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='ssambbakhayu_expenses_'+mk+'.csv';a.click();setTimeout(()=>URL.revokeObjectURL(u),500)};
   const oldGo=window.go;if(typeof oldGo==='function'&&!oldGo.__cn60){const wrappedGo=function(id){oldGo(id);if(id==='expenses')setTimeout(render,20);};wrappedGo.__cn60=true;window.go=wrappedGo}
   document.addEventListener('DOMContentLoaded',()=>{setTimeout(()=>{cnFullSync();if(document.getElementById('expenses')?.classList.contains('on'))render()},500)});
 })();
@@ -4669,7 +4669,7 @@ function cnRestoreData(){
  const oldSaveCosts=window.saveCosts;if(typeof oldSaveCosts==='function')window.saveCosts=function(v){const r=oldSaveCosts(v);setTimeout(sync,0);return r};
  const oldRenderExpenses=window.cnRenderExpenses;if(typeof oldRenderExpenses==='function')window.cnRenderExpenses=function(){const r=oldRenderExpenses();setTimeout(render64,0);return r};
  const oldBackup=window.cnBackupData;
- window.cnBackupData=function(){try{sync();const prefix='cn8_';const data={schema:'cleannova-v64',createdAt:new Date().toISOString(),customers:cust(),bookings:arr(),localStorage:{}};for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith(prefix))data.localStorage[k]=localStorage.getItem(k)};const blob=new Blob([JSON.stringify(data)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a'),d=new Date(),stamp=d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0')+'_'+String(d.getHours()).padStart(2,'0')+String(d.getMinutes()).padStart(2,'0');a.href=url;a.download='cleannova_backup_'+stamp+'.json';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);msg('동기화 후 백업 파일을 저장했습니다.')}catch(e){if(typeof oldBackup==='function')oldBackup();else alert('백업 실패 '+e.message)}};
+ window.cnBackupData=function(){try{sync();const prefix='cn8_';const data={schema:'ssambbakhayu-v64',createdAt:new Date().toISOString(),customers:cust(),bookings:arr(),localStorage:{}};for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith(prefix))data.localStorage[k]=localStorage.getItem(k)};const blob=new Blob([JSON.stringify(data)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a'),d=new Date(),stamp=d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0')+'_'+String(d.getHours()).padStart(2,'0')+String(d.getMinutes()).padStart(2,'0');a.href=url;a.download='ssambbakhayu_backup_'+stamp+'.json';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);msg('동기화 후 백업 파일을 저장했습니다.')}catch(e){if(typeof oldBackup==='function')oldBackup();else alert('백업 실패 '+e.message)}};
  document.addEventListener('change',e=>{if(e.target?.id==='cn64Year')renderAnnual()});
  document.addEventListener('DOMContentLoaded',()=>setTimeout(()=>{mount();sync()},700));
 })();
@@ -4696,7 +4696,7 @@ function cnRestoreData(){
     const rows=items.map((x,i)=>`<tr><td>${i+1}</td><td>${esc(x.service)}</td><td>${Number(x.qty||0).toLocaleString('ko-KR')}</td><td>${money(x.unit)}</td><td>${money(x.amount)}</td></tr>`).join('');
     const w=window.open('','_blank','width=820,height=900');
     if(!w){msg('팝업이 차단되었습니다. 브라우저에서 팝업을 허용해주세요.');return}
-    w.document.write(`<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>클린노바 견적서 ${esc(no)}</title><style>body{font-family:Arial,'Malgun Gothic',sans-serif;color:#111827;margin:0;padding:36px;background:#fff} .wrap{max-width:760px;margin:auto}.head{display:flex;justify-content:space-between;border-bottom:3px solid #111827;padding-bottom:18px;margin-bottom:22px}.brand{font-size:28px;font-weight:800}.title{font-size:24px;font-weight:800;text-align:right}.meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:22px}.box{border:1px solid #dbe2ea;border-radius:10px;padding:12px}.box span{display:block;font-size:11px;color:#64748b;margin-bottom:5px}.box b{font-size:14px}.items{width:100%;border-collapse:collapse;margin-top:12px}.items th,.items td{border:1px solid #dbe2ea;padding:11px 8px;text-align:center;font-size:12px}.items th{background:#f8fafc}.items td:nth-child(2){text-align:left}.summary{margin-top:18px;margin-left:auto;width:320px;border:1px solid #dbe2ea;border-radius:10px;overflow:hidden}.summary div{display:flex;justify-content:space-between;padding:10px 13px;border-bottom:1px solid #edf0f3}.summary .total{font-size:17px;font-weight:800;background:#f8fafc;border-bottom:0}.memo{margin-top:22px;border:1px solid #dbe2ea;border-radius:10px;padding:14px;min-height:60px}.foot{margin-top:28px;text-align:center;color:#64748b;font-size:11px;line-height:1.7}@media print{body{padding:15mm}.no-print{display:none}} </style></head><body><div class="wrap"><div class="head"><div><div class="brand">클린노바</div><div style="color:#64748b;margin-top:5px">에어컨 청소 견적서</div></div><div class="title">견적서<br><span style="font-size:11px;color:#64748b;font-weight:400">견적일 ${esc(today)}</span></div></div><div class="meta"><div class="box"><span>고객명</span><b>${esc(b.name)}</b></div><div class="box"><span>예약번호</span><b>${esc(no)}</b></div><div class="box"><span>연락처</span><b>${esc(c.phone||'-')}</b></div><div class="box"><span>예약일시</span><b>${esc((b.date||'-')+' '+(b.time||''))}</b></div><div class="box" style="grid-column:1/-1"><span>주소</span><b>${esc(c.addr||'-')}</b></div></div><table class="items"><thead><tr><th>번호</th><th>서비스</th><th>수량</th><th>단가</th><th>금액</th></tr></thead><tbody>${rows}</tbody></table><div class="summary"><div><span>공급가액</span><b>${money(supply)}</b></div><div><span>부가세(10%)</span><b>${money(vat)}</b></div><div class="total"><span>총 견적금액</span><b>${money(total)}</b></div></div>${memo?`<div class="memo"><b>메모</b><div style="margin-top:8px;white-space:pre-wrap;font-size:12px">${esc(memo)}</div></div>`:''}<div class="foot">본 견적서는 고객 요청에 따른 청소 서비스 견적 내용입니다.<br>문의 : 010-2488-9109</div><div class="no-print" style="text-align:center;margin-top:20px"><button onclick="window.print()" style="padding:12px 24px;border:0;border-radius:9px;background:#111827;color:white;font-weight:700">인쇄 / PDF 저장</button></div></div>`);
+    w.document.write(`<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>쌈빡해유 견적서 ${esc(no)}</title><style>body{font-family:Arial,'Malgun Gothic',sans-serif;color:#111827;margin:0;padding:36px;background:#fff} .wrap{max-width:760px;margin:auto}.head{display:flex;justify-content:space-between;border-bottom:3px solid #111827;padding-bottom:18px;margin-bottom:22px}.brand{font-size:28px;font-weight:800}.title{font-size:24px;font-weight:800;text-align:right}.meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:22px}.box{border:1px solid #dbe2ea;border-radius:10px;padding:12px}.box span{display:block;font-size:11px;color:#64748b;margin-bottom:5px}.box b{font-size:14px}.items{width:100%;border-collapse:collapse;margin-top:12px}.items th,.items td{border:1px solid #dbe2ea;padding:11px 8px;text-align:center;font-size:12px}.items th{background:#f8fafc}.items td:nth-child(2){text-align:left}.summary{margin-top:18px;margin-left:auto;width:320px;border:1px solid #dbe2ea;border-radius:10px;overflow:hidden}.summary div{display:flex;justify-content:space-between;padding:10px 13px;border-bottom:1px solid #edf0f3}.summary .total{font-size:17px;font-weight:800;background:#f8fafc;border-bottom:0}.memo{margin-top:22px;border:1px solid #dbe2ea;border-radius:10px;padding:14px;min-height:60px}.foot{margin-top:28px;text-align:center;color:#64748b;font-size:11px;line-height:1.7}@media print{body{padding:15mm}.no-print{display:none}} </style></head><body><div class="wrap"><div class="head"><div><div class="brand">쌈빡해유</div><div style="color:#64748b;margin-top:5px">에어컨 청소 견적서</div></div><div class="title">견적서<br><span style="font-size:11px;color:#64748b;font-weight:400">견적일 ${esc(today)}</span></div></div><div class="meta"><div class="box"><span>고객명</span><b>${esc(b.name)}</b></div><div class="box"><span>예약번호</span><b>${esc(no)}</b></div><div class="box"><span>연락처</span><b>${esc(c.phone||'-')}</b></div><div class="box"><span>예약일시</span><b>${esc((b.date||'-')+' '+(b.time||''))}</b></div><div class="box" style="grid-column:1/-1"><span>주소</span><b>${esc(c.addr||'-')}</b></div></div><table class="items"><thead><tr><th>번호</th><th>서비스</th><th>수량</th><th>단가</th><th>금액</th></tr></thead><tbody>${rows}</tbody></table><div class="summary"><div><span>공급가액</span><b>${money(supply)}</b></div><div><span>부가세(10%)</span><b>${money(vat)}</b></div><div class="total"><span>총 견적금액</span><b>${money(total)}</b></div></div>${memo?`<div class="memo"><b>메모</b><div style="margin-top:8px;white-space:pre-wrap;font-size:12px">${esc(memo)}</div></div>`:''}<div class="foot">본 견적서는 고객 요청에 따른 청소 서비스 견적 내용입니다.<br>문의 : 010-2488-9109</div><div class="no-print" style="text-align:center;margin-top:20px"><button onclick="window.print()" style="padding:12px 24px;border:0;border-radius:9px;background:#111827;color:white;font-weight:700">인쇄 / PDF 저장</button></div></div>`);
     w.document.close();
   };
 })();
@@ -4726,8 +4726,8 @@ function cnRestoreData(){
   window.cnQuoteRenderTotals=function(){const a=items();const supply=a.reduce((s,x)=>s+x.amount,0);const vat=document.getElementById('cnqVat')?.checked?Math.round(supply*.1):0;document.getElementById('cnqSupply').textContent=money(supply);document.getElementById('cnqVatAmount').textContent=money(vat);document.getElementById('cnqTotal').textContent=money(supply+vat)};
   window.cnQuoteSave=function(){const q=getForm();if(!q.name){msg('고객명을 입력하세요.');return}if(!q.items.length){msg('서비스 품목을 하나 이상 입력하세요.');return}const a=load();const i=a.findIndex(x=>x.id===q.id);if(i>=0)a[i]=q;else a.unshift(q);saveAll(a);currentId=q.id;cnQuoteRenderList();msg('견적서를 저장했습니다.');};
   function getCurrent(){const q=getForm();return q;}
-  window.cnQuoteCopy=function(){const q=getCurrent();if(!q.name||!q.items.length){msg('고객명과 품목을 입력하세요.');return}const lines=q.items.map((x,i)=>`${i+1}. ${x.service} / ${x.qty}개 × ${x.unit.toLocaleString()}원 = ${x.amount.toLocaleString()}원`).join('\n');const text=`[클린노바 견적서]\n사업주: 신혜린\n사업자등록번호: 863-24-02308\n연락처: 010-2488-9109\n견적번호: ${q.no}\n견적일: ${q.date}\n고객명: ${q.name}\n연락처: ${q.phone||'-'}\n주소: ${q.addr||'-'}\n${lines}\n공급가액: ${q.supply.toLocaleString()}원\n부가세: ${q.vat.toLocaleString()}원\n총 견적금액: ${q.total.toLocaleString()}원${q.memo?'\n메모: '+q.memo:''}\n문의: 010-2488-9109`;navigator.clipboard?.writeText(text).then(()=>msg('견적서 내용이 복사되었습니다.')).catch(()=>msg('복사에 실패했습니다.'))};
-  window.cnQuotePrint=function(id){const q=id?load().find(x=>x.id===id):getCurrent();if(!q||!q.name||!q.items?.length){msg('견적서를 먼저 작성하세요.');return}const rows=q.items.map((x,i)=>`<tr><td>${i+1}</td><td>${esc(x.service)}</td><td>${x.qty}</td><td>${money(x.unit)}</td><td>${money(x.amount)}</td></tr>`).join('');const w=window.open('','_blank','width=850,height=900');if(!w){msg('팝업 차단을 해제해주세요.');return}w.document.write(`<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>클린노바 견적서 ${esc(q.no)}</title><style>body{font-family:Arial,'Malgun Gothic',sans-serif;color:#111827;margin:0;padding:35px;background:#fff}.wrap{max-width:760px;margin:auto}.head{display:flex;justify-content:space-between;border-bottom:3px solid #111827;padding-bottom:18px;margin-bottom:22px}.brand{font-size:28px;font-weight:800}.title{font-size:24px;font-weight:800;text-align:right}.biz{font-size:11px;color:#475569;margin-top:5px}.meta{display:grid;grid-template-columns:1fr 1fr;gap:8px}.box{border:1px solid #dbe2ea;border-radius:10px;padding:12px}.box span{display:block;font-size:11px;color:#64748b;margin-bottom:5px}.box b{font-size:14px}.items{width:100%;border-collapse:collapse;margin-top:18px}.items th,.items td{border:1px solid #dbe2ea;padding:11px 8px;text-align:center;font-size:12px}.items th{background:#f8fafc}.items td:nth-child(2){text-align:left}.summary{margin-top:18px;margin-left:auto;width:320px;border:1px solid #dbe2ea;border-radius:10px;overflow:hidden}.summary div{display:flex;justify-content:space-between;padding:10px 13px;border-bottom:1px solid #edf0f3}.summary .total{font-size:17px;font-weight:800;background:#f8fafc;border-bottom:0}.memo{margin-top:22px;border:1px solid #dbe2ea;border-radius:10px;padding:14px;min-height:60px}.foot{margin-top:28px;text-align:center;color:#64748b;font-size:11px;line-height:1.7}@media print{body{padding:15mm}.no-print{display:none}}</style>
+  window.cnQuoteCopy=function(){const q=getCurrent();if(!q.name||!q.items.length){msg('고객명과 품목을 입력하세요.');return}const lines=q.items.map((x,i)=>`${i+1}. ${x.service} / ${x.qty}개 × ${x.unit.toLocaleString()}원 = ${x.amount.toLocaleString()}원`).join('\n');const text=`[쌈빡해유 견적서]\n사업주: 신혜린\n사업자등록번호: 863-24-02308\n연락처: 010-2488-9109\n견적번호: ${q.no}\n견적일: ${q.date}\n고객명: ${q.name}\n연락처: ${q.phone||'-'}\n주소: ${q.addr||'-'}\n${lines}\n공급가액: ${q.supply.toLocaleString()}원\n부가세: ${q.vat.toLocaleString()}원\n총 견적금액: ${q.total.toLocaleString()}원${q.memo?'\n메모: '+q.memo:''}\n문의: 010-2488-9109`;navigator.clipboard?.writeText(text).then(()=>msg('견적서 내용이 복사되었습니다.')).catch(()=>msg('복사에 실패했습니다.'))};
+  window.cnQuotePrint=function(id){const q=id?load().find(x=>x.id===id):getCurrent();if(!q||!q.name||!q.items?.length){msg('견적서를 먼저 작성하세요.');return}const rows=q.items.map((x,i)=>`<tr><td>${i+1}</td><td>${esc(x.service)}</td><td>${x.qty}</td><td>${money(x.unit)}</td><td>${money(x.amount)}</td></tr>`).join('');const w=window.open('','_blank','width=850,height=900');if(!w){msg('팝업 차단을 해제해주세요.');return}w.document.write(`<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>쌈빡해유 견적서 ${esc(q.no)}</title><style>body{font-family:Arial,'Malgun Gothic',sans-serif;color:#111827;margin:0;padding:35px;background:#fff}.wrap{max-width:760px;margin:auto}.head{display:flex;justify-content:space-between;border-bottom:3px solid #111827;padding-bottom:18px;margin-bottom:22px}.brand{font-size:28px;font-weight:800}.title{font-size:24px;font-weight:800;text-align:right}.biz{font-size:11px;color:#475569;margin-top:5px}.meta{display:grid;grid-template-columns:1fr 1fr;gap:8px}.box{border:1px solid #dbe2ea;border-radius:10px;padding:12px}.box span{display:block;font-size:11px;color:#64748b;margin-bottom:5px}.box b{font-size:14px}.items{width:100%;border-collapse:collapse;margin-top:18px}.items th,.items td{border:1px solid #dbe2ea;padding:11px 8px;text-align:center;font-size:12px}.items th{background:#f8fafc}.items td:nth-child(2){text-align:left}.summary{margin-top:18px;margin-left:auto;width:320px;border:1px solid #dbe2ea;border-radius:10px;overflow:hidden}.summary div{display:flex;justify-content:space-between;padding:10px 13px;border-bottom:1px solid #edf0f3}.summary .total{font-size:17px;font-weight:800;background:#f8fafc;border-bottom:0}.memo{margin-top:22px;border:1px solid #dbe2ea;border-radius:10px;padding:14px;min-height:60px}.foot{margin-top:28px;text-align:center;color:#64748b;font-size:11px;line-height:1.7}@media print{body{padding:15mm}.no-print{display:none}}</style>
 <style id="cn-booking-modal-visibility-fix">
 /* 예약 추가창이 sticky header 뒤로 숨지 않도록 최종 레이어 우선순위 보정 */
 #modal{
@@ -4766,7 +4766,7 @@ function cnRestoreData(){
 }
 
 </style>
-</head><body><div class="wrap"><div class="head"><div><div class="brand">클린노바</div><div class="biz">사업자등록번호 863-24-02308</div><div class="biz">에어컨 청소 전문</div></div><div class="title">견적서<br><span style="font-size:11px;color:#64748b;font-weight:400">견적번호 ${esc(q.no)} · ${esc(q.date)}</span></div></div><div class="meta"><div class="box"><span>고객명</span><b>${esc(q.name)}</b></div><div class="box"><span>연락처</span><b>${esc(q.phone||'-')}</b></div><div class="box" style="grid-column:1/-1"><span>주소</span><b>${esc(q.addr||'-')}</b></div></div><table class="items"><thead><tr><th>번호</th><th>서비스</th><th>수량</th><th>단가</th><th>금액</th></tr></thead><tbody>${rows}</tbody></table><div class="summary"><div><span>공급가액</span><b>${money(q.supply)}</b></div><div><span>부가세</span><b>${money(q.vat)}</b></div><div class="total"><span>총 견적금액</span><b>${money(q.total)}</b></div></div>${q.memo?`<div class="memo"><b>메모</b><div style="margin-top:8px;white-space:pre-wrap;font-size:12px">${esc(q.memo)}</div></div>`:''}<div class="foot">본 견적서는 청소 서비스 상담 및 견적을 위한 문서입니다.<br>문의 : 010-2488-9109</div><div class="no-print" style="text-align:center;margin-top:20px"><button onclick="window.print()" style="padding:12px 24px;border:0;border-radius:9px;background:#111827;color:white;font-weight:700">인쇄 / PDF 저장</button></div></div>
+</head><body><div class="wrap"><div class="head"><div><div class="brand">쌈빡해유</div><div class="biz">사업자등록번호 863-24-02308</div><div class="biz">에어컨 청소 전문</div></div><div class="title">견적서<br><span style="font-size:11px;color:#64748b;font-weight:400">견적번호 ${esc(q.no)} · ${esc(q.date)}</span></div></div><div class="meta"><div class="box"><span>고객명</span><b>${esc(q.name)}</b></div><div class="box"><span>연락처</span><b>${esc(q.phone||'-')}</b></div><div class="box" style="grid-column:1/-1"><span>주소</span><b>${esc(q.addr||'-')}</b></div></div><table class="items"><thead><tr><th>번호</th><th>서비스</th><th>수량</th><th>단가</th><th>금액</th></tr></thead><tbody>${rows}</tbody></table><div class="summary"><div><span>공급가액</span><b>${money(q.supply)}</b></div><div><span>부가세</span><b>${money(q.vat)}</b></div><div class="total"><span>총 견적금액</span><b>${money(q.total)}</b></div></div>${q.memo?`<div class="memo"><b>메모</b><div style="margin-top:8px;white-space:pre-wrap;font-size:12px">${esc(q.memo)}</div></div>`:''}<div class="foot">본 견적서는 청소 서비스 상담 및 견적을 위한 문서입니다.<br>문의 : 010-2488-9109</div><div class="no-print" style="text-align:center;margin-top:20px"><button onclick="window.print()" style="padding:12px 24px;border:0;border-radius:9px;background:#111827;color:white;font-weight:700">인쇄 / PDF 저장</button></div></div>
 
 
 <script>
@@ -4999,7 +4999,7 @@ function cnRestoreData(){
   document.addEventListener('DOMContentLoaded',function(){setTimeout(function(){syncAll();if(typeof renderCustomers==='function')renderCustomers();},120);});
 })();
 </script>
-<!-- 클린노바 v76 실제 Supabase 클라우드 -->
+<!-- 쌈빡해유 v76 실제 Supabase 클라우드 -->
 <style>
 .cn-cloud-top{background:#173b57!important;color:#fff!important;border-color:#173b57!important}
 #cnCloudModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.58);z-index:99999;align-items:center;justify-content:center;padding:18px}
@@ -5014,7 +5014,7 @@ function cnRestoreData(){
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <div id="cnCloudModal" onclick="if(event.target===this)cnCloseCloud()">
 <div class="cn-cloud-modal">
-<h2>☁ 클린노바 클라우드</h2>
+<h2>☁ 쌈빡해유 클라우드</h2>
 <div class="cn-cloud-sub">같은 계정으로 로그인하면 휴대폰·태블릿·PC에서 고객, 예약, 매출 데이터를 함께 사용할 수 있습니다.</div>
 <div class="cn-cloud-status off" id="cnCloudStatus">클라우드 연결 전</div>
 <div id="cnCloudConfig">
@@ -5023,7 +5023,7 @@ function cnRestoreData(){
 <label>Supabase Publishable key</label>
 <input autocomplete="off" id="cnCloudKey" placeholder="sb_publishable_..."/>
 <div class="cn-cloud-row"><button class="primary" onclick="cnCloudSaveConfig()">연결 설정 저장</button><button onclick="cnCloudTest()">연결 테스트</button></div>
-<label>클린노바 계정 이메일</label>
+<label>쌈빡해유 계정 이메일</label>
 <input autocomplete="username" id="cnCloudEmail" placeholder="이메일" type="email"/>
 <label>비밀번호</label>
 <input autocomplete="current-password" id="cnCloudPassword" placeholder="6자 이상" type="password"/>
@@ -5044,7 +5044,7 @@ function cnRestoreData(){
   const DEFAULT_URL='https://tukzlccjowugmomlggiy.supabase.co';
   const DEFAULT_KEY='sb_publishable_-DF9I2SzuD-_b-DjRcXKsQ_S3DlQc1-';
   const CFG_URL='cn_cloud_url', CFG_KEY='cn_cloud_anon';
-  const TABLE='cleannova_data', DATA_TYPE='app_state';
+  const TABLE='ssambbakhayu_data', DATA_TYPE='app_state';
   let client=null, user=null, syncing=false, hydrating=false, timer=null;
   const q=id=>document.getElementById(id);
   const setStatus=(html,mode)=>{const e=q('cnCloudStatus');if(e){e.innerHTML=html;e.className='cn-cloud-status '+(mode||'off')}};
@@ -5976,7 +5976,7 @@ function cnRestoreData(){
 
 
 <style id="cn-app-shell-fix-v9">
-/* CleanNova v9: native Capacitor insets handle the Android system bars; app content uses a dedicated vertical scroll container.
+/* Ssambbakhayu v9: native Capacitor insets handle the Android system bars; app content uses a dedicated vertical scroll container.
    Do not fake status/navigation-bar offsets in CSS. */
 html,body{margin:0!important;padding:0!important;width:100%;min-height:100%;overflow-x:hidden;overflow-y:hidden!important;overscroll-behavior-y:auto}
 body{background:#f4f7fb}
@@ -6125,7 +6125,7 @@ button,input,select,textarea{touch-action:manipulation}
 <div id="cnAuthGate" aria-modal="true" role="dialog">
   <div id="cnAuthCard">
     <div id="cnAuthLogo">클린<br>노바</div>
-    <h2 id="cnAuthTitle">클린노바 시작하기</h2>
+    <h2 id="cnAuthTitle">쌈빡해유 시작하기</h2>
     <div class="cn-auth-sub" id="cnAuthSub">처음 실행입니다. 사용할 아이디와 비밀번호를 만들어주세요.</div>
     <label class="cn-auth-label" for="cnAuthId">아이디</label>
     <input class="cn-auth-input" id="cnAuthId" autocomplete="username" autocapitalize="none" placeholder="아이디 입력">
@@ -6166,13 +6166,13 @@ button,input,select,textarea{touch-action:manipulation}
   function setMsg(t,ok){const e=msgEl();if(e){e.textContent=t||'';e.style.color=ok?'#31916d':'#d45b5b';}}
   function showLogin(){
     const g=gate(); if(!g)return;
-    titleEl().textContent='클린노바 로그인'; subEl().textContent='아이디와 비밀번호를 입력해주세요.';
+    titleEl().textContent='쌈빡해유 로그인'; subEl().textContent='아이디와 비밀번호를 입력해주세요.';
     submitEl().textContent='로그인'; switchEl().style.display='block'; pw2Wrap().style.display='none'; setMsg('');
     idEl().value='';pwEl().value='';pw2El().value='';g.classList.add('on');setTimeout(()=>idEl().focus(),50);
   }
   function showCreate(){
     const g=gate(); if(!g)return;
-    titleEl().textContent='클린노바 시작하기'; subEl().textContent='처음 실행입니다. 사용할 아이디와 비밀번호를 만들어주세요.';
+    titleEl().textContent='쌈빡해유 시작하기'; subEl().textContent='처음 실행입니다. 사용할 아이디와 비밀번호를 만들어주세요.';
     submitEl().textContent='계정 만들기'; switchEl().style.display='none'; pw2Wrap().style.display='block'; setMsg('');
     idEl().value='';pwEl().value='';pw2El().value='';g.classList.add('on');setTimeout(()=>idEl().focus(),50);
   }
@@ -6278,19 +6278,19 @@ function cnSetCalendarView(mode){
 (function(){
   const KEY='cn8_cloudinary';
   const CN_DEFAULT_CLOUD='aaud0ax6';
-  const CN_DEFAULT_PRESET='cleannova_upload';
-  const CN_DEFAULT_PUBLIC='https://shinhr1206-lab.github.io/cleannova-app2/';
-  function normalizePublicBase(v){const s=String(v||'').trim();return /^https?:\/\/shinhr1206-lab\.github\.io\/cleannova-app2(?:\/|$)/i.test(s)?s.replace(/\/?$/,'/') : CN_DEFAULT_PUBLIC;}
+  const CN_DEFAULT_PRESET='ssambbakhayu_upload';
+  const CN_DEFAULT_PUBLIC='https://shinhr1206-lab.github.io/ssambbakhayu-app2/';
+  function normalizePublicBase(v){const s=String(v||'').trim();return /^https?:\/\/shinhr1206-lab\.github\.io\/ssambbakhayu-app2(?:\/|$)/i.test(s)?s.replace(/\/?$/,'/') : CN_DEFAULT_PUBLIC;}
   function cfg(){try{const v=JSON.parse(localStorage.getItem(KEY)||'{}');const out=Object.assign({cloud:CN_DEFAULT_CLOUD,preset:CN_DEFAULT_PRESET,publicBase:CN_DEFAULT_PUBLIC},v||{});out.publicBase=normalizePublicBase(out.publicBase);if(out.publicBase!==v?.publicBase){try{localStorage.setItem(KEY,JSON.stringify(out));}catch(e){}}return out;}catch(e){return {cloud:CN_DEFAULT_CLOUD,preset:CN_DEFAULT_PRESET,publicBase:CN_DEFAULT_PUBLIC};}}
   function saveCfg(){const cloud=(document.getElementById('cnCloudName')?.value||CN_DEFAULT_CLOUD).trim();const preset=(document.getElementById('cnCloudPreset')?.value||CN_DEFAULT_PRESET).trim();const publicBase=normalizePublicBase(document.getElementById('cnPhotoPublicBase')?.value||CN_DEFAULT_PUBLIC);localStorage.setItem(KEY,JSON.stringify({cloud,preset,publicBase}));}
-  function isValidCustomerPhotoLink(v){return /^https:\/\/shinhr1206-lab\.github\.io\/cleannova-app2\/index\.html#cn-photo-view=/i.test(String(v||''));}
+  function isValidCustomerPhotoLink(v){return /^https:\/\/shinhr1206-lab\.github\.io\/ssambbakhayu-app2\/index\.html#cn-photo-view=/i.test(String(v||''));}
   try{if(Array.isArray(bookings)){let dirty=false;bookings.forEach(b=>{if(b&&b.customerPhotoLink&&!isValidCustomerPhotoLink(b.customerPhotoLink)){delete b.customerPhotoLink;delete b.customerPhotoLinkAt;dirty=true;}});if(dirty&&typeof save==='function')save();}}catch(e){}
   window.cnGetCustomerPhotoLink=function(){const b=(bookings||[]).find(x=>x.id===selectedBookingId);return isValidCustomerPhotoLink(b?.customerPhotoLink)?b.customerPhotoLink:''};
   window.cnOpenPhotoSettings=(function(orig){return function(){if(typeof orig==='function')orig();setTimeout(()=>{const c=cfg();const a=document.getElementById('cnCloudName'),p=document.getElementById('cnCloudPreset'),u=document.getElementById('cnPhotoPublicBase');if(a)a.value=c.cloud||CN_DEFAULT_CLOUD;if(p)p.value=c.preset||CN_DEFAULT_PRESET;if(u)u.value=c.publicBase||CN_DEFAULT_PUBLIC},0)}})(window.cnOpenPhotoSettings);
   window.cnSavePhotoSettings=(function(orig){return function(){saveCfg();if(typeof orig==='function')orig();else msg('사진 설정을 저장했습니다.')}})(window.cnSavePhotoSettings);
   function esc(v){return String(v??'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));}
   function getSharePayload(b){const c=(customers||[]).find(x=>x.name===b.name)||{};const d=detailDataForBooking(b);const photos=(Array.isArray(d.photos)?d.photos:[]).map((p,i)=>({url:typeof p==='string'?p:p?.src||'',type:typeof p==='object'&&p?.type==='before'?'before':'after',date:typeof p==='object'?p?.date||'':''})).filter(x=>x.url);return {id:b.id,bookingNo:b.bookingNo||b.reservationNo||'',name:b.name||c.name||'',date:b.date||'',time:b.time||'',service:b.type||c.type||'서비스',photos};}
-  async function uploadPhoto(cloud,preset,dataUrl,publicId){const blob=await (await fetch(dataUrl)).blob();const fd=new FormData();fd.append('file',blob,'cleannova.jpg');fd.append('upload_preset',preset);fd.append('folder','cleannova/'+(publicId||'photos'));const r=await fetch('https://api.cloudinary.com/v1_1/'+encodeURIComponent(cloud)+'/image/upload',{method:'POST',body:fd});if(!r.ok)throw new Error('사진 업로드 실패');const j=await r.json();return j.secure_url||j.url;}
+  async function uploadPhoto(cloud,preset,dataUrl,publicId){const blob=await (await fetch(dataUrl)).blob();const fd=new FormData();fd.append('file',blob,'ssambbakhayu.jpg');fd.append('upload_preset',preset);fd.append('folder','ssambbakhayu/'+(publicId||'photos'));const r=await fetch('https://api.cloudinary.com/v1_1/'+encodeURIComponent(cloud)+'/image/upload',{method:'POST',body:fd});if(!r.ok)throw new Error('사진 업로드 실패');const j=await r.json();return j.secure_url||j.url;}
   function buildViewUrl(payload){const c=cfg();const base=normalizePublicBase(c.publicBase);const finalBase=/index\.html(?:$|[?#])/i.test(base)?base:base+'index.html';const token=btoa(unescape(encodeURIComponent(JSON.stringify(payload)))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');return finalBase+'#cn-photo-view='+token;}
   function renderShareState(b){const url=b?.customerPhotoLink||'';const st=document.getElementById('cnPhotoShareStatus'),box=document.getElementById('cnPhotoShareUrl');if(st)st.textContent=url?'링크 발급됨':'미발급';if(box){box.style.display=url?'block':'none';box.textContent=url||'';}}
   window.cnCreateCustomerPhotoLink=async function(){
@@ -6302,9 +6302,9 @@ function cnSetCalendarView(mode){
       const link=buildViewUrl(payload);b.customerPhotoLink=link;b.customerPhotoLinkAt=new Date().toISOString();save();renderShareState(b);msg('고객용 사진 링크가 만들어졌습니다.');
     }catch(e){console.error(e);msg('사진 업로드에 실패했습니다. Cloudinary 설정과 인터넷 연결을 확인해주세요.');}
   };
-  window.cnSendCustomerPhotoLink=function(){const b=(bookings||[]).find(x=>x.id===selectedBookingId),c=(customers||[]).find(x=>x.name===b?.name)||{};if(!b||!c.phone){msg('고객 전화번호가 없습니다.');return}const link=window.cnGetCustomerPhotoLink();if(!link){msg('사진 링크를 다시 만들어주세요.');return}const text='안녕하세요, 클린노바입니다.\n\n작업 전·후 사진을 확인하실 수 있습니다.\n'+link;location.href='sms:'+c.phone.replace(/[^0-9+]/g,'')+'?body='+encodeURIComponent(text)};
+  window.cnSendCustomerPhotoLink=function(){const b=(bookings||[]).find(x=>x.id===selectedBookingId),c=(customers||[]).find(x=>x.name===b?.name)||{};if(!b||!c.phone){msg('고객 전화번호가 없습니다.');return}const link=window.cnGetCustomerPhotoLink();if(!link){msg('사진 링크를 다시 만들어주세요.');return}const text='안녕하세요, 쌈빡해유입니다.\n\n작업 전·후 사진을 확인하실 수 있습니다.\n'+link;location.href='sms:'+c.phone.replace(/[^0-9+]/g,'')+'?body='+encodeURIComponent(text)};
   window.cnRenderPhotoShare=window.cnRenderPhotoShare||function(){const b=(bookings||[]).find(x=>x.id===selectedBookingId);if(b)renderShareState(b)};
-  function renderPublic(){const h=location.hash||'';if(!h.startsWith('#cn-photo-view='))return;try{const token=h.slice(15);const json=decodeURIComponent(escape(atob(token.replace(/-/g,'+').replace(/_/g,'/'))));const p=JSON.parse(json);document.body.innerHTML='<div style="font-family:system-ui,sans-serif;max-width:760px;margin:0 auto;padding:22px;background:#f7fbfd;min-height:100vh;box-sizing:border-box"><h2 style="color:#183e53;margin:0 0 6px">📷 클린노바 작업사진</h2><div style="color:#6d808c;font-size:13px;margin-bottom:18px">'+esc(p.name)+' · '+esc(p.date)+' '+esc(p.time)+'</div><div style="display:grid;gap:18px">'+p.photos.map(x=>'<section style="background:#fff;border:1px solid #dce7ec;border-radius:16px;padding:12px"><b style="display:block;margin-bottom:8px;color:#31566b">'+(x.type==='before'?'작업 전':'작업 후')+'</b><img src="'+esc(x.url)+'" style="display:block;width:100%;height:auto;border-radius:12px" loading="lazy"><small style="display:block;margin-top:6px;color:#8a9aa3">'+esc(x.date||'')+'</small></section>').join('')+'</div><div style="margin-top:22px;padding:12px;background:#eef7fb;border-radius:12px;color:#5c7480;font-size:11px;line-height:1.5">클린노바 고객 전용 사진 페이지입니다.</div></div>';}catch(e){document.body.innerHTML='<div style="font-family:system-ui,sans-serif;padding:30px">사진 링크를 열 수 없습니다.</div>';}}
+  function renderPublic(){const h=location.hash||'';if(!h.startsWith('#cn-photo-view='))return;try{const token=h.slice(15);const json=decodeURIComponent(escape(atob(token.replace(/-/g,'+').replace(/_/g,'/'))));const p=JSON.parse(json);document.body.innerHTML='<div style="font-family:system-ui,sans-serif;max-width:760px;margin:0 auto;padding:22px;background:#f7fbfd;min-height:100vh;box-sizing:border-box"><h2 style="color:#183e53;margin:0 0 6px">📷 쌈빡해유 작업사진</h2><div style="color:#6d808c;font-size:13px;margin-bottom:18px">'+esc(p.name)+' · '+esc(p.date)+' '+esc(p.time)+'</div><div style="display:grid;gap:18px">'+p.photos.map(x=>'<section style="background:#fff;border:1px solid #dce7ec;border-radius:16px;padding:12px"><b style="display:block;margin-bottom:8px;color:#31566b">'+(x.type==='before'?'작업 전':'작업 후')+'</b><img src="'+esc(x.url)+'" style="display:block;width:100%;height:auto;border-radius:12px" loading="lazy"><small style="display:block;margin-top:6px;color:#8a9aa3">'+esc(x.date||'')+'</small></section>').join('')+'</div><div style="margin-top:22px;padding:12px;background:#eef7fb;border-radius:12px;color:#5c7480;font-size:11px;line-height:1.5">쌈빡해유 고객 전용 사진 페이지입니다.</div></div>';}catch(e){document.body.innerHTML='<div style="font-family:system-ui,sans-serif;padding:30px">사진 링크를 열 수 없습니다.</div>';}}
   window.addEventListener('hashchange',renderPublic);if(location.hash.startsWith('#cn-photo-view='))renderPublic();
   const oldOpen=window.openDetail;window.openDetail=function(){const r=oldOpen&&oldOpen.apply(this,arguments);setTimeout(()=>window.cnRenderPhotoShare(),0);return r};
 })();
@@ -6314,7 +6314,7 @@ function cnSetCalendarView(mode){
 /* v-final-photo-link: Cloudinary defaults + public GitHub Pages link hardening */
 (function(){
   const KEY='cn8_cloudinary';
-  const DEF={cloud:'aaud0ax6',preset:'cleannova_upload',publicBase:'https://shinhr1206-lab.github.io/cleannova-app2/'};
+  const DEF={cloud:'aaud0ax6',preset:'ssambbakhayu_upload',publicBase:'https://shinhr1206-lab.github.io/ssambbakhayu-app2/'};
   function read(){try{return Object.assign({},DEF,JSON.parse(localStorage.getItem(KEY)||'{}'));}catch(e){return {...DEF};}}
   function write(v){try{localStorage.setItem(KEY,JSON.stringify(Object.assign({},DEF,v||{})));}catch(e){}}
   const c=read();

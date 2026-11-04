@@ -1,8 +1,8 @@
 {
-  "name": "cleannova-apk",
+  "name": "ssambbakhayu-apk",
   "version": "1.0.0",
   "private": true,
-  "description": "클린노바 Android APK build project",
+  "description": "쌈빡해유 에어컨 청소 고객관리 Android APK",
   "scripts": {
     "cap:add": "cap add android",
     "cap:sync": "cap sync android"
