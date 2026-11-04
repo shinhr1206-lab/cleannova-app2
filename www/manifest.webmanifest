@@ -1,7 +1,7 @@
 {
-  "name": "클린노바",
-  "short_name": "클린노바",
-  "description": "청소 서비스 예약·고객·매출 관리 앱",
+  "name": "쌈빡해유",
+  "short_name": "쌈빡해유",
+  "description": "쌈빡해유 에어컨 청소 예약·고객·매출 관리 앱",
   "lang": "ko-KR",
   "start_url": "./",
   "scope": "./",
@@ -10,7 +10,17 @@
   "background_color": "#f6f8fc",
   "theme_color": "#2563eb",
   "icons": [
-    {"src":"icons/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},
-    {"src":"icons/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
   ]
 }
